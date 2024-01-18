@@ -1,6 +1,48 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import { queryClient } from "@/common/api";
+import { FONTS } from "@/common/constants";
+import { GeneralLayout, Layout } from "@/common/layouts";
+import { TAppPropsWithLayout } from "@/common/types";
+import "@/styles/index.scss";
+import Theme from "@/theme";
+import { HydrationBoundary, QueryClientProvider } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import NextProgressBar from "nextjs-progressbar";
+import { SnackbarProvider } from "notistack";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
-}
+const App = (props: TAppPropsWithLayout) => {
+  const { Component, pageProps } = props;
+  const { route } = useRouter();
+
+  const renderWithLayout =
+    Component.getLayout ||
+    function (page: any) {
+      return <Layout pageProps={pageProps}>{page}</Layout>;
+    };
+
+  return (
+    <Theme>
+      <NextProgressBar color="#358CE1" />
+      <QueryClientProvider client={queryClient}>
+        <HydrationBoundary state={pageProps.dehydratedState}>
+          <GeneralLayout font={FONTS.variable}>
+            <SnackbarProvider
+              maxSnack={3}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              autoHideDuration={3000}
+            >
+              {renderWithLayout(
+                <Component {...pageProps} key={route} />,
+                pageProps
+              )}
+            </SnackbarProvider>
+          </GeneralLayout>
+        </HydrationBoundary>
+      </QueryClientProvider>
+    </Theme>
+  );
+};
+
+export default App;
