@@ -1,6 +1,13 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-}
+const path = require("path");
 
-module.exports = nextConfig
+const nextConfig = {
+  sassOptions: {
+    includePaths: [path.join(__dirname, "styles")],
+  },
+  images: {
+    deviceSizes: [320, 375, 420, 540, 600, 767, 1024, 1280, 1440, 1920],
+  },
+};
+
+module.exports = nextConfig;
