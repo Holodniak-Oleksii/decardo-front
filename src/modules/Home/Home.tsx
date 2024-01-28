@@ -1,5 +1,12 @@
+import { BannerSlider } from "./components";
+import { Wrapper } from "./styles";
+
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <Wrapper>
+      <BannerSlider />
+    </Wrapper>
+  );
 };
 
 export default Home;

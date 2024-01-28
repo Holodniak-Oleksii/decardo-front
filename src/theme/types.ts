@@ -17,6 +17,11 @@ export interface IConfigProps {
     between: string;
   };
   colors: IColorsProps;
+  content: {
+    mainContainerPadding: string;
+    headerSpace: string;
+    mainContainerWidth: string;
+  };
 }
 
 export interface IThemeProvider extends PropsWithChildren {}
