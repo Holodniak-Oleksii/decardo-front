@@ -13,3 +13,11 @@ export type TNextPageWithLayout<P = any, IP = P> = NextPage<P, IP> & {
 export type TAppPropsWithLayout = AppProps & {
   Component: TNextPageWithLayout;
 };
+
+export interface IOpenable {
+  isOpen: boolean;
+}
+
+export interface IDisabled {
+  disabled: boolean;
+}

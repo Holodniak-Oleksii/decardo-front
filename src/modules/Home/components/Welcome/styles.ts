@@ -2,5 +2,6 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: fit-content;
+  height: 100svh;
+  ${({ theme }) => theme.content.headerSpace}
 `;

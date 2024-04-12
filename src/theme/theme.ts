@@ -1,8 +1,7 @@
-import { themeColors } from "./colors";
-import { IConfigProps } from "./types";
+import { colors } from "./colors";
+import { ITheme } from "./types";
 
-export const themeConfig: IConfigProps = {
-  colors: themeColors,
+export const theme: ITheme = {
   text: {
     overflow: `
       text-overflow: ellipsis;
@@ -17,6 +16,14 @@ export const themeConfig: IConfigProps = {
         -webkit-box-orient: vertical;
         overflow: hidden;
       `,
+    getDefault: ({ size = 14, weight = 500, color = "#1D2939" } = {}) => `
+      font-size: ${size}px;
+      font-weight: ${weight};
+      color: ${color};
+      font-family: var(--font-roboto);
+      font-style: normal;
+      line-height: normal;
+    `,
   },
   absoluteCenter: `
     opacity: absolute;
@@ -43,6 +50,17 @@ export const themeConfig: IConfigProps = {
       align-items: center;
       justify-content: space-between;
     `,
+  },
+  colors: colors,
+  boxShadow: {
+    xs: `0px 2px 8px 0px rgba(16, 24, 40, 0.08);`,
+    sm: `0px 0px 4px -2px rgba(16, 24, 40, 0.06), 0px 2px 8px -2px rgba(16, 24, 40, 0.10), 0px 0px 4px -2px rgba(16, 24, 40, 0.06), 0px 2px 8px -2px rgba(16, 24, 40, 0.10)`,
+    md: `0px 3px 6px 0px rgba(16, 24, 40, 0.14)`,
+    lg: `0px 4px 12px 0px rgba(16, 24, 40, 0.06)`,
+    xl: `0px 4px 6px -2px rgba(16, 24, 40, 0.03), 0px 4px 24px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03), 0px 4px 24px -4px rgba(16, 24, 40, 0.08) `,
+    xl2: `0px 4px 8px -2px rgba(16, 24, 40, 0.03), 0px 12px 20px -4px rgba(16, 24, 40, 0.08), 0px 4px 8px -2px rgba(16, 24, 40, 0.03), 0px 12px 20px -4px rgba(16, 24, 40, 0.08)`,
+    xl3: `0px 8px 8px -4px rgba(16, 24, 40, 0.03), 0px 20px 24px -4px rgba(16, 24, 40, 0.08), 0px 8px 8px -4px rgba(16, 24, 40, 0.03), 0px 20px 24px -4px rgba(16, 24, 40, 0.08)`,
+    xl4: `-20px 2px 60px 0px rgba(16, 24, 40, 0.08)`,
   },
   content: {
     mainContainerPadding: `
@@ -71,7 +89,7 @@ export const themeConfig: IConfigProps = {
     `,
     mainContainerWidth: `
       width: 100%;
-      max-width: 1440px;
+      max-width: 1920px;
       margin: 0 auto;
       position: relative;
     `,

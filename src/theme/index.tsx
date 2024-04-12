@@ -1,11 +1,9 @@
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
-import { themeConfig } from "./config";
-import { IThemeProvider } from "./types";
+import { theme } from "./theme";
 
-const Theme: FC<IThemeProvider> = (props) => {
-  const { children } = props;
-  return <ThemeProvider theme={themeConfig}>{children}</ThemeProvider>;
-};
+const Theme: FC<PropsWithChildren> = ({ children }) => (
+  <ThemeProvider theme={theme}>{children}</ThemeProvider>
+);
 
 export default Theme;

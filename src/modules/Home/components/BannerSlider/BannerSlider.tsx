@@ -1,12 +1,17 @@
 import { useState } from "react";
-import { pathSvg } from "./data";
+import { pathSvg, sliderContent } from "./data";
 import {
+  Background,
   Circle,
+  Container,
   CoverSvg,
   HexagonSlider,
   HexagonSvg,
+  ItemDescription,
+  ItemTitle,
   List,
   NavItem,
+  NavLine,
   Pagination,
   Sector,
   SectorContent,
@@ -14,6 +19,7 @@ import {
   SectorSlider,
   StarBlok,
   StarRelative,
+  Title,
   Wrapper,
 } from "./styles";
 
@@ -22,7 +28,7 @@ const BannerSlider = () => {
   const [activeIndex, setActiveIndex] = useState(1);
 
   const renderSectors = () => {
-    return [...Array(ANGELS)].map((_, index) => {
+    return sliderContent.map((slide, index) => {
       const currentElIndex = index + 1;
       const isActive =
         activeIndex === ANGELS
@@ -32,7 +38,8 @@ const BannerSlider = () => {
         <Sector key={currentElIndex} index={currentElIndex} isActive={isActive}>
           <SectorRelative>
             <SectorContent index={currentElIndex} position={activeIndex}>
-              {currentElIndex}
+              <ItemTitle>{slide.title}</ItemTitle>
+              <ItemDescription>{slide.description}</ItemDescription>
             </SectorContent>
           </SectorRelative>
         </Sector>
@@ -43,38 +50,57 @@ const BannerSlider = () => {
   const renderPagination = () => {
     return [...Array(ANGELS)].map((_, index) => {
       const currentElIndex = index + 1;
+      const isActive = currentElIndex === activeIndex;
       return (
-        <NavItem
-          isActive={currentElIndex === activeIndex}
-          key={currentElIndex}
-          onClick={() => setActiveIndex(currentElIndex)}
-        >
-          {currentElIndex}
-        </NavItem>
+        <>
+          <NavItem
+            isActive={isActive}
+            key={currentElIndex}
+            onClick={() => setActiveIndex(currentElIndex)}
+          >
+            {currentElIndex}
+          </NavItem>
+          {currentElIndex !== ANGELS && <NavLine isActive={isActive} />}
+        </>
       );
     });
   };
 
+  const renderBackgrounds = () => {
+    return sliderContent.map((el, index) => (
+      <Background
+        isActive={index + 1 === activeIndex}
+        src={el.image}
+        alt={el.title}
+        key={index}
+      />
+    ));
+  };
+
   return (
-    <Wrapper>
-      <HexagonSlider>
-        <Circle position={activeIndex}>
-          <CoverSvg>
-            <HexagonSvg viewBox="0 0 24 24" fill="none">
-              <path d={pathSvg} />
-            </HexagonSvg>
-          </CoverSvg>
-          <List>
-            <SectorSlider>
-              <StarBlok>
-                <StarRelative>{renderSectors()}</StarRelative>
-              </StarBlok>
-            </SectorSlider>
-          </List>
-        </Circle>
-      </HexagonSlider>
-      <Pagination>{renderPagination()}</Pagination>
-    </Wrapper>
+    <Container>
+      {renderBackgrounds()}
+      <Wrapper>
+        <HexagonSlider>
+          <Circle position={activeIndex}>
+            <CoverSvg>
+              <HexagonSvg viewBox="0 0 24 24" fill="none">
+                <path d={pathSvg} />
+              </HexagonSvg>
+            </CoverSvg>
+            <List>
+              <SectorSlider>
+                <StarBlok>
+                  <StarRelative>{renderSectors()}</StarRelative>
+                </StarBlok>
+              </SectorSlider>
+            </List>
+          </Circle>
+          <Title position={activeIndex}>DECARDO</Title>
+        </HexagonSlider>
+        <Pagination>{renderPagination()}</Pagination>
+      </Wrapper>
+    </Container>
   );
 };
 
