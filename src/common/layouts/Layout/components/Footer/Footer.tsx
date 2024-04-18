@@ -1,9 +1,18 @@
-import { Content, Wrapper } from "./styles";
+import { social } from "./data";
+import { Container, Wrapper } from "./styles";
 
 const Footer = () => {
+  const renderSocial = () => {
+    return social.map((Item, id) => (
+      <li key={id}>
+        <Item />
+      </li>
+    ));
+  };
+
   return (
     <Wrapper>
-      <Content></Content>
+      <Container></Container>
     </Wrapper>
   );
 };

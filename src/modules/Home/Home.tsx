@@ -1,4 +1,10 @@
-import { BannerSlider, Welcome } from "./components";
+import {
+  BannerSlider,
+  Grid,
+  HexagonCategories,
+  WaveExamples,
+  Welcome,
+} from "./components";
 import { Wrapper } from "./styles";
 
 const Home = () => {
@@ -6,6 +12,9 @@ const Home = () => {
     <Wrapper>
       <Welcome />
       <BannerSlider />
+      <Grid />
+      <WaveExamples />
+      <HexagonCategories />
     </Wrapper>
   );
 };

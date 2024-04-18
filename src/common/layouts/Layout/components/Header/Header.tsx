@@ -1,15 +1,33 @@
-import { useOnClickOutside } from "@/common/hooks";
+import { LINK_TEMPLATES } from "@/common/constants";
+import { Button } from "@/ui-liberty/buttons";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { BurgerMenu } from "./components";
-import { Content, Wrapper } from "./styles";
+import { headerNavigation } from "./data";
+import {
+  Content,
+  Controls,
+  Logo,
+  NavItem,
+  Navigation,
+  Wrapper,
+} from "./styles";
 
 const Header = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const [isOpenCategory, setIsOpenCategory] = useState(false);
   const refContainer = useRef<HTMLDivElement>(null);
+  const { push, asPath } = useRouter();
 
-  useOnClickOutside(refContainer, () => setIsOpenCategory(false));
+  const renderNavigations = () => {
+    return headerNavigation.map((navigation) => {
+      const path = navigation.trigger();
+      return (
+        <NavItem isActive={asPath === path} key={navigation.id} href={path}>
+          {navigation.title}
+        </NavItem>
+      );
+    });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +50,16 @@ const Header = () => {
   return (
     <Wrapper visible={visible}>
       <Content ref={refContainer}>
-        <BurgerMenu isOpen={isOpenCategory} setOpen={setIsOpenCategory} />
+        <Navigation>
+          <Logo onClick={() => push(LINK_TEMPLATES.HOME())}>
+            D <span>3</span>
+          </Logo>
+          {renderNavigations()}
+        </Navigation>
+        <Controls>
+          <Button>Sing in</Button>
+          <Button variant="outlined">Sing up</Button>
+        </Controls>
       </Content>
     </Wrapper>
   );

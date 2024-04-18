@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.footer`
-  background-color: rgb(244, 244, 244);
+export const Wrapper = styled.div`
+  ${({ theme }) => theme.content.headerSpace};
+  background-color: ${({ theme }) => theme.colors.main900};
   width: 100%;
-  border-top: 1px solid #d0d5dd;
+  height: 400px;
 `;
 
-export const Content = styled.div`
-  ${({ theme }) => theme.content.mainContainerPadding};
-  ${({ theme }) => theme.content.mainContainerWidth};
-  width: 100%;
+export const Container = styled.div`
+  ${({ theme }) => theme.content.mainContainerWidth}
+  ${({ theme }) => theme.content.mainContainerPadding}
+  height: 100%;
+  display: flex;
 `;

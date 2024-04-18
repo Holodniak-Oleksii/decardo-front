@@ -93,5 +93,8 @@ export const theme: ITheme = {
       margin: 0 auto;
       position: relative;
     `,
+    indention: `
+      padding: 60px 0;
+    `,
   },
 };

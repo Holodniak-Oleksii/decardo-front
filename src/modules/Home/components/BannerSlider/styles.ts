@@ -5,14 +5,6 @@ import { IRotate, ISectorProps } from "./types";
 
 // 360 / 6 = 60
 const ROTATE_ANGLE = 60;
-const colors = [
-  "#0400046c",
-  "#4da9ff40",
-  "#738a9e47",
-  "#fa4b4550",
-  "#b8e9164c",
-  "#00ff4c4a",
-];
 
 export const Wrapper = styled.div`
   ${({ theme }) => theme.content.mainContainerWidth}
@@ -25,8 +17,8 @@ export const HexagonSlider = styled.div`
   top: 0;
   left: 0;
   transform: translate(-50%, -35%);
-  width: 75%;
-  height: 110%;
+  width: 90%;
+  height: 130%;
 `;
 
 export const Circle = styled.div<IRotate>`
@@ -37,10 +29,10 @@ export const Circle = styled.div<IRotate>`
   transform-origin: center;
   ${({ position }) => css`
     transform: rotate(${position * ROTATE_ANGLE}deg);
-    path {
-      fill: ${colors[position - 1]};
-    }
   `}
+  path {
+    fill: #fa4b45d4;
+  }
 `;
 
 export const Sector = styled.div<ISectorProps & IActiveble>`
@@ -65,12 +57,12 @@ export const SectorRelative = styled.div`
 
 export const SectorContent = styled.div<ISectorProps & IRotate>`
   position: absolute;
-  right: -25%;
+  right: -45%;
   top: 0%;
-  height: 300px;
+  height: fit-content;
   width: 500px;
   transition: all 0.5s ease-in;
-  transform: translateY(-70%)
+  transform: translateY(-130%)
     rotate(
       -${({ position, index }) => 35 + index * ROTATE_ANGLE + position * ROTATE_ANGLE}deg
     );
@@ -79,7 +71,8 @@ export const SectorContent = styled.div<ISectorProps & IRotate>`
   align-items: flex-end;
   flex-direction: column;
   gap: 16px;
-  padding: 32px;
+  padding: 48px;
+  background: #000000ca;
 `;
 
 export const SectorSlider = styled.div`
@@ -132,19 +125,19 @@ export const CoverSvg = styled.div`
 
 export const Title = styled.div<IRotate>`
   color: #fff;
-  font-size: 54px;
+  font-size: 48px;
   transition: none;
   font-weight: 800;
   position: absolute;
   top: 60%;
-  left: 50%;
+  left: 51%;
   transform: translate(0, -50%);
 `;
 
 export const Pagination = styled.div`
   position: absolute;
   top: 40px;
-  right: 0;
+  right: 80px;
   ${({ theme }) => theme.flex.column};
   align-items: center;
 `;
@@ -206,13 +199,14 @@ export const Background = styled(Image)<IActiveble>`
   width: 100%;
   height: 100%;
   transition: all 0.4s ease-in;
-  opacity: ${({ isActive }) => (isActive ? 0.2 : 0)};
-  /* filter: grayscale(0.9); */
+  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
+  object-fit: cover;
+  filter: grayscale(1);
 `;
 
 export const Container = styled.div`
   width: 100%;
-  height: 100svh;
+  height: calc(100svh - 200px);
   position: relative;
   overflow: hidden;
 `;
