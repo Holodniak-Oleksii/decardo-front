@@ -2,6 +2,7 @@ import {
   BannerSlider,
   Grid,
   HexagonCategories,
+  TargetText,
   WaveExamples,
   Welcome,
 } from "./components";
@@ -14,6 +15,7 @@ const Home = () => {
       <BannerSlider />
       <Grid />
       <WaveExamples />
+      <TargetText />
       <HexagonCategories />
     </Wrapper>
   );
