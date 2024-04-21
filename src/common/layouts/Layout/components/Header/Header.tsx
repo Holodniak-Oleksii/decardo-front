@@ -57,8 +57,15 @@ const Header = () => {
           {renderNavigations()}
         </Navigation>
         <Controls>
-          <Button>Sing in</Button>
-          <Button variant="outlined">Sing up</Button>
+          <Button onClick={() => push(LINK_TEMPLATES.SIGN_IN())}>
+            Sing in
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => push(LINK_TEMPLATES.SIGN_UP())}
+          >
+            Sing up
+          </Button>
         </Controls>
       </Content>
     </Wrapper>

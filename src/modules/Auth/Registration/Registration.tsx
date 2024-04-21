@@ -6,18 +6,18 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { ActionContainer, Form, Wrapper } from "./styles";
-import { ILoginFormValues } from "./types";
+import { IRegistrationFormValues } from "./types";
 
-const Login = () => {
+const Registration = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ILoginFormValues>({ mode: "onSubmit" });
+  } = useForm<IRegistrationFormValues>({ mode: "onSubmit" });
 
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const onSubmit = async (data: ILoginFormValues) => {
+  const onSubmit = async (data: IRegistrationFormValues) => {
     try {
       // push(LINK_TEMPLATES.USER({ username: user.username }));
     } catch (e) {
@@ -42,6 +42,14 @@ const Login = () => {
           error={errors.username}
         />
         <Input
+          label={"Email"}
+          placeholder={"Enter email"}
+          {...register("email", {
+            required: true,
+          })}
+          error={errors.email}
+        />
+        <Input
           label={"Password"}
           type="password"
           placeholder={"Create password"}
@@ -50,9 +58,18 @@ const Login = () => {
           })}
           error={errors.password}
         />
+        <Input
+          label={"Confirm password"}
+          type="password"
+          placeholder={"Confirm password"}
+          {...register("confirmPassword", {
+            required: true,
+          })}
+          error={errors.confirmPassword}
+        />
         <ActionContainer>
           <Button size={"lg"} fullWidth type={"submit"}>
-            Sing in
+            Sing up
           </Button>
           <Button
             size={"lg"}
@@ -69,4 +86,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Registration;

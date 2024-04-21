@@ -1,5 +1,5 @@
 import { Meta } from "@/common/shared";
-import { Login } from "@/modules";
+import { AboutUs } from "@/modules";
 import { GetServerSideProps, NextPage } from "next";
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -8,13 +8,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-const LoginPage: NextPage = () => {
+const AboutUsPage: NextPage = () => {
   return (
     <>
       <Meta />
-      <Login />
+      <AboutUs />
     </>
   );
 };
 
-export default LoginPage;
+export default AboutUsPage;

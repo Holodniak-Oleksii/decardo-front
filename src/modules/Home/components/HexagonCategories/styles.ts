@@ -47,7 +47,7 @@ export const Hexagon = styled.div`
       }
       .title {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(-50%);
       }
     }
   }
@@ -91,16 +91,17 @@ export const Content = styled.div<IContentProps>`
 `;
 
 export const Title = styled.div`
-  width: 100%;
-  background-color: ${({ theme }) => theme.colors.error500};
-  padding: 12px;
-  position: relative;
-  z-index: 2;
-  margin-top: auto;
   color: ${({ theme }) => theme.colors.main0};
-  margin-bottom: 20px;
+  width: 100%;
+  background-color: #00000076;
+  backdrop-filter: blur(2px);
+  padding: 12px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(0);
+  z-index: 2;
   text-align: center;
   opacity: 0;
   transition: all 0.3s ease;
-  transform: translateY(100%);
 `;
