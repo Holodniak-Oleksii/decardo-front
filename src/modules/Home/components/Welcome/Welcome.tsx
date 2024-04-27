@@ -12,7 +12,7 @@ import {
 
 import imagePot from "@/assets/images/pot.png";
 import imageStars from "@/assets/images/stars.png";
-import { PlayIcon } from "@/common/components";
+import { PlayIcon } from "@/common/icons";
 import { Button } from "@/ui-liberty/buttons";
 
 const Welcome = () => {

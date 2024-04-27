@@ -33,3 +33,5 @@ export interface IOpenable {
 export interface IDisabled {
   disabled: boolean;
 }
+
+export type TModelFormat = "fbx" | "glb" | "gltf" | "obj";
