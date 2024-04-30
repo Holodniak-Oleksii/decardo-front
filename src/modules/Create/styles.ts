@@ -50,7 +50,71 @@ export const View = styled.div`
   ${({ theme }) => theme.flex.center}
 
   width: 100%;
-  height: 90svh;
+  height: 100svh;
   min-height: 500px;
   position: relative;
+`;
+
+export const Message = styled.div`
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  padding: 32px 16px;
+  border: 1px solid ${({ theme }) => theme.colors.main600};
+  border-radius: 6px;
+  ${({ theme }) => theme.flex.center};
+  flex-direction: column;
+  gap: 12px;
+`;
+
+export const MessageTitle = styled.div`
+  font-size: 28px;
+  font-weight: 600;
+`;
+
+export const Row = styled.div`
+  ${({ theme }) => theme.flex.center};
+  gap: 8px;
+`;
+
+export const MessageTag = styled.div`
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: ${({ theme }) => theme.colors.main600};
+  border: 1px solid ${({ theme }) => theme.colors.main600};
+`;
+
+export const MessageDescription = styled.div`
+  font-size: 16px;
+`;
+
+export const Upload = styled.label`
+  ${({ theme }) => theme.flex.center};
+  background: ${({ theme }) => theme.colors.main600};
+  box-shadow: ${({ theme }) => theme.boxShadow.md};
+
+  margin-top: 12px;
+  width: fit-content;
+  padding: 10px 20px;
+  font-size: 16px;
+  height: 36px;
+
+  color: ${({ theme }) => theme.colors.main0};
+
+  @media (hover: hover) {
+    &:hover {
+      background: ${({ theme }) => theme.colors.main700};
+    }
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+
+  gap: 8px;
+  border-radius: 8px;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: -0.4px;
+  transition: all 0.2s ease;
 `;

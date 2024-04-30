@@ -1,32 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const Mask = styled.div`
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
-  height: 100%;
-  padding: 8px;
-  z-index: 1;
-  transition: all 0.2s ease-in-out;
-`;
-
-export const Relative = styled.div`
-  position: relative;
-  height: 100%;
-  width: auto;
-`;
-
-export const Container = styled.div`
-  position: sticky;
-  left: 0;
-  top: 0;
-  pointer-events: all;
-  ${({ theme }) => theme.flex.column};
-  gap: 16px;
-`;
-
-export const Button = styled.button`
+const buttonStyle = css`
   ${({ theme }) => theme.flex.center};
   height: 44px;
   width: 44px;
@@ -49,4 +23,39 @@ export const Button = styled.button`
   &:active {
     transform: scale(0.95);
   }
+`;
+
+export const Mask = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding: 8px;
+  z-index: 2;
+  transition: all 0.2s ease-in-out;
+`;
+
+export const Relative = styled.div`
+  position: relative;
+  height: 100%;
+  width: auto;
+`;
+
+export const Container = styled.div`
+  position: sticky;
+  left: 0;
+  top: 0;
+  pointer-events: all;
+  ${({ theme }) => theme.flex.column};
+  gap: 16px;
+  width: fit-content;
+`;
+
+export const Button = styled.button`
+  ${buttonStyle}
+`;
+
+export const Upload = styled.label`
+  ${buttonStyle}
 `;

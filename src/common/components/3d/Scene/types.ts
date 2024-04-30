@@ -1,19 +1,8 @@
 import { TModelFormat } from "@/common/types";
-import { IModelLoaderProps } from "../types";
+import { IModelLoaderProps, ISceneSettings } from "../types";
 
-export interface ISceneProps extends IModelLoaderProps {
+export interface ISceneProps extends IModelLoaderProps, ISceneSettings {
   format: TModelFormat;
-  ambientLight: {
-    intensity: number;
-  };
-  directionalLight: {
-    intensity: number;
-  };
-  castShadow: boolean;
-  backgroundColor: string;
-  hemisphereLight: {
-    intensity: number;
-    groundColor: string;
-  };
+
   isCapture: boolean;
 }

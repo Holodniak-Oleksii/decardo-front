@@ -9,7 +9,6 @@ const Scene: FC<ISceneProps> = ({
   url,
   format,
   ambientLight,
-  castShadow,
   directionalLight,
   backgroundColor,
   hemisphereLight,
@@ -44,10 +43,7 @@ const Scene: FC<ISceneProps> = ({
       <color attach="background" args={[backgroundColor]} />
       <OrbitControls makeDefault />
       <ambientLight intensity={ambientLight.intensity} />
-      <directionalLight
-        intensity={directionalLight.intensity}
-        castShadow={castShadow}
-      />
+      <directionalLight intensity={directionalLight.intensity} castShadow />
       <hemisphereLight
         intensity={hemisphereLight.intensity}
         groundColor={hemisphereLight.groundColor}
@@ -56,8 +52,8 @@ const Scene: FC<ISceneProps> = ({
         <Bounds fit clip observe margin={1.2}>
           <Center>
             <ModelLoader url={url} format={format} />
-            {/* <Refresh /> */}
             <GetImage />
+            <Refresh />
           </Center>
         </Bounds>
       </Suspense>

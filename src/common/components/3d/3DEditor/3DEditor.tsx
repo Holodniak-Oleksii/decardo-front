@@ -1,6 +1,7 @@
-import { LevaPanel, folder, useControls, useCreateStore } from "leva";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Scene from "../Scene/Scene";
+import { ISceneSettings } from "../types";
+import { SettingsPanel } from "./components";
 import { IThreeDEditorProps } from "./types";
 
 const ThreeDEditor: FC<IThreeDEditorProps> = ({
@@ -8,57 +9,41 @@ const ThreeDEditor: FC<IThreeDEditorProps> = ({
   format,
   isCapture,
   onCaptureModel,
+  onChangeSceneSettings,
 }) => {
-  const storePanel = useCreateStore();
-
-  const {
-    backgroundColor,
-    castShadow,
-    ambientIntensity,
-    directionalIntensity,
-    hemisphereIntensity,
-    groundColor,
-  } = useControls(
-    {
-      "Ambient Light": folder({
-        ambientIntensity: { value: 1.2, min: 0, step: 0.1, max: 100 },
-      }),
-      "Directional Light": folder({
-        directionalIntensity: { value: 0.5, min: 0, step: 0.1, max: 100 },
-      }),
-      "Hemisphere Light": folder({
-        hemisphereIntensity: { value: 1, min: 0, step: 0.1, max: 100 },
-        groundColor: { value: "#ffffff" },
-      }),
-      backgroundColor: { value: "#e6e6e6" },
-      castShadow: { value: false },
+  const [sceneSettings, setSceneSettings] = useState<ISceneSettings>({
+    ambientLight: {
+      intensity: 1.2,
     },
-    { store: storePanel }
-  );
+    backgroundColor: "#fff",
+    directionalLight: {
+      intensity: 0.5,
+    },
+    hemisphereLight: {
+      groundColor: "#000",
+      intensity: 1,
+    },
+  });
+
+  useEffect(() => {
+    onChangeSceneSettings(sceneSettings);
+  }, [JSON.stringify(sceneSettings)]);
 
   return (
     <>
-      <LevaPanel
-        store={storePanel}
-        titleBar={{
-          drag: false,
-        }}
-      />
       <Scene
-        ambientLight={{ intensity: ambientIntensity }}
-        directionalLight={{
-          intensity: directionalIntensity,
-        }}
-        castShadow={castShadow}
+        ambientLight={sceneSettings.ambientLight}
+        directionalLight={sceneSettings.directionalLight}
         format={format}
-        backgroundColor={backgroundColor}
+        backgroundColor={sceneSettings.backgroundColor}
         url={url}
-        hemisphereLight={{
-          intensity: hemisphereIntensity,
-          groundColor: groundColor,
-        }}
+        hemisphereLight={sceneSettings.hemisphereLight}
         isCapture={isCapture}
         onCaptureModel={onCaptureModel}
+      />
+      <SettingsPanel
+        onChangeSceneSettings={(settings) => setSceneSettings(settings)}
+        sceneSettings={sceneSettings}
       />
     </>
   );

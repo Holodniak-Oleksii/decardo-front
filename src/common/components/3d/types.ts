@@ -9,3 +9,17 @@ export interface IModelLoaderProps extends ILoadModelProps {
   format: TModelFormat;
   onCaptureModel: (screenShot: string) => void;
 }
+
+export interface ISceneSettings {
+  ambientLight: {
+    intensity: number;
+  };
+  directionalLight: {
+    intensity: number;
+  };
+  backgroundColor: string;
+  hemisphereLight: {
+    intensity: number;
+    groundColor: string;
+  };
+}

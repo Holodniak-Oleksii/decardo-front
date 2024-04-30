@@ -1,15 +1,21 @@
+import { MODEL_FORMATS } from "@/common/constants";
 import {
   CameraIcon,
   ChevronLeftIcon,
+  FolderOpenIcon,
   HandFingerIcon,
   HandFingerOffIcon,
 } from "@/common/icons";
 import { useRouter } from "next/router";
 import { FC, useEffect, useRef, useState } from "react";
-import { Button, Container, Mask, Relative } from "./styles";
+import { Button, Container, Mask, Relative, Upload } from "./styles";
 import { INavigationsProps } from "./types";
 
-const Navigations: FC<INavigationsProps> = ({ handlerTakePhoto, disabled }) => {
+const Navigations: FC<INavigationsProps> = ({
+  handlerTakePhoto,
+  disabled,
+  handlerChangeFile,
+}) => {
   const [enabled, setEnabled] = useState(false);
   const maskRef = useRef<HTMLDivElement>(null);
   const { back } = useRouter();
@@ -63,6 +69,16 @@ const Navigations: FC<INavigationsProps> = ({ handlerTakePhoto, disabled }) => {
           >
             <CameraIcon />
           </Button>
+          <Upload htmlFor="file">
+            <FolderOpenIcon />
+            <input
+              id="file"
+              type="file"
+              accept={"." + MODEL_FORMATS.join(", .")}
+              hidden
+              onChange={handlerChangeFile}
+            />
+          </Upload>
         </Container>
       </Relative>
     </Mask>
