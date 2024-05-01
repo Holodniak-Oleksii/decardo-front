@@ -1,9 +1,9 @@
+import Link from "next/link";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
   height: fit-content;
-  overflow: hidden;
   position: relative;
   min-height: 100svh;
 `;
@@ -20,27 +20,143 @@ export const Content = styled.div`
 `;
 
 export const Details = styled.div`
-  ${({ theme }) => theme.flex.between}
+  ${({ theme }) => theme.flex.column}
   width: 100%;
   gap: 16px;
   margin-top: 24px;
+  padding-bottom: 40px;
 `;
 
-export const Information = styled.div`
-  ${({ theme }) => theme.flex.column};
-  gap: 16px;
+export const View = styled.div`
+  background: ${({ theme }) => theme.colors.main10};
+  width: 100%;
+  height: 60svh;
+  min-height: 500px;
+  position: relative;
 `;
 
-export const Title = styled.h2`
+export const Mask = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding: 16px;
+  z-index: 2;
+  transition: all 0.2s ease-in-out;
+`;
+
+export const Like = styled.button`
+  ${({ theme }) => theme.flex.row};
+  height: 100%;
+  gap: 6px;
+  margin-right: auto;
+  position: relative;
+
+  span {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1;
+    color: ${({ theme }) => theme.colors.error600};
+  }
+
+  svg {
+    height: 32px;
+    width: 32px;
+  }
+`;
+
+export const Text = styled.div`
   ${({ theme }) => theme.text.getLineClamp(2)}
+  flex-grow: 1;
   font-size: 32px;
   font-weight: 700;
   line-height: 1;
 `;
 
-export const View = styled.div`
+export const Title = styled.div`
+  ${({ theme }) => theme.flex.row};
+  gap: 16px;
+`;
+
+export const Tags = styled.div`
+  ${({ theme }) => theme.flex.row};
+  flex-wrap: wrap;
+  gap: 6px;
   width: 100%;
-  height: 60svh;
-  min-height: 500px;
-  background: ${({ theme }) => theme.colors.main10};
+`;
+
+export const Tag = styled.div`
+  background: ${({ theme }) => theme.colors.main900};
+  color: ${({ theme }) => theme.colors.main0};
+  font-size: 12px;
+  line-height: normal;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 4px;
+`;
+
+export const Description = styled.div`
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: ${({ theme }) => theme.colors.main900};
+  margin-bottom: 24px;
+`;
+
+export const Owner = styled(Link)`
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  color: ${({ theme }) => theme.colors.main500};
+  font-style: italic;
+`;
+
+export const Relative = styled.div`
+  position: relative;
+  height: 100%;
+  width: auto;
+`;
+
+export const Overlay = styled.div`
+  position: sticky;
+  left: 0;
+  top: 0;
+  pointer-events: all;
+  width: fit-content;
+`;
+
+export const Button = styled.button`
+  ${({ theme }) => theme.flex.center};
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  background: #252532;
+  -webkit-box-shadow: inset 0px 5px 10px 0px #16151c, 0px 3px 6px -2px #403f4e;
+  box-shadow: inset 0px 5px 10px 0px #16151c, 0px 3px 6px -2px #403f4e;
+  border: 1px solid #32303e;
+  padding: 6px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.2s ease-in-out;
+  pointer-events: all;
+  z-index: 4;
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+export const List = styled.div`
+  width: 100%;
+  display: grid;
+  gap: 42px;
+  position: relative;
+  grid-template-columns: repeat(4, calc(25% - 32px));
+  @media screen and (max-width: 1600px) {
+    gap: 38px;
+    grid-template-columns: repeat(3, calc(33.3% - 25px));
+  }
 `;

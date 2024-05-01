@@ -19,7 +19,7 @@ const GetImage: FC<IGetImageProps> = ({ isCapture, onCaptureModel }) => {
   useEffect(() => {
     if (isCapture) {
       gl.render(scene, camera);
-      onCaptureModel(gl.domElement.toDataURL("image/png", 1));
+      onCaptureModel?.(gl.domElement.toDataURL("image/png", 1));
     }
   }, [isCapture]);
 

@@ -78,6 +78,7 @@ const Create = () => {
       }
       const body: IArtRequestModel = {
         ...data,
+        format: art.format,
         model: art.file,
         preview: image,
         settings: sceneSettings,

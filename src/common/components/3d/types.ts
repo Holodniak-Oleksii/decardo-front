@@ -7,7 +7,7 @@ export type TCaptureModel = (screenShot: string) => void;
 
 export interface IModelLoaderProps extends ILoadModelProps {
   format: TModelFormat;
-  onCaptureModel: TCaptureModel;
+  onCaptureModel?: TCaptureModel;
 }
 
 export interface ISceneSettings {

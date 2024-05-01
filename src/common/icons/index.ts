@@ -3,6 +3,7 @@ export { default as ChevronLeftIcon } from "./ChevronLeftIcon";
 export { default as FilterIcon } from "./FilterIcon";
 export { default as FolderOpenIcon } from "./FolderOpenIcon";
 export { default as HandFingerIcon } from "./HandFingerIcon";
+export { default as HeartIcon } from "./HeartIcon";
 export { default as PhotoIcon } from "./PhotoIcon";
 
 export { default as HandFingerOffIcon } from "./HandFingerOffIcon";

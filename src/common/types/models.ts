@@ -1,10 +1,12 @@
 import { StaticImageData } from "next/image";
 import { ISceneSettings } from "../components/3d/types";
+import { TModelFormat } from "./general";
 
 export interface IUser {}
 
 export interface IArtResponseModel {
   id: string | number;
+  format: TModelFormat;
   title: string;
   description: string;
   tags: string[];
