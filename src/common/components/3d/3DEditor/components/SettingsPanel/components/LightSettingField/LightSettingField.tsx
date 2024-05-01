@@ -40,6 +40,7 @@ const LightSettingField: FC<ILightSettingFieldProps> = (props) => {
           <Input
             min={0}
             max={100}
+            step={0.1}
             type="number"
             value={String(value)}
             onChange={(value) => onChange(+value.target.value)}

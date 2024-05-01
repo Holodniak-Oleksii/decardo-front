@@ -3,7 +3,28 @@ import { Canvas, useThree } from "@react-three/fiber";
 import { FC, Suspense, useEffect } from "react";
 
 import { ArtLoader, ModelLoader } from "..";
-import { ISceneProps } from "./types";
+import { IGetImageProps, IRefreshProps, ISceneProps } from "./types";
+
+const Refresh: FC<IRefreshProps> = ({ url }) => {
+  const bounds = useBounds();
+  useEffect(() => {
+    const setCentred = () => bounds.refresh().clip().fit();
+    setCentred();
+  }, [url]);
+  return null;
+};
+
+const GetImage: FC<IGetImageProps> = ({ isCapture, onCaptureModel }) => {
+  const { gl, scene, camera } = useThree();
+  useEffect(() => {
+    if (isCapture) {
+      gl.render(scene, camera);
+      onCaptureModel(gl.domElement.toDataURL("image/png", 1));
+    }
+  }, [isCapture]);
+
+  return null;
+};
 
 const Scene: FC<ISceneProps> = ({
   url,
@@ -15,29 +36,6 @@ const Scene: FC<ISceneProps> = ({
   onCaptureModel,
   isCapture,
 }) => {
-  const Refresh = () => {
-    const bounds = useBounds();
-    useEffect(() => {
-      bounds.refresh();
-      bounds.clip();
-      bounds.fit();
-    }, [url]);
-    return null;
-  };
-
-  const GetImage = () => {
-    const { gl, scene, camera } = useThree();
-
-    useEffect(() => {
-      if (isCapture) {
-        gl.render(scene, camera);
-        onCaptureModel(gl.domElement.toDataURL("image/png", 1));
-      }
-    }, [isCapture]);
-
-    return null;
-  };
-
   return (
     <Canvas shadows resize={{ scroll: false }}>
       <color attach="background" args={[backgroundColor]} />
@@ -52,8 +50,8 @@ const Scene: FC<ISceneProps> = ({
         <Bounds fit clip observe margin={1.2}>
           <Center>
             <ModelLoader url={url} format={format} />
-            <GetImage />
-            <Refresh />
+            <Refresh url={url} />
+            <GetImage onCaptureModel={onCaptureModel} isCapture={isCapture} />
           </Center>
         </Bounds>
       </Suspense>

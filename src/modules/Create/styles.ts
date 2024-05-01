@@ -1,7 +1,8 @@
+import { IInvalid } from "@/common/types";
 import styled, { css } from "styled-components";
 import { IScreenShotProps } from "./types";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.form`
   width: 100%;
   position: relative;
   min-height: 100svh;
@@ -22,7 +23,18 @@ export const Container = styled.div`
 `;
 
 export const ScreenShot = styled.div<IScreenShotProps>`
+  ${({ theme }) => theme.flex.center};
   background: ${({ theme }) => theme.colors.main10};
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+
+  width: 40%;
+  min-width: 200px;
+  max-width: 500px;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+
   ${({ url }) =>
     url &&
     css`
@@ -31,14 +43,20 @@ export const ScreenShot = styled.div<IScreenShotProps>`
       background-size: cover;
       background-position: center;
     `}
-  width: 40%;
-  min-width: 200px;
-  max-width: 500px;
-  aspect-ratio: 1 / 1;
-  border-radius: 8px;
+
+  ${({ theme, isError }) =>
+    isError &&
+    css`
+      border: 1px solid ${theme.colors.error600};
+      background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0) 10%,
+        ${theme.colors.error200} 100%
+      );
+    `};
 `;
 
-export const Form = styled.form`
+export const FormContainer = styled.div`
   flex-grow: 1;
   max-width: calc(60% - 24px);
   ${({ theme }) => theme.flex.column}
@@ -55,30 +73,41 @@ export const View = styled.div`
   position: relative;
 `;
 
-export const Message = styled.div`
+export const Message = styled.div<IInvalid>`
   width: 100%;
   max-width: 500px;
   margin: auto;
   padding: 32px 16px;
-  border: 1px solid ${({ theme }) => theme.colors.main600};
   border-radius: 6px;
   ${({ theme }) => theme.flex.center};
   flex-direction: column;
   gap: 12px;
+  border: 1px solid
+    ${({ theme, isError }) =>
+      isError ? theme.colors.error600 : theme.colors.main600};
+  ${({ theme, isError }) =>
+    isError &&
+    `background: radial-gradient(circle, rgba(255,255,255,0) 10%,  ${theme.colors.error200} 100%);`};
 `;
 
 export const MessageTitle = styled.div`
   font-size: 28px;
   font-weight: 600;
+  text-align: center;
 `;
 
 export const Row = styled.div`
   ${({ theme }) => theme.flex.center};
   gap: 8px;
+  svg {
+    height: 60px;
+    width: 60px;
+  }
 `;
 
 export const MessageTag = styled.div`
   font-size: 12px;
+  text-align: center;
   padding: 4px 8px;
   border-radius: 4px;
   color: ${({ theme }) => theme.colors.main600};
@@ -86,6 +115,7 @@ export const MessageTag = styled.div`
 `;
 
 export const MessageDescription = styled.div`
+  text-align: center;
   font-size: 16px;
 `;
 

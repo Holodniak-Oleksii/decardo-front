@@ -48,6 +48,7 @@ const Navigations: FC<INavigationsProps> = ({
       <Relative>
         <Container>
           <Button
+            type="button"
             onClick={() => {
               back();
             }}
@@ -55,12 +56,14 @@ const Navigations: FC<INavigationsProps> = ({
             <ChevronLeftIcon />
           </Button>
           <Button
+            type="button"
             onClick={() => setEnabled((prev) => !prev)}
             disabled={disabled}
           >
             {!enabled ? <HandFingerIcon /> : <HandFingerOffIcon />}
           </Button>
           <Button
+            type="button"
             disabled={enabled || disabled}
             onClick={() => {
               onCameraCapture();

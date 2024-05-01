@@ -14,6 +14,14 @@ const nextConfig = {
       },
     ],
   },
+  env: {
+    NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
+  },
+  api: {
+    bodyParser: {
+      sizeLimit: "50mb",
+    },
+  },
 };
 
 module.exports = nextConfig;

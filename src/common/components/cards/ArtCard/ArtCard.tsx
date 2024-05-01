@@ -16,8 +16,16 @@ import {
 import { IArtCardProps } from "./types";
 
 const ArtCard: FC<IArtCardProps> = (props) => {
-  const { description, id, modelArt, name, owner, ownerName, preview, tags } =
-    props.art;
+  const {
+    description,
+    id,
+    model: modelArt,
+    title: name,
+    owner,
+    ownerName,
+    preview,
+    tags,
+  } = props.art;
   const { push } = useRouter();
 
   const renderTags = () => {

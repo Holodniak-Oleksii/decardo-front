@@ -26,7 +26,11 @@ export const Content = styled.div`
 export const List = styled.div`
   width: 100%;
   display: grid;
-  gap: 38px;
-  grid-template-columns: repeat(3, calc(33.3% - 25px));
+  gap: 42px;
   position: relative;
+  grid-template-columns: repeat(4, calc(25% - 32px));
+  @media screen and (max-width: 1600px) {
+    gap: 38px;
+    grid-template-columns: repeat(3, calc(33.3% - 25px));
+  }
 `;

@@ -30,6 +30,10 @@ export interface IOpenable {
   isOpen: boolean;
 }
 
+export interface IInvalid {
+  isError: boolean;
+}
+
 export interface IDisabled {
   disabled: boolean;
 }
