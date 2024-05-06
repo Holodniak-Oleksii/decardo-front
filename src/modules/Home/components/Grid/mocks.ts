@@ -1,3 +1,4 @@
+import { ISceneSettings } from "@/common/components/3d/types";
 import { IArtMockModel } from "@/common/types";
 
 export const artData: IArtMockModel[] = [
@@ -9,8 +10,9 @@ export const artData: IArtMockModel[] = [
     preview: "/images/sunset.jpg",
     model: "https://example.com/models/sunset.obj",
     owner: "user123",
-    ownerName: "John Doe",
     tags: ["landscape", "sunset", "ocean", "art"],
+    format: "fbx",
+    settings: {} as ISceneSettings,
   },
   {
     id: 2,
@@ -20,7 +22,8 @@ export const artData: IArtMockModel[] = [
     preview: "/images/abstract.jpg",
     model: "https://example.com/models/abstract.obj",
     owner: "user456",
-    ownerName: "Jane Smith",
+    format: "fbx",
+    settings: {} as ISceneSettings,
     tags: ["abstract", "colorful", "modern", "art"],
   },
   {
@@ -31,7 +34,8 @@ export const artData: IArtMockModel[] = [
     preview: "/images/floral.jpg",
     model: "https://example.com/models/floral.obj",
     owner: "user789",
-    ownerName: "Alice Johnson",
+    format: "fbx",
+    settings: {} as ISceneSettings,
     tags: ["floral", "nature", "flowers", "art"],
   },
   {
@@ -42,7 +46,8 @@ export const artData: IArtMockModel[] = [
     preview: "/images/cityscape.jpg",
     model: "https://example.com/models/cityscape.obj",
     owner: "user456",
-    ownerName: "Jane Smith",
+    format: "fbx",
+    settings: {} as ISceneSettings,
     tags: ["cityscape", "urban", "architecture", "art"],
   },
   {
@@ -53,7 +58,8 @@ export const artData: IArtMockModel[] = [
     preview: "/images/wildlife.jpg",
     model: "https://example.com/models/wildlife.obj",
     owner: "user789",
-    ownerName: "Alice Johnson",
+    format: "fbx",
+    settings: {} as ISceneSettings,
     tags: ["wildlife", "animals", "nature", "art"],
   },
   {
@@ -63,7 +69,8 @@ export const artData: IArtMockModel[] = [
     preview: "/images/still-life.jpg",
     model: "https://example.com/models/still-life.obj",
     owner: "user123",
-    ownerName: "John Doe",
+    format: "fbx",
+    settings: {} as ISceneSettings,
     tags: ["still life", "objects", "realism", "art"],
   },
 ];

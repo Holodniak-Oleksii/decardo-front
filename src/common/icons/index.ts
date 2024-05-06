@@ -6,8 +6,10 @@ export { default as HandFingerIcon } from "./HandFingerIcon";
 export { default as HeartIcon } from "./HeartIcon";
 export { default as PhotoIcon } from "./PhotoIcon";
 
+export { default as ExternalLinkIcon } from "./ExternalLinkIcon";
 export { default as HandFingerOffIcon } from "./HandFingerOffIcon";
 export { default as PentagonIcon } from "./PentagonIcon";
+export { default as SettingsIcon } from "./SettingsIcon";
 export { default as PlayIcon } from "./PlayIcon";
 export { default as InstagramIcon } from "./social/InstagramIcon";
 export { default as PinterestIcon } from "./social/PinterestIcon";

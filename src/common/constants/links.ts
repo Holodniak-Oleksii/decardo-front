@@ -6,5 +6,6 @@ export const LINK_TEMPLATES = {
   SIGN_IN: () => "/sign-in",
   SIGN_UP: () => "/sign-up",
   CREATE_SPACE: () => "/create-space",
+  EDIT: () => "/edit",
   PROFILE: (username: string) => `/profile/${username}`,
 };
