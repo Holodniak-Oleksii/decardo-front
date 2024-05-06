@@ -22,7 +22,6 @@ const ArtCard: FC<IArtCardProps> = (props) => {
     model: modelArt,
     title: name,
     owner,
-    ownerName,
     preview,
     tags,
   } = props.art;

@@ -1,5 +1,5 @@
-import { ICustomOptionComponent } from "@/ui-library/inputs/MultiSelect/types";
-import { IOption } from "@/ui-library/inputs/types";
+import { ICustomOptionComponent } from "@/ui-liberty/inputs/MultiSelect/types";
+import { IOption } from "@/ui-liberty/inputs/types";
 import { IEvent } from "../../types";
 
 export interface IOptionProps<T> extends IEvent<T> {
