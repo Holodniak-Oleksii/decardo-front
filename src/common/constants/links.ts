@@ -7,7 +7,11 @@ export const LINK_TEMPLATES = {
   SIGN_IN: () => "/sign-in",
   SIGN_UP: () => "/sign-up",
   CREATE_SPACE: () => "/create-space",
-  SPACES: ({ query = "", tags = [], page = 1 }: Omit<IArtsFilter, "limit">) => {
+  SPACES: ({
+    query = "",
+    tags = [],
+    page = 1,
+  }: Partial<Omit<IArtsFilter, "limit">>) => {
     return `/spaces?page=${page}&query=${query}&tags=${tags.join(",")}`;
   },
   EDIT: () => "/edit",
