@@ -22,7 +22,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     label,
     endIcon,
     onClick,
-    renderLeftIcon,
+    startIcon,
     endIconComponent,
     ...rest
   } = props;
@@ -38,7 +38,12 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
   const renderEndIcon = () => {
     if (endIcon || endIconComponent) {
       return (
-        <Icon type={"button"} className="end-icon" onClick={onClickHandler}>
+        <Icon
+          position="right"
+          type={"button"}
+          className="end-icon"
+          onClick={onClickHandler}
+        >
           {endIconComponent ? (
             endIconComponent
           ) : (
@@ -57,8 +62,13 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
           haveEndIcon={!!endIcon}
           isDisabled={!!props.disabled}
           isError={!!error}
+          startIcon={!!startIcon}
         >
-          {renderLeftIcon && renderLeftIcon()}
+          {!!startIcon && (
+            <Icon type={"button"} className="end-icon" position="left">
+              {startIcon}
+            </Icon>
+          )}
 
           <Component
             {...rest}
@@ -76,6 +86,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
             onClick={() => setIsOpen((prev) => !prev)}
             type={"button"}
             className="end-icon"
+            position="right"
           >
             {isOpen ? (
               <Image src={imageEye} alt={"image eye"} />

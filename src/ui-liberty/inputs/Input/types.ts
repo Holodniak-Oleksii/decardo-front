@@ -11,7 +11,7 @@ export interface IInputProps extends IBaseInputProps {
   onClick?: () => void;
   id?: string;
   readOnly?: boolean;
-  renderLeftIcon?: () => ReactNode;
+  startIcon?: ReactNode;
 }
 
 export interface IInputComponentProps
@@ -23,4 +23,9 @@ export interface IInputComponentProps
 export interface IInputWrapperProps
   extends Pick<IInputComponentProps, "isError" | "haveEndIcon"> {
   isDisabled: boolean;
+  startIcon?: boolean;
+}
+
+export interface IPosition {
+  position: "left" | "right";
 }

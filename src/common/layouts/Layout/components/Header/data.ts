@@ -9,7 +9,7 @@ export const headerNavigation = [
   {
     id: 1,
     title: "Spaces",
-    trigger: LINK_TEMPLATES.SPACES,
+    trigger: () => LINK_TEMPLATES.SPACES({}),
   },
   {
     id: 2,

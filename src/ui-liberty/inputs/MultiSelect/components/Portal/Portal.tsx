@@ -7,7 +7,8 @@ import { List, NotFound, Search, SearchWrapper, Wrapper } from "./styles";
 import { IPortalProps } from "./types";
 
 const Portal = <T extends TSelectOptionGenericType>(props: IPortalProps<T>) => {
-  const { options, isOpen, onAdd, onRemove, tags, CustomOption } = props;
+  const { options, isOpen, onAdd, onRemove, tags, CustomOption, unErrored } =
+    props;
   const [filteredOptions, setFilteredOptions] = useState<IOption<T>[]>(options);
   const refInput = useRef<HTMLInputElement>(null);
 
@@ -47,7 +48,7 @@ const Portal = <T extends TSelectOptionGenericType>(props: IPortalProps<T>) => {
   };
 
   return (
-    <Wrapper isOpen={isOpen}>
+    <Wrapper isOpen={isOpen} unErrored={unErrored}>
       <SearchWrapper>
         <Search
           placeholder={"Search"}

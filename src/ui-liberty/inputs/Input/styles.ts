@@ -1,6 +1,6 @@
 import { IError } from "@/common/types/general";
 import styled, { css } from "styled-components";
-import { IInputComponentProps, IInputWrapperProps } from "./types";
+import { IInputComponentProps, IInputWrapperProps, IPosition } from "./types";
 
 export const Wrapper = styled.div`
   ${({ theme }) => theme.flex.column};
@@ -51,6 +51,8 @@ export const ComponentWrapper = styled.div<IInputWrapperProps>`
   padding: ${({ haveEndIcon }) =>
     haveEndIcon ? `12px 48px 12px 16px` : `12px 16px;`};
 
+  ${({ startIcon }) => !!startIcon && "padding: 12px 16px 12px 48px;"}
+
   ${({ isDisabled }) =>
     isDisabled &&
     css`
@@ -89,14 +91,14 @@ export const Container = styled.div`
   width: 100%;
 `;
 
-export const Icon = styled.button`
+export const Icon = styled.button<IPosition>`
   ${({ theme }) => theme.flex.center};
   position: absolute;
   top: 50%;
   height: 100%;
   aspect-ratio: 1 / 1;
-  right: 0;
-  transform: translate(-4px, -50%);
+  ${({ position }) => `${position}: 0`};
+  transform: translate(0, -50%);
   svg {
     path {
       width: 20px;

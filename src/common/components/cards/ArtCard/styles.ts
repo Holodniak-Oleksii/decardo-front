@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -49,7 +48,7 @@ export const Time = styled.div`
   ${({ theme }) => theme.flex.center};
 `;
 
-export const Preview = styled(Image)`
+export const Preview = styled.img`
   height: 100%;
   width: 100%;
   position: relative;

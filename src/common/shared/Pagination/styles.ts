@@ -52,7 +52,7 @@ export const ArrowButtonNext = styled(ArrowButtonPrev)`
 
 export const ButtonPage = styled.button<IActiveble>`
   color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.main900 : theme.colors.main600};
+    isActive ? theme.colors.main900 : theme.colors.main200};
   font-size: 16px;
   font-weight: 600;
 `;

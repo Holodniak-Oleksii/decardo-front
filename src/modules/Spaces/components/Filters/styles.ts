@@ -10,7 +10,8 @@ export const Wrapper = styled.div`
       width: 100%;
     }
     &:last-child {
-      width: 360px;
+      width: 100%;
+      max-width: 360px;
     }
   }
 `;

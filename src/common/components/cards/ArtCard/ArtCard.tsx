@@ -36,10 +36,9 @@ const ArtCard: FC<IArtCardProps> = (props) => {
       <Container>
         <Glossiness>
           <Preview
-            src={preview || imagePlug}
+            src={imagePlug.src}
             alt="preview"
             className="preview"
-            unoptimized
             width={400}
             height={300}
             onError={(e) => {

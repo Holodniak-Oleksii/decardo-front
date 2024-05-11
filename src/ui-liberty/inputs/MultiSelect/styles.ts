@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { IErrored } from "./types";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<IErrored>`
   ${({ theme }) => theme.flex.column};
   position: relative;
   gap: 4px;
-  min-height: 87px;
+  ${({ unErrored }) => !unErrored && `min-height: 87px;`}
 `;
 
 export const Label = styled.label`

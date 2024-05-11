@@ -1,5 +1,5 @@
 import { IOption } from "@/ui-liberty/inputs/types";
-import { ICustomOptionComponent } from "../../types";
+import { ICustomOptionComponent, IErrored } from "../../types";
 
 export interface IEvent<T> {
   tags: IOption<T>[];
@@ -7,7 +7,7 @@ export interface IEvent<T> {
   onRemove: (id: number | string) => void;
 }
 
-export interface IPortalProps<T> extends IEvent<T> {
+export interface IPortalProps<T> extends IEvent<T>, IErrored {
   options: IOption<T>[];
   isOpen: boolean;
   CustomOption?: ICustomOptionComponent<T>;

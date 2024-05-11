@@ -4,6 +4,7 @@ import { renderInputError } from "@/common/helpers/renderInputError";
 import { useOnClickOutside } from "@/common/hooks";
 import { IOption, TSelectOptionGenericType } from "../types";
 import { Input, Portal } from "./components";
+import { convertToOptions } from "./components/Portal/helpers";
 import { Label, Message, Wrapper } from "./styles";
 import { IMultiSelectProps } from "./types";
 
@@ -19,9 +20,13 @@ const MultiSelect = <T extends TSelectOptionGenericType>(
     placeholder,
     registerOptions,
     components,
+    selected,
+    unErrored,
   } = props;
 
-  const [selectedTags, setSelectedTags] = useState<IOption<T>[]>([]);
+  const [selectedTags, setSelectedTags] = useState<IOption<T>[]>(
+    convertToOptions<T>(options, selected)
+  );
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const refWrapper = useRef<HTMLDivElement>(null);
 
@@ -60,7 +65,7 @@ const MultiSelect = <T extends TSelectOptionGenericType>(
   }, [isClear]);
 
   return (
-    <Wrapper ref={refWrapper}>
+    <Wrapper ref={refWrapper} unErrored={!!unErrored} className="form_item">
       {label && <Label>{label}</Label>}
       <input {...registerOptions} hidden />
       <Input<T>
@@ -81,6 +86,7 @@ const MultiSelect = <T extends TSelectOptionGenericType>(
         onAdd={handlerAdd}
         CustomOption={components?.Option}
         onRemove={handlerRemove}
+        unErrored={unErrored}
       />
       {error && <Message>{renderInputError(error)}</Message>}
     </Wrapper>

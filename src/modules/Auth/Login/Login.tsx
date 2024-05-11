@@ -2,10 +2,11 @@ import { LINK_TEMPLATES } from "@/common/constants";
 import { Button } from "@/ui-liberty/buttons";
 import { Input } from "@/ui-liberty/inputs";
 import { AxiosError } from "axios";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
-import { ActionContainer, Form, Wrapper } from "./styles";
+import { ActionContainer, Form, Label, Wrapper } from "./styles";
 import { ILoginFormValues } from "./types";
 
 const Login = () => {
@@ -50,6 +51,10 @@ const Login = () => {
           })}
           error={errors.password}
         />
+        <Label>
+          Don`t have account.&nbsp;
+          <Link href={LINK_TEMPLATES.SIGN_UP()}>Create account</Link>
+        </Label>
         <ActionContainer>
           <Button size={"lg"} fullWidth type={"submit"}>
             Sing in

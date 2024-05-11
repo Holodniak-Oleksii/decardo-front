@@ -11,6 +11,8 @@ export { default as HandFingerOffIcon } from "./HandFingerOffIcon";
 export { default as PentagonIcon } from "./PentagonIcon";
 export { default as SettingsIcon } from "./SettingsIcon";
 export { default as PlayIcon } from "./PlayIcon";
+export { default as SearchIcon } from "./SearchIcon";
+
 export { default as InstagramIcon } from "./social/InstagramIcon";
 export { default as PinterestIcon } from "./social/PinterestIcon";
 export { default as TwitterIcon } from "./social/TwitterIcon";

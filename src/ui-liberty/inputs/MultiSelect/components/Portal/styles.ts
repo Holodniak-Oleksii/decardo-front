@@ -1,19 +1,24 @@
-import { IOpenable } from "@/common/types";
+import { IOpenable } from "@/common/types/general";
 import styled, { css } from "styled-components";
+import { IErrored } from "../../types";
 
-export const Wrapper = styled.div<IOpenable>`
+export const Wrapper = styled.div<IOpenable & IErrored>`
   border: 1px solid ${({ theme }) => theme.colors.gray200};
   box-shadow: ${({ theme }) => theme.boxShadow.xl};
-  ${({ isOpen }) =>
+  ${({ isOpen, unErrored }) =>
     !isOpen
       ? css`
           opacity: 0;
           visibility: hidden;
-          transform: translateY(calc(100% - 18px));
+          transform: translateY(
+            ${!unErrored ? `calc(100% - 18px)` : `calc(100% + 2px)`}
+          );
           pointer-events: none;
         `
       : css`
-          transform: translateY(calc(100% - 12px));
+          transform: translateY(
+            ${!unErrored ? `calc(100% - 10px)` : `calc(100% + 10px)`}
+          );
         `}
 
   transition: all 0.2s ease-out;
