@@ -1,6 +1,6 @@
 import animationData from "@/assets/animation/loader.json";
-import { Html } from "@react-three/drei";
 import Lottie from "lottie-react";
+import { Html } from "@react-three/drei";
 import { Container } from "./styles";
 
 const Loading = () => (

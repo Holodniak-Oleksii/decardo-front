@@ -1,6 +1,8 @@
 import { queryClient } from "@/common/api";
 import { FONTS } from "@/common/constants";
+import { useInitFetch } from "@/common/hooks";
 import { GeneralLayout, Layout } from "@/common/layouts";
+import { PageLoader } from "@/common/shared";
 import { TAppPropsWithLayout } from "@/common/types";
 import "@/styles/index.scss";
 import Theme from "@/theme";
@@ -13,6 +15,8 @@ const App = (props: TAppPropsWithLayout) => {
   const { Component, pageProps } = props;
   const { route } = useRouter();
 
+  useInitFetch();
+
   const renderWithLayout =
     Component.getLayout ||
     function (page: any) {
@@ -21,6 +25,7 @@ const App = (props: TAppPropsWithLayout) => {
 
   return (
     <Theme>
+      <PageLoader />
       <NextProgressBar color="#358CE1" />
       <QueryClientProvider client={queryClient}>
         <HydrationBoundary state={pageProps.dehydratedState}>

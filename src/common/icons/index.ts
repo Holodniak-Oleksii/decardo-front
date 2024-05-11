@@ -12,6 +12,7 @@ export { default as PentagonIcon } from "./PentagonIcon";
 export { default as SettingsIcon } from "./SettingsIcon";
 export { default as PlayIcon } from "./PlayIcon";
 export { default as SearchIcon } from "./SearchIcon";
+export { default as PlusIcon } from "./PlusIcon";
 
 export { default as InstagramIcon } from "./social/InstagramIcon";
 export { default as PinterestIcon } from "./social/PinterestIcon";

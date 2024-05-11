@@ -6,7 +6,7 @@ export const LINK_TEMPLATES = {
   SPACE_DETAILS: (id: string | number) => `/spaces/${id}`,
   SIGN_IN: () => "/sign-in",
   SIGN_UP: () => "/sign-up",
-  CREATE_SPACE: () => "/create-space",
+  CREATE_SPACE: () => "/create",
   SPACES: ({
     query = "",
     tags = [],

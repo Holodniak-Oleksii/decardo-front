@@ -10,14 +10,14 @@ import { Banner, Filters } from "./components";
 import { Container, Content, List, Wrapper } from "./styles";
 
 const Spaces = () => {
-  const { push, query } = useRouter();
+  const { push } = useRouter();
 
   const filters = useArtsFilterStore((state) => state.filter);
   const isInit = useArtsFilterStore((state) => state.isInit);
 
-  const debouncePage = useDebounce(filters.page, 1000);
-  const debounceQuery = useDebounce(filters.query, 1000);
-  const debounceTags = useDebounce(filters.tags, 1000);
+  const debouncePage = useDebounce(filters.page, !isInit, 1000);
+  const debounceQuery = useDebounce(filters.query, !isInit, 1000);
+  const debounceTags = useDebounce(filters.tags, !isInit, 1000);
 
   const onChangeFilterFieldHandler = useArtsFilterStore(
     (state) => state.onChangeFilterFieldHandler

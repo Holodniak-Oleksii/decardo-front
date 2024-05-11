@@ -76,12 +76,6 @@ export const NavItem = styled(Link)<IActiveble>`
   font-size: 16px;
 `;
 
-export const Controls = styled.div`
-  ${({ theme }) => theme.flex.row};
-  gap: 16px;
-  margin-left: auto;
-`;
-
 export const Logo = styled.div`
   height: 100%;
   aspect-ratio: 1 / 1;

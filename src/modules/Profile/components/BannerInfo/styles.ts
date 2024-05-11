@@ -79,7 +79,7 @@ export const Setting = styled(Link)`
   transform: translateY(-50%);
   right: 0;
   svg {
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
   }
 `;

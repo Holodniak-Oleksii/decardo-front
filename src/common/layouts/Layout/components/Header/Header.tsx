@@ -1,22 +1,17 @@
 import { LINK_TEMPLATES } from "@/common/constants";
-import { Button } from "@/ui-liberty/buttons";
+import { useUserStore } from "@/common/store";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
+import { Account, AuthControls } from "./components";
 import { headerNavigation } from "./data";
-import {
-  Content,
-  Controls,
-  Logo,
-  NavItem,
-  Navigation,
-  Wrapper,
-} from "./styles";
+import { Content, Logo, NavItem, Navigation, Wrapper } from "./styles";
 
 const Header = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const refContainer = useRef<HTMLDivElement>(null);
   const { push, asPath } = useRouter();
+  const isAuth = useUserStore((state) => state.isAuth);
 
   const renderNavigations = () => {
     return headerNavigation.map((navigation) => {
@@ -56,17 +51,7 @@ const Header = () => {
           </Logo>
           {renderNavigations()}
         </Navigation>
-        <Controls>
-          <Button onClick={() => push(LINK_TEMPLATES.SIGN_IN())}>
-            Sing in
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() => push(LINK_TEMPLATES.SIGN_UP())}
-          >
-            Sing up
-          </Button>
-        </Controls>
+        {isAuth ? <Account /> : <AuthControls />}
       </Content>
     </Wrapper>
   );
