@@ -1,12 +1,14 @@
 import imageBg from "@/assets/images/slider/02.webp";
 import { LINK_TEMPLATES } from "@/common/constants";
-import { SettingsIcon } from "@/common/icons";
+import { LogoutIcon, SettingsIcon } from "@/common/icons";
+import { useUserStore } from "@/common/store";
 import Image from "next/image";
 import { FC, PropsWithChildren } from "react";
 import { Indent } from "../../styles";
 import {
   Content,
   Flex,
+  Logout,
   Mask,
   Row,
   Setting,
@@ -15,6 +17,12 @@ import {
   Wrapper,
 } from "./styles";
 const BannerInfo: FC<PropsWithChildren> = ({ children }) => {
+  const setAuth = useUserStore((state) => state.setAuth);
+
+  const logOut = () => {
+    setAuth(false);
+  };
+
   return (
     <Wrapper>
       <Content>
@@ -30,7 +38,12 @@ const BannerInfo: FC<PropsWithChildren> = ({ children }) => {
                 <SettingsIcon />
               </Setting>
             </Title>
-            <Text>madara@gmail.com</Text>
+            <Text>
+              <span>madara@gmail.com</span>
+              <Logout onClick={logOut}>
+                <LogoutIcon />
+              </Logout>
+            </Text>
           </Row>
         </Flex>
       </Content>

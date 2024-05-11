@@ -1,16 +1,16 @@
 import { LINK_TEMPLATES } from "@/common/constants";
+import { TabletOff, TabletOn } from "@/utils";
 import { useRouter } from "next/router";
-import { contactText, footerNavigation, social } from "./data";
+import { Navigations } from "./components";
+import { contactText, social } from "./data";
 import {
   CompanyLabel,
   Container,
   Content,
   Line,
-  List,
   Logo,
   Name,
-  NavItem,
-  NavTitle,
+  NavContainer,
   SocialList,
   Terms,
   Text,
@@ -21,9 +21,6 @@ import {
 
 const Footer = () => {
   const { push } = useRouter();
-
-  const renderNavigation = (array: string[]) =>
-    array.map((item, id) => <NavItem key={id}>{item}</NavItem>);
 
   const renderSocial = () => social.map((Social, id) => <Social key={id} />);
 
@@ -41,27 +38,15 @@ const Footer = () => {
             <Watchword>{contactText}</Watchword>
             <SocialList>{renderSocial()}</SocialList>
           </Welcome>
-
-          <List>
-            <NavTitle>About us</NavTitle>
-            {renderNavigation(footerNavigation.about)}
-          </List>
-
-          <List>
-            <NavTitle>Services</NavTitle>
-            {renderNavigation(footerNavigation.services)}
-          </List>
-
-          <List>
-            <NavTitle>Product</NavTitle>
-            {renderNavigation(footerNavigation.products)}
-          </List>
-
-          <List>
-            <NavTitle>Support</NavTitle>
-            {renderNavigation(footerNavigation.support)}
-          </List>
+          <TabletOff>
+            <Navigations />
+          </TabletOff>
         </Content>
+        <TabletOn>
+          <NavContainer>
+            <Navigations />
+          </NavContainer>
+        </TabletOn>
         <Line />
         <Terms>
           <Text>© 2024 Decardo. All rights reserved.</Text>

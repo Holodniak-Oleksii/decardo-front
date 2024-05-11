@@ -71,6 +71,12 @@ export const Text = styled.div`
   font-weight: 600;
   color: ${({ theme }) => theme.colors.main0};
   ${({ theme }) => theme.text.overflow}
+  ${({ theme }) => theme.flex.row}
+gap: 6px;
+`;
+
+export const Logout = styled.button`
+  margin-left: 10px;
 `;
 
 export const Setting = styled(Link)`

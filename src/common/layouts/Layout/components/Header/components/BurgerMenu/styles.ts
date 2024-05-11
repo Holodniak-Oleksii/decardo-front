@@ -1,9 +1,29 @@
 import { IOpenable } from "@/common/types";
-import styled, { css } from "styled-components";
+import Link from "next/link";
+import styled, { css, keyframes } from "styled-components";
+
+const moveAnimation = keyframes`
+  0% {
+    transform: translateY(calc(100dvh + 136px));
+  }
+  100% {
+    transform: translateY(calc(100dvh - 64px));
+  }
+`;
+
+const moveAnimationRevert = keyframes`
+  0% {
+    transform: translateY(calc(100dvh - 64px));
+  }
+  100% {
+    transform: translateY(calc(100dvh + 136px));
+  }
+`;
 
 export const Wrapper = styled.div`
   ${({ theme }) => theme.flex.center};
   gap: 12px;
+  position: relative;
 `;
 
 export const Title = styled.div`
@@ -22,6 +42,27 @@ export const Burger = styled.div`
   ${({ theme }) => theme.flex.center};
   gap: 12px;
   cursor: pointer;
+  z-index: 2;
+`;
+
+export const CircleOverlay = styled.div<IOpenable>`
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: -1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease-in-out;
+  background: ${({ theme }) => theme.colors.main900};
+
+  ${({ isOpen }) =>
+    isOpen &&
+    css`
+      width: 500vh;
+      height: 500vh;
+    `}
 `;
 
 export const Button = styled.button<IOpenable>`
@@ -31,13 +72,13 @@ export const Button = styled.button<IOpenable>`
   justify-content: flex-start;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.3s;
+  transition: all 0.5s;
   span {
-    background: ${({ theme }) => theme.colors.main0};
+    background: ${({ theme }) => theme.colors.main900};
     width: 100%;
     height: 2px;
     border-radius: 100px;
-    transition: 0.3s ease;
+    transition: 0.5s ease;
     :nth-child(3) {
       width: 60%;
     }
@@ -46,6 +87,9 @@ export const Button = styled.button<IOpenable>`
     ${({ isOpen }) =>
       isOpen &&
       css`
+        span {
+          background: ${({ theme }) => theme.colors.main0};
+        }
         span:nth-child(1) {
           transform: translateY(9px) rotate(45deg);
         }
@@ -64,41 +108,68 @@ export const Button = styled.button<IOpenable>`
 `;
 
 export const Menu = styled.div<IOpenable>`
-  background: ${({ theme }) => theme.colors.main800};
-  display: none;
-  position: absolute;
+  border-top: 1px solid ${({ theme }) => theme.colors.main400};
+  ${({ theme }) => theme.flex.column};
+  position: fixed;
   top: 64px;
   left: 0;
+  width: 100vw;
   z-index: 120;
   height: calc(100svh - 64px);
-  width: 100%;
   transition: all 0.4s ease;
-  @media screen and (max-width: 767px) {
-    display: block;
-    transform: translateX(-100%);
-    ${({ isOpen }) => isOpen && "transform: translateX(0);"}
-  }
+  transform: ${({ isOpen }) =>
+    isOpen ? "translateX(0)" : "translateX(-100%)"};
   @media screen and (max-width: 540px) {
     top: 60px;
-    height: calc(100svh - 60px);
-    transform: translateY(calc(100% + 120px));
-    ${({ isOpen }) => isOpen && "transform: translateY(0);"}
-  }
-  @media screen and (min-width: 541px) {
-    max-width: 400px;
   }
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<IOpenable>`
   width: 100%;
-  height: 100%;
+  flex-grow: 1;
   position: relative;
-  padding: 16px 0 32px 0;
-  ${({ theme }) => theme.flex.between};
+  padding: 0 0 16px 0;
+  ${({ theme }) => theme.flex.row};
   flex-direction: column;
+  overflow: hidden;
+  overflow-y: auto;
 `;
 
 export const List = styled.div`
   ${({ theme }) => theme.flex.column};
   width: 100%;
+`;
+
+export const NavItem = styled(Link)`
+  color: ${({ theme }) => theme.colors.main0};
+  font-size: 16px;
+  padding: 16px;
+  position: relative;
+`;
+
+export const Indent = styled.div`
+  height: 64px;
+`;
+
+export const SocialList = styled.div<IOpenable>`
+  ${({ theme }) => theme.flex.center};
+  gap: 16px;
+  padding: 20px 16px;
+  transition: all 0.3s ease;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  ${({ isOpen }) =>
+    isOpen
+      ? css`
+          animation: ${moveAnimation} both;
+          animation-delay: 0.2s;
+          animation-duration: 0.3s;
+        `
+      : css`
+          animation: ${moveAnimationRevert} both;
+          animation-duration: 0.3s;
+        `}
 `;

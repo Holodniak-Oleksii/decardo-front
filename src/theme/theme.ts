@@ -95,6 +95,12 @@ export const theme: ITheme = {
     `,
     indention: `
       padding: 60px 0;
+      @media screen and (max-width: 767px) {
+        padding: 40px 0;
+      }
+      @media screen and (max-width: 540px) {
+        padding: 32px 0;
+      }
     `,
   },
 };

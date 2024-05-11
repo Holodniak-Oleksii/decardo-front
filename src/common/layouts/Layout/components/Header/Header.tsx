@@ -1,8 +1,9 @@
 import { LINK_TEMPLATES } from "@/common/constants";
 import { useUserStore } from "@/common/store";
+import { MobileOff, MobileOn } from "@/utils";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { Account, AuthControls } from "./components";
+import { Account, AuthControls, BurgerMenu } from "./components";
 import { headerNavigation } from "./data";
 import { Content, Logo, NavItem, Navigation, Wrapper } from "./styles";
 
@@ -12,12 +13,17 @@ const Header = () => {
   const refContainer = useRef<HTMLDivElement>(null);
   const { push, asPath } = useRouter();
   const isAuth = useUserStore((state) => state.isAuth);
+  const [isOpen, setIsOpen] = useState(false);
 
   const renderNavigations = () => {
     return headerNavigation.map((navigation) => {
       const path = navigation.trigger();
       return (
-        <NavItem isActive={asPath === path} key={navigation.id} href={path}>
+        <NavItem
+          isActive={asPath.includes(path)}
+          key={navigation.id}
+          href={path}
+        >
           {navigation.title}
         </NavItem>
       );
@@ -43,15 +49,18 @@ const Header = () => {
   }, [prevScrollPos, visible]);
 
   return (
-    <Wrapper visible={visible}>
+    <Wrapper isOpen={isOpen} visible={visible}>
       <Content ref={refContainer}>
         <Navigation>
-          <Logo onClick={() => push(LINK_TEMPLATES.HOME())}>
+          <Logo isOpen={isOpen} onClick={() => push(LINK_TEMPLATES.HOME())}>
             D <span>3</span>
           </Logo>
-          {renderNavigations()}
+          <MobileOff>{renderNavigations()}</MobileOff>
         </Navigation>
-        {isAuth ? <Account /> : <AuthControls />}
+        <MobileOff>{isAuth ? <Account /> : <AuthControls />}</MobileOff>
+        <MobileOn>
+          <BurgerMenu isOpen={isOpen} setIsOpen={setIsOpen} />
+        </MobileOn>
       </Content>
     </Wrapper>
   );

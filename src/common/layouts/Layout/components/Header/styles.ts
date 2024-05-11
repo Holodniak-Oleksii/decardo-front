@@ -1,4 +1,4 @@
-import { IActiveble } from "@/common/types";
+import { IActiveble, IOpenable } from "@/common/types";
 import Link from "next/link";
 import styled, { css, keyframes } from "styled-components";
 import { IHeaderWrapperProps } from "./types";
@@ -14,15 +14,19 @@ const appearAnim = keyframes`
   }
 `;
 
-export const Wrapper = styled.header<IHeaderWrapperProps>`
-  background: ${({ theme }) => theme.colors.main0};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.main100};
+export const Wrapper = styled.header<IHeaderWrapperProps & IOpenable>`
+  background: ${({ theme, isOpen }) =>
+    isOpen ? theme.colors.main900 : theme.colors.main0};
+  border-bottom: 1px solid
+    ${({ theme, isOpen }) =>
+      isOpen ? theme.colors.main0 : theme.colors.main100};
   height: 80px;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
+
   transition: all 0.4s ease-in-out;
   @media screen and (max-width: 1440px) {
     height: 72px;
@@ -76,20 +80,30 @@ export const NavItem = styled(Link)<IActiveble>`
   font-size: 16px;
 `;
 
-export const Logo = styled.div`
+export const Logo = styled.div<IOpenable>`
+  ${({ theme }) => theme.flex.center};
+  background-color: ${({ theme, isOpen }) =>
+    isOpen ? theme.colors.main0 : theme.colors.main900};
+  color: ${({ theme, isOpen }) =>
+    isOpen ? theme.colors.main900 : theme.colors.main0};
+
   height: 100%;
   aspect-ratio: 1 / 1;
-  background-color: ${({ theme }) => theme.colors.main900};
   font-size: 40px;
   font-weight: 900;
+  transition: all 0.5s ease-in-out;
   padding: 6px;
-  ${({ theme }) => theme.flex.center};
-  color: ${({ theme }) => theme.colors.main0};
   border-radius: 4px;
   cursor: pointer;
   margin-right: 20px;
   span {
     font-size: 10px;
     height: 100%;
+  }
+  @media screen and (max-width: 1024px) {
+    font-size: 24px;
+    span {
+      font-size: 8px;
+    }
   }
 `;

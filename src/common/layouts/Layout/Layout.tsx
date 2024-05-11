@@ -6,7 +6,12 @@ const Layout: FC<ILayoutProps> = ({ children }) => {
   return (
     <>
       <Header />
-      {children}
+      <div
+        style={{
+          height: "400px",
+        }}
+      />
+      {/* {children} */}
       <Footer />
     </>
   );
