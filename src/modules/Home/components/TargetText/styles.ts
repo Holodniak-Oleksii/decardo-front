@@ -6,8 +6,8 @@ export const Wrapper = styled.div`
   ${({ theme }) => theme.content.indention};
 
   width: 100%;
-  height: 100svh;
-  max-height: 800px;
+  height: min-content;
+  max-height: 812px;
 `;
 
 export const Container = styled.div`
@@ -19,6 +19,7 @@ export const Container = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
+  min-height: min-content;
 `;
 
 export const Content = styled.div`
@@ -26,6 +27,22 @@ export const Content = styled.div`
   justify-content: center;
   gap: 40px;
   width: calc(50% - 40px);
+
+  @media screen and (max-width: 1280px) {
+    width: calc(65% - 40px);
+    gap: 32px;
+  }
+  @media screen and (max-width: 1024px) {
+    width: 50%;
+    gap: 24px;
+  }
+  @media screen and (max-width: 900px) {
+    width: 100%;
+    gap: 60px;
+  }
+  @media screen and (max-width: 540px) {
+    gap: 40px;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -33,6 +50,18 @@ export const ImageContainer = styled.div`
   position: relative;
   min-width: 300px;
   width: 50%;
+  min-height: 400px;
+  height: calc(100svh - 200px);
+  max-height: 812px;
+  @media screen and (max-width: 1280px) {
+    width: 35%;
+  }
+  @media screen and (max-width: 1024px) {
+    width: calc(50% - 40px);
+  }
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
 `;
 
 export const ArtImage = styled(Image)`

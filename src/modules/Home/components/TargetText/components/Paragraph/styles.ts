@@ -4,6 +4,10 @@ export const Wrapper = styled.div`
   ${({ theme }) => theme.flex.column};
   gap: 8px;
   width: 100%;
+  min-height: min-content;
+  @media screen and (max-width: 1280px) {
+    gap: 4px;
+  }
 `;
 
 export const Title = styled.div`
@@ -12,6 +16,13 @@ export const Title = styled.div`
   font-weight: 800;
   line-height: 1.3;
   margin-bottom: 12px;
+
+  @media screen and (max-width: 1280px) {
+    margin-bottom: 8px;
+  }
+  @media screen and (max-width: 767px) {
+    font-size: 24px;
+  }
 `;
 
 export const List = styled.div`
@@ -35,4 +46,7 @@ export const Text = styled.div`
   font-weight: 300;
   line-height: 1.5;
   font-size: 16px;
+  @media screen and (max-width: 767px) {
+    font-size: 14px;
+  }
 `;

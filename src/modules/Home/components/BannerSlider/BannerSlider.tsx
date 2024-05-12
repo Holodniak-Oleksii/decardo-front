@@ -1,3 +1,4 @@
+import { MobileOff, MobileOn } from "@/utils";
 import { useState } from "react";
 import { pathSvg, sliderContent } from "./data";
 import {
@@ -47,6 +48,15 @@ const BannerSlider = () => {
     });
   };
 
+  const renderMobileSelector = () => {
+    return sliderContent.map((slide, index) => (
+      <SectorContent key={index} isActive={index + 1 === activeIndex}>
+        <ItemTitle>{slide.title}</ItemTitle>
+        <ItemDescription>{slide.description}</ItemDescription>
+      </SectorContent>
+    ));
+  };
+
   const renderPagination = () => {
     return [...Array(ANGELS)].map((_, index) => {
       const currentElIndex = index + 1;
@@ -81,23 +91,27 @@ const BannerSlider = () => {
     <Container>
       {renderBackgrounds()}
       <Wrapper>
-        <HexagonSlider>
-          <Circle position={activeIndex}>
-            <CoverSvg>
-              <HexagonSvg viewBox="0 0 24 24" fill="none">
-                <path d={pathSvg} />
-              </HexagonSvg>
-            </CoverSvg>
-            <List>
-              <SectorSlider>
-                <StarBlok>
-                  <StarRelative>{renderSectors()}</StarRelative>
-                </StarBlok>
-              </SectorSlider>
-            </List>
-          </Circle>
-          <Title position={activeIndex}>DECARDO</Title>
-        </HexagonSlider>
+        <MobileOff>
+          <HexagonSlider>
+            <Circle position={activeIndex}>
+              <CoverSvg>
+                <HexagonSvg viewBox="0 0 24 24" fill="none">
+                  <path d={pathSvg} />
+                </HexagonSvg>
+              </CoverSvg>
+              <List>
+                <SectorSlider>
+                  <StarBlok>
+                    <StarRelative>{renderSectors()}</StarRelative>
+                  </StarBlok>
+                </SectorSlider>
+              </List>
+            </Circle>
+
+            <Title position={activeIndex}>DECARDO</Title>
+          </HexagonSlider>
+        </MobileOff>
+        <MobileOn>{renderMobileSelector()}</MobileOn>
         <Pagination>{renderPagination()}</Pagination>
       </Wrapper>
     </Container>

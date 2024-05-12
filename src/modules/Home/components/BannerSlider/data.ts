@@ -12,32 +12,32 @@ export const pathSvg =
 export const sliderContent: IBannerSliderItem[] = [
   {
     title: "Architectural Discoveries",
-    image: imageSlide5,
+    image: imageSlide4,
     description:
       "Discover architectural masterpieces that enrich our environment through the lens of art, opening up new perspectives on space and form.",
   },
   {
     title: "Light and Shadows",
-    image: imageSlide3,
+    image: imageSlide2,
     description:
       "Dive into the play of light and shadows through unique images that reflect the diversity of life and nature in our world",
   },
   {
     title: "Art of Dimensions",
-    image: imageSlide1,
+    image: imageSlide3,
     description:
       "Explore the world of new dimensions in art with our collection of unique interpretations that captivate the imagination and inspire dreams.",
   },
   {
     title: "Emotional Palette",
-    image: imageSlide2,
+    image: imageSlide5,
     description:
       "Feel the magic of art through a variety of feelings and emotions brought to life on the canvases of our talented artists",
   },
 
   {
     title: "Fantasy Landscape",
-    image: imageSlide4,
+    image: imageSlide1,
     description:
       "Open the doors to a world of fantasy landscapes where each painting is a step into an incredible journey of imagination and creativity.",
   },

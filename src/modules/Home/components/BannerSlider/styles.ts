@@ -19,6 +19,10 @@ export const HexagonSlider = styled.div`
   transform: translate(-50%, -35%);
   width: 90%;
   height: 130%;
+
+  @media screen and (max-width: 1280px) {
+    height: 110%;
+  }
 `;
 
 export const Circle = styled.div<IRotate>`
@@ -43,7 +47,9 @@ export const Sector = styled.div<ISectorProps & IActiveble>`
   max-width: 1400px;
   height: 100px;
   transform-origin: center;
-  transition: transform 0.6s ease-in, opacity 0.7s ease-in-out;
+  transition:
+    transform 0.6s ease-in,
+    opacity 0.7s ease-in-out;
   transform: translate(-50%, -50%)
     rotate(${({ index }) => 35 + index * ROTATE_ANGLE}deg);
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
@@ -55,7 +61,9 @@ export const SectorRelative = styled.div`
   height: 100%;
 `;
 
-export const SectorContent = styled.div<ISectorProps & IRotate>`
+export const SectorContent = styled.div<
+  Partial<ISectorProps> & Partial<IRotate> & Partial<IActiveble>
+>`
   position: absolute;
   right: -45%;
   top: 0%;
@@ -64,7 +72,7 @@ export const SectorContent = styled.div<ISectorProps & IRotate>`
   transition: all 0.5s ease-in;
   transform: translateY(-130%)
     rotate(
-      -${({ position, index }) => 35 + index * ROTATE_ANGLE + position * ROTATE_ANGLE}deg
+      -${({ position, index }) => 35 + index! * ROTATE_ANGLE + position! * ROTATE_ANGLE}deg
     );
   display: flex;
   justify-content: flex-end;
@@ -72,7 +80,40 @@ export const SectorContent = styled.div<ISectorProps & IRotate>`
   flex-direction: column;
   gap: 16px;
   padding: 48px;
-  background: #000000ca;
+  box-shadow: ${({ theme }) => theme.boxShadow.xs};
+  background: #0000009f;
+  backdrop-filter: blur(3px);
+  @media screen and (max-width: 1280px) {
+    right: -70%;
+  }
+  @media screen and (max-width: 1024px) {
+    right: -60%;
+    width: 400px;
+    padding: 24px;
+    gap: 12px;
+  }
+  @media screen and (max-width: 767px) {
+    left: 16px;
+    right: auto;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  @media screen and (max-width: 540px) {
+    width: calc(100% - 32px);
+    backdrop-filter: blur(0);
+    background: #000000c4;
+
+    ${({ isActive }) =>
+      isActive
+        ? css`
+            transform: translateY(-50%);
+            opacity: 1;
+          `
+        : css`
+            opacity: 0;
+            transform: translateY(0%);
+          `}
+  }
 `;
 
 export const SectorSlider = styled.div`
@@ -88,6 +129,11 @@ export const StarBlok = styled.div`
   width: 130%;
   height: 130%;
   transform: translate(-50%, -50%);
+
+  @media screen and (max-width: 1440px) {
+    width: 110%;
+    height: 110%;
+  }
 `;
 
 export const StarRelative = styled.div`
@@ -113,6 +159,14 @@ export const HexagonSvg = styled.svg`
     height: 100%;
     transition: all 0.5s ease;
   }
+  @media screen and (max-width: 1440px) {
+    width: 110%;
+    height: 110%;
+  }
+  @media screen and (max-width: 1280px) {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const CoverSvg = styled.div`
@@ -132,6 +186,13 @@ export const Title = styled.div<IRotate>`
   top: 60%;
   left: 51%;
   transform: translate(0, -50%);
+
+  @media screen and (max-width: 1280px) {
+    font-size: 36px;
+  }
+  @media screen and (max-width: 1024px) {
+    font-size: 28px;
+  }
 `;
 
 export const Pagination = styled.div`
@@ -140,6 +201,18 @@ export const Pagination = styled.div`
   right: 80px;
   ${({ theme }) => theme.flex.column};
   align-items: center;
+  @media screen and (max-width: 1024px) {
+    right: 44px;
+  }
+  @media screen and (max-width: 540px) {
+    flex-direction: row;
+    right: 0;
+    padding: 16px;
+    justify-content: space-between;
+    width: 100%;
+    top: auto;
+    bottom: 16px;
+  }
 `;
 
 export const NavLine = styled.div<IActiveble>`
@@ -157,6 +230,18 @@ export const NavLine = styled.div<IActiveble>`
           height: 16px;
           margin: 2px 0;
         `}
+  @media screen and (max-width: 540px) {
+    ${({ isActive }) =>
+      isActive
+        ? css`
+            height: 1px;
+            width: 40px;
+          `
+        : css`
+            height: 1px;
+            width: 16px;
+          `}
+  }
 `;
 
 export const NavItem = styled.button<IActiveble>`
@@ -172,10 +257,24 @@ export const NavItem = styled.button<IActiveble>`
     isActive
       ? css`
           border: 1px solid #fff;
+          background: #0000003d;
+          backdrop-filter: blur(0);
         `
       : css`
+          background: #0000009f;
+          backdrop-filter: blur(3px);
           border: 1px solid transparent;
         `}
+  @media screen and (max-width: 1024px) {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 540px) {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
 `;
 
 export const ItemTitle = styled.div`
@@ -183,6 +282,9 @@ export const ItemTitle = styled.div`
   line-height: 1.3;
   color: #ffffff;
   font-weight: 700;
+  @media screen and (max-width: 1024px) {
+    font-size: 20px;
+  }
 `;
 
 export const ItemDescription = styled.div`
@@ -190,6 +292,9 @@ export const ItemDescription = styled.div`
   line-height: 1.5;
   color: #ffffff;
   font-weight: 400;
+  @media screen and (max-width: 1024px) {
+    font-size: 14px;
+  }
 `;
 
 export const Background = styled(Image)<IActiveble>`
@@ -209,4 +314,13 @@ export const Container = styled.div`
   height: calc(100svh - 200px);
   position: relative;
   overflow: hidden;
+  max-width: 1920px;
+  margin: auto;
+  @media screen and (max-width: 1280px) {
+    max-height: 520px;
+  }
+
+  @media screen and (max-width: 1024px) {
+    max-height: 440px;
+  }
 `;

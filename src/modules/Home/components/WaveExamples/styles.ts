@@ -3,6 +3,14 @@ import { IWaveProps } from "./types";
 
 export const Container = styled.div`
   ${({ theme }) => theme.flex.center};
+  width: 100%;
+  overflow: hidden;
+  overflow-x: auto;
+  @media screen and (max-width: 767px) {
+    gap: 16px;
+    padding: 0 16px;
+    justify-content: flex-start;
+  }
 `;
 
 export const Title = styled.div`
@@ -12,6 +20,16 @@ export const Title = styled.div`
   text-align: center;
   font-family: "Times New Roman", Times, serif;
   color: ${({ theme }) => theme.colors.main0};
+
+  @media screen and (max-width: 1280px) {
+    font-size: 44px;
+  }
+  @media screen and (max-width: 1024px) {
+    font-size: 32px;
+  }
+  @media screen and (max-width: 767px) {
+    font-size: 24px;
+  }
 `;
 
 export const Items = styled.div`
@@ -78,7 +96,9 @@ export const Item = styled.div<IWaveProps>`
   background-image: url(${({ preview }) => preview.src});
   cursor: pointer;
   filter: grayscale(1) brightness(0.5);
-  transition: transform 1.25s var(--transition), filter 3s var(--transition),
+  transition:
+    transform 1.25s var(--transition),
+    filter 3s var(--transition),
     width 1.25s var(--transition);
   will-change: transform, filter, rotateY, width;
 
@@ -108,6 +128,29 @@ export const Item = styled.div<IWaveProps>`
           }
         `
       : css``}
+  @media screen and (max-width: 767px) {
+    transition: all 0.3s ease;
+    height: 300px;
+    ${({ isActive }) =>
+      isActive
+        ? css`
+            width: 400px;
+          `
+        : css`
+            width: 100px;
+          `}
+  }
+  @media screen and (max-width: 540px) {
+    height: 200px;
+    ${({ isActive }) =>
+      isActive
+        ? css`
+            min-width: 200px;
+          `
+        : css`
+            min-width: 100px;
+          `}
+  }
 `;
 
 export const BlurBlock = styled.div`
@@ -123,6 +166,13 @@ export const BlurBlock = styled.div`
     transition: all 0.3s linear;
     white-space: nowrap;
   }
+
+  @media screen and (max-width: 540px) {
+    button {
+      padding: 4px 16px;
+      font-size: 14px;
+    }
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -132,6 +182,10 @@ export const Wrapper = styled.div`
   ${({ theme }) => theme.content.mainContainerPadding}
   overflow: hidden;
   background-color: ${({ theme }) => theme.colors.main600};
+  @media screen and (max-width: 540px) {
+    padding-right: 0;
+    padding-left: 0;
+  }
 `;
 
 export const Wrap = styled.div`
@@ -139,4 +193,7 @@ export const Wrap = styled.div`
   ${({ theme }) => theme.flex.column};
   gap: 52px;
   width: 100%;
+  @media screen and (max-width: 767px) {
+    gap: 32px;
+  }
 `;

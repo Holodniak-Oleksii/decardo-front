@@ -1,6 +1,31 @@
 import Image from "next/image";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { IContentProps } from "./types";
+
+const hexagons = css`
+  width: var(--s);
+  margin: var(--m);
+  cursor: pointer;
+  height: calc(var(--s) * 1.1547);
+  display: inline-block;
+  font-size: initial;
+  clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
+  margin-bottom: calc(var(--m) - var(--s) * 0.2885);
+  position: relative;
+  background-color: ${({ theme }) => theme.colors.gray800};
+  @media screen and (hover: hover) {
+    &:hover {
+      img {
+        filter: grayscale(0);
+        transform: scale(1.1);
+      }
+      .title {
+        opacity: 1;
+        transform: translateY(-50%);
+      }
+    }
+  }
+`;
 
 export const Wrapper = styled.div`
   ${({ theme }) => theme.content.indention};
@@ -29,31 +54,22 @@ export const Body = styled.div`
 `;
 
 export const Hexagon = styled.div`
-  width: var(--s);
-  margin: var(--m);
-  cursor: pointer;
-  height: calc(var(--s) * 1.1547);
-  display: inline-block;
-  font-size: initial;
-  clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
-  margin-bottom: calc(var(--m) - var(--s) * 0.2885);
-  position: relative;
-  background-color: ${({ theme }) => theme.colors.gray800};
-  @media screen and (hover: hover) {
-    &:hover {
-      img {
-        filter: grayscale(0);
-        transform: scale(1.1);
-      }
-      .title {
-        opacity: 1;
-        transform: translateY(-50%);
-      }
+  ${hexagons}
+  @media screen and (max-width: 1024px) {
+    &:nth-child(1),
+    &:nth-child(2) {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 540px) {
+    &:nth-child(2) {
+      display: inline-block;
     }
   }
 `;
 
-export const DoubleHexagon = styled(Hexagon)`
+export const DoubleHexagon = styled.div`
+  ${hexagons}
   position: absolute;
   z-index: -1;
   left: 4px;
@@ -88,6 +104,12 @@ export const Content = styled.div<IContentProps>`
   --m: 4px; /* margin */
   --f: calc(1.732 * var(--s) + 4 * var(--m) - 1px);
   padding-bottom: calc(var(--s) / 3);
+  @media screen and (max-width: 1024px) {
+    --s: calc(${({ size }) => size}px / 4 - 8px);
+  }
+  @media screen and (max-width: 540px) {
+    --s: calc(${({ size }) => size}px / 3 - 8px);
+  }
 `;
 
 export const Title = styled.div`
