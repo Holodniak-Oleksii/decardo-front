@@ -12,6 +12,18 @@ export const Wrapper = styled.div`
       }
     }
   }
+  @media screen and (max-width: 1512px) {
+    padding: 20px 0 0 20px;
+  }
+  @media screen and (max-width: 1024px) {
+    padding: 16px 0 0 16px;
+  }
+  @media screen and (max-width: 540px) {
+    padding: 16px 0 0 0;
+  }
+  @media screen and (max-width: 440px) {
+    padding: 16px 0 0 16px;
+  }
 `;
 
 export const Container = styled.div`
@@ -22,11 +34,17 @@ export const Container = styled.div`
   position: relative;
   transition: all 0.4s ease;
   border: 1px solid ${({ theme }) => theme.colors.main600};
+  @media screen and (max-width: 1512px) {
+    padding: 20px 20px 0 20px;
+  }
+  @media screen and (max-width: 1024px) {
+    padding: 16px 16px 0 16px;
+  }
 `;
 
 export const Glossiness = styled.div`
   transform: translate(-48px, -48px);
-  width: calc(100% + 24px);
+  width: calc(100% + 48px);
   height: 200px;
   position: relative;
   border-radius: 12px;
@@ -34,6 +52,27 @@ export const Glossiness = styled.div`
   overflow: hidden;
   background-color: #fff;
   border: 1px solid ${({ theme }) => theme.colors.main600};
+  @media screen and (max-width: 1512px) {
+    transform: translate(-40px, -40px);
+    width: calc(100% + 40px);
+  }
+  @media screen and (max-width: 1024px) {
+    transform: translate(-32px, -32px);
+    width: calc(100% + 32px);
+  }
+  @media screen and (max-width: 767px) {
+    height: 180px;
+  }
+  @media screen and (max-width: 540px) {
+    height: 160px;
+    transform: translate(0, -32px);
+    width: 100%;
+  }
+  @media screen and (max-width: 440px) {
+    height: 180px;
+    transform: translate(-32px, -32px);
+    width: calc(100% + 32px);
+  }
 `;
 
 export const Time = styled.div`
@@ -67,16 +106,27 @@ export const Information = styled.div`
   width: 100%;
   gap: 8px;
   transform: translateY(-24px);
+  @media screen and (max-width: 1512px) {
+    transform: translateY(-20px);
+  }
+  @media screen and (max-width: 1024px) {
+    transform: translateY(-16px);
+  }
 `;
 
 export const Title = styled.div`
   ${({ theme }) => theme.text.getLineClamp(2)};
   font-size: 18px;
+  line-height: 1.2;
   font-weight: 600;
+  @media screen and (max-width: 1512px) {
+    font-size: 16px;
+  }
 `;
 
 export const Description = styled.p`
   font-size: 14px;
+  line-height: 1.2;
   padding: 0;
   ${({ theme }) => theme.text.getLineClamp(3)};
 `;
@@ -86,6 +136,9 @@ export const TagList = styled.div`
   flex-wrap: wrap;
   width: 100%;
   gap: 8px;
+  @media screen and (max-width: 767px) {
+    gap: 6px;
+  }
 `;
 
 export const Tags = styled.div`

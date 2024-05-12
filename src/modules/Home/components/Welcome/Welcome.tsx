@@ -5,6 +5,7 @@ import {
   Description,
   ImageContainer,
   ImageIndent,
+  Relative,
   Text,
   Title,
   Wrapper,
@@ -14,6 +15,7 @@ import imagePot from "@/assets/images/pot.png";
 import imageStars from "@/assets/images/stars.png";
 import { PlayIcon } from "@/common/icons";
 import { Button } from "@/ui-liberty/buttons";
+import { MobileOff } from "@/utils";
 
 const Welcome = () => {
   return (
@@ -23,7 +25,9 @@ const Welcome = () => {
           <Text>
             <Title>
               Discover the 3D Art Universe in your mind
-              <Image src={imageStars} alt="start" />
+              <MobileOff>
+                <Image src={imageStars} alt="start" />
+              </MobileOff>
             </Title>
             <Description>
               Immerse yourself in the captivating world of our 3D art gallery,
@@ -37,9 +41,11 @@ const Welcome = () => {
             </Button>
           </Text>
           <ImageContainer>
-            <ImageIndent>
-              <Image src={imagePot} alt="consmo" />
-            </ImageIndent>
+            <Relative>
+              <ImageIndent>
+                <Image src={imagePot} alt="consmo" />
+              </ImageIndent>
+            </Relative>
           </ImageContainer>
         </Content>
       </Container>

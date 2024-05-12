@@ -84,7 +84,7 @@ export const theme: ITheme = {
         padding-top: 80px; 
       }
       @media screen and (max-width: 540px) {
-        padding-top: 76px; 
+        padding-top: 60px; 
       }
     `,
     mainContainerWidth: `
