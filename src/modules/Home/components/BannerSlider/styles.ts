@@ -316,11 +316,13 @@ export const Container = styled.div`
   overflow: hidden;
   max-width: 1920px;
   margin: auto;
+  min-height: 500px;
   @media screen and (max-width: 1280px) {
     max-height: 520px;
   }
 
   @media screen and (max-width: 1024px) {
     max-height: 440px;
+    min-height: 360px;
   }
 `;
