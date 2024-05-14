@@ -35,3 +35,9 @@ export interface IUser {
   arts: IArtResponseModel[];
   wishlist: IArtResponseModel[];
 }
+
+export interface IResponse<T> {
+  result: T;
+  total: number;
+  status: number;
+}

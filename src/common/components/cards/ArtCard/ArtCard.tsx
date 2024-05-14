@@ -36,7 +36,7 @@ const ArtCard: FC<IArtCardProps> = (props) => {
       <Container>
         <Glossiness>
           <Preview
-            src={imagePlug.src}
+            src={(preview as string) || ""}
             alt="preview"
             className="preview"
             width={400}

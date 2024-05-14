@@ -1,11 +1,11 @@
+import { useGetArtsQuery } from "@/common/api";
 import { ArtCard } from "@/common/components/cards";
 import { LINK_TEMPLATES } from "@/common/constants";
 import { useDebounce } from "@/common/hooks";
-import { Pagination } from "@/common/shared";
+import { BannerLoader, Pagination } from "@/common/shared";
 import { useArtsFilterStore } from "@/common/store";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { artData } from "../Home/components/Grid/mocks";
 import { Banner, Filters } from "./components";
 import { Container, Content, List, Wrapper } from "./styles";
 
@@ -19,12 +19,14 @@ const Spaces = () => {
   const debounceQuery = useDebounce(filters.query, !isInit, 1000);
   const debounceTags = useDebounce(filters.tags, !isInit, 1000);
 
+  const { data: arts, isLoading } = useGetArtsQuery(filters);
+
   const onChangeFilterFieldHandler = useArtsFilterStore(
     (state) => state.onChangeFilterFieldHandler
   );
 
   const renderGrid = () => {
-    return artData.map((art) => <ArtCard art={art} key={art.id} />);
+    return arts?.result.map((art) => <ArtCard art={art} key={art.id} />);
   };
 
   const redirectQuery = async () => {
@@ -45,14 +47,24 @@ const Spaces = () => {
         <Content>
           <Banner />
           <Filters />
-          <List>{renderGrid()}</List>
+          {isLoading ? (
+            <BannerLoader />
+          ) : (
+            <>
+              {!!arts?.total ? (
+                <List>{renderGrid()}</List>
+              ) : (
+                <BannerLoader is404 />
+              )}
+            </>
+          )}
           <Pagination
             currentPage={filters.page}
             onPageChange={(page) => {
               onChangeFilterFieldHandler(page, "page");
             }}
             pageSize={filters.limit}
-            totalCount={40}
+            totalCount={arts?.total || 0}
           />
         </Content>
       </Container>

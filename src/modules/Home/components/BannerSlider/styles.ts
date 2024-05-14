@@ -317,6 +317,8 @@ export const Container = styled.div`
   max-width: 1920px;
   margin: auto;
   min-height: 500px;
+  max-height: 900px;
+
   @media screen and (max-width: 1280px) {
     max-height: 520px;
   }

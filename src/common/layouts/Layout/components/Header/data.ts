@@ -11,9 +11,9 @@ export const headerNavigation = [
     title: "Spaces",
     trigger: () => LINK_TEMPLATES.SPACES({}),
   },
-  {
-    id: 2,
-    title: "About us",
-    trigger: LINK_TEMPLATES.ABOUT_US,
-  },
+  // {
+  //   id: 2,
+  //   title: "About us",
+  //   trigger: LINK_TEMPLATES.ABOUT_US,
+  // },
 ];

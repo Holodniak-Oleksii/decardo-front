@@ -19,11 +19,7 @@ const Header = () => {
     return headerNavigation.map((navigation) => {
       const path = navigation.trigger();
       return (
-        <NavItem
-          isActive={asPath.includes(path)}
-          key={navigation.id}
-          href={path}
-        >
+        <NavItem isActive={asPath === path} key={navigation.id} href={path}>
           {navigation.title}
         </NavItem>
       );
