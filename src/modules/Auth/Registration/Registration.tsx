@@ -1,3 +1,4 @@
+import { useRegistrationMutation } from "@/common/api";
 import { LINK_TEMPLATES } from "@/common/constants";
 import { Button } from "@/ui-liberty/buttons";
 import { Input } from "@/ui-liberty/inputs";
@@ -18,8 +19,13 @@ const Registration = () => {
 
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+
+  const { mutateAsync } = useRegistrationMutation();
+
   const onSubmit = async (data: IRegistrationFormValues) => {
     try {
+      const response = await mutateAsync(data);
+      console.log("response :", response);
       // push(LINK_TEMPLATES.USER({ username: user.username }));
     } catch (e) {
       const error = e as AxiosError;

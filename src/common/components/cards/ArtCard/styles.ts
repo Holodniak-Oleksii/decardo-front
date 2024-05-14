@@ -42,6 +42,10 @@ export const Container = styled.div`
   }
 `;
 
+export const ContainerLoader = styled(Container)`
+  border: 1px solid ${({ theme }) => theme.colors.main100};
+`;
+
 export const Glossiness = styled.div`
   transform: translate(-48px, -48px);
   width: calc(100% + 48px);
@@ -75,16 +79,9 @@ export const Glossiness = styled.div`
   }
 `;
 
-export const Time = styled.div`
-  position: absolute;
-  right: -1px;
-  top: -1px;
-  background-color: ${({ theme }) => theme.colors.main0};
-  box-shadow: 0px 0px 20px -5px #10101065;
-  border-bottom-left-radius: 8px;
-  padding: 4px 8px;
-  gap: 2px;
-  ${({ theme }) => theme.flex.center};
+export const GlossinessLoader = styled(Glossiness)`
+  background: ${({ theme }) => theme.colors.main10};
+  border: 1px solid ${({ theme }) => theme.colors.main100};
 `;
 
 export const Preview = styled.img`
@@ -119,9 +116,14 @@ export const Title = styled.div`
   font-size: 18px;
   line-height: 1.2;
   font-weight: 600;
+  width: 100%;
   @media screen and (max-width: 1512px) {
     font-size: 16px;
   }
+`;
+export const TitleLoader = styled(Title)`
+  height: 20px;
+  background: ${({ theme }) => theme.colors.main10};
 `;
 
 export const Description = styled.p`
@@ -129,6 +131,11 @@ export const Description = styled.p`
   line-height: 1.2;
   padding: 0;
   ${({ theme }) => theme.text.getLineClamp(3)};
+`;
+
+export const DescriptionLoader = styled(Description)`
+  height: 40px;
+  background: ${({ theme }) => theme.colors.main10};
 `;
 
 export const TagList = styled.div`
@@ -148,4 +155,10 @@ export const Tags = styled.div`
   font-size: 12px;
   white-space: nowrap;
   border-radius: 4px;
+`;
+
+export const TagsLoader = styled(Tags)`
+  background: ${({ theme }) => theme.colors.main10};
+  height: 18px;
+  min-width: 60px;
 `;

@@ -30,31 +30,89 @@ export const useCreateArtMutation = () =>
     },
   });
 
+const artsFetch = async (filters: IArtsFilter) => {
+  const params = new URLSearchParams();
+
+  if (filters.page) params.append("page", filters.page.toString());
+  if (filters.query) params.append("query", filters.query);
+  if (filters.limit) params.append("limit", filters.limit.toString());
+  if (filters.tags) params.append("tags", filters.tags.join(","));
+
+  const url = `/arts${params.toString() ? `?${params.toString()}` : ""}`;
+
+  const response = await axiosInstance.get(url);
+  return response.data;
+};
+
 export const useGetArtsQuery = (filters: IArtsFilter) => {
   return useQuery<IResponse<IArtResponseModel[]>>({
     staleTime: 60000,
     refetchOnMount: false,
-    queryKey: [QueryKey.ARTS, filters.page, filters.query, filters.tags],
+    queryKey: [
+      QueryKey.ARTS,
+      filters.page,
+      filters.query,
+      filters.tags.join(","),
+    ],
+    queryFn: async () => artsFetch(filters),
+  });
+};
+
+export const prefetchGetArts = (filters: IArtsFilter) => {
+  return queryClient.prefetchQuery({
+    queryKey: [
+      QueryKey.ARTS,
+      filters.page,
+      filters.query,
+      filters.tags.join(","),
+    ],
+    queryFn: async () => artsFetch(filters),
+  });
+};
+
+export const prefetchGetHomeArts = () => {
+  return queryClient.prefetchQuery({
+    queryKey: [QueryKey.ART_HOME],
     queryFn: async () => {
-      const params = new URLSearchParams();
+      const response = await axiosInstance.get(`/arts?page=1&limit=8`);
+      return response.data.result;
+    },
+  });
+};
 
-      if (filters.page) params.append("page", filters.page.toString());
-      if (filters.query) params.append("query", filters.query);
-      if (filters.tags) params.append("tags", filters.tags.join(","));
-
-      const url = `/arts${params.toString() ? `?${params.toString()}` : ""}`;
-
-      const response = await axiosInstance.get(url);
+export const useGetArtQuery = ({ id = "" }) => {
+  return useQuery<IResponse<IArtResponseModel[]>>({
+    staleTime: 60000,
+    refetchOnMount: false,
+    queryKey: [QueryKey.ART, id],
+    queryFn: async () => {
+      const response = await axiosInstance.get(`/arts/${id}`);
       return response.data;
     },
   });
 };
 
-export const prefetchGetArts = (filters: Omit<IArtsFilter, "limit">) => {
+export const prefetchArt = ({ id = "", cookie = "" }) => {
   return queryClient.prefetchQuery({
-    queryKey: [QueryKey.ARTS, filters.page, filters.query, filters.tags],
+    queryKey: [QueryKey.ART, id],
     queryFn: async () => {
-      const response = await axiosInstance.get(`/arts`);
+      const response = await axiosInstance.get(`/arts/${id}`, {
+        headers: {
+          cookie,
+        },
+      });
+      return response.data;
+    },
+  });
+};
+
+export const prefetchArtsRecommended = ({ id = "", tags = "" }) => {
+  return queryClient.prefetchQuery({
+    queryKey: [QueryKey.RECOMMENDED_ARTS, id, tags],
+    queryFn: async () => {
+      const response = await axiosInstance.get(
+        `/arts?page=1&limit=8&tags=${tags}`
+      );
       return response.data;
     },
   });

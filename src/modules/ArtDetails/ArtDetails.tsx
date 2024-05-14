@@ -1,8 +1,11 @@
+import { queryClient } from "@/common/api";
 import { Scene } from "@/common/components/3d";
 import { ArtCard } from "@/common/components/cards";
+import { QueryKey } from "@/common/enums";
+import { useIsMounted } from "@/common/hooks";
 import { HandFingerIcon, HandFingerOffIcon, HeartIcon } from "@/common/icons";
+import { IArtResponseModel, IResponse } from "@/common/types";
 import { FC, useEffect, useRef, useState } from "react";
-import { artData } from "../Home/components/Grid/mocks";
 import {
   Button,
   Container,
@@ -28,13 +31,21 @@ const ArtDetails: FC<IArtDetailsProps> = ({ art }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [enabled, setEnabled] = useState(false);
   const maskRef = useRef<HTMLDivElement>(null);
+  const isMounted = useIsMounted();
+
+  let recommendedArts = queryClient.getQueryData<
+    IResponse<IArtResponseModel[]>
+  >([QueryKey.RECOMMENDED_ARTS, art.id, art.tags.join(",")]);
 
   const renderTags = () => {
-    return art.tags.map((tag) => <Tag>{tag}</Tag>);
+    return art?.tags?.map((tag) => <Tag>{tag}</Tag>);
   };
 
   const renderGrid = () => {
-    return artData.map((art) => <ArtCard art={art} key={art.id} />);
+    return recommendedArts?.result?.map((item) => {
+      if (item.id === art.id) return null;
+      return <ArtCard art={item} key={item.id} />;
+    });
   };
 
   useEffect(() => {

@@ -48,3 +48,10 @@ export const ART_CATEGORIES = [
   "Mixed Media",
   "Performance Art",
 ];
+
+export const ARTS_LIMITS = {
+  HD_SCREEN: 16,
+  DESKTOP: 12,
+  TABLET: 8,
+  MOBILE: 4,
+};

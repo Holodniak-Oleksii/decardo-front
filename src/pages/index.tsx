@@ -1,10 +1,15 @@
+import { prefetchGetHomeArts, queryClient } from "@/common/api";
 import { Meta } from "@/common/shared";
 import { Home } from "@/modules";
+import { dehydrate } from "@tanstack/react-query";
 import { GetServerSideProps, NextPage } from "next";
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  await prefetchGetHomeArts();
   return {
-    props: {},
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
   };
 };
 

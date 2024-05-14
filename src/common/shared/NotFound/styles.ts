@@ -7,5 +7,12 @@ export const Container = styled.div`
   height: 100%;
   min-height: 400px;
   width: 100%;
-  font-size: : 32px;
+`;
+
+export const Title = styled.div`
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.3;
+  max-width: 500px;
+  text-align: center;
 `;
