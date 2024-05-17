@@ -72,6 +72,9 @@ export const Indent = styled.div`
 export const Tabs = styled.div`
   ${({ theme }) => theme.flex.row}
   gap: 24px;
+  @media screen and (max-width: 767px) {
+    gap: 16px;
+  }
 `;
 
 export const Tab = styled.button<IActiveble>`
@@ -83,4 +86,8 @@ export const Tab = styled.button<IActiveble>`
   border-bottom: 2px solid
     ${({ isActive, theme }) =>
       isActive ? theme.colors.main900 : theme.colors.main0};
+  @media screen and (max-width: 767px) {
+    font-size: 14px;
+    min-width: 60px;
+  }
 `;

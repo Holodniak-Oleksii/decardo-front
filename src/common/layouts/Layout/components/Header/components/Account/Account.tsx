@@ -1,5 +1,4 @@
 import { LINK_TEMPLATES } from "@/common/constants";
-import { useIsMounted } from "@/common/hooks";
 import { PlusIcon } from "@/common/icons";
 import { useUserStore } from "@/common/store";
 import { MobileOff, MobileOn } from "@/utils";
@@ -11,6 +10,7 @@ import { Avatar, Create, Wrapper } from "./styles";
 const Account: FC<IAccountProps> = ({ isOpen, onClose }) => {
   const { push } = useRouter();
   const user = useUserStore((state) => state.user);
+  const isAuth = useUserStore((state) => state.isAuth);
 
   const onRedirect = () => {
     onClose?.();
@@ -19,11 +19,13 @@ const Account: FC<IAccountProps> = ({ isOpen, onClose }) => {
 
   return (
     <Wrapper isOpen={isOpen}>
-      <MobileOff>
-        <Create onClick={() => push(LINK_TEMPLATES.CREATE_SPACE())}>
-          <PlusIcon />
-        </Create>
-      </MobileOff>
+      {isAuth && (
+        <MobileOff>
+          <Create onClick={() => push(LINK_TEMPLATES.CREATE_SPACE())}>
+            <PlusIcon />
+          </Create>
+        </MobileOff>
+      )}
       <MobileOn>
         <Create onClick={onRedirect}>{user?.username}</Create>
       </MobileOn>

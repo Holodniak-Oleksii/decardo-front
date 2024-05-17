@@ -26,6 +26,13 @@ export const Content = styled.div`
   min-height: 300px;
   padding: 16px;
   border-radius: 8px;
+  @media screen and (max-width: 767px) {
+    gap: 16px;
+    button {
+      font-size: 14px;
+      padding: 8px 12px;
+    }
+  }
 `;
 
 export const Title = styled.div`
@@ -34,4 +41,7 @@ export const Title = styled.div`
   line-height: 1.4;
   max-width: 400px;
   text-align: center;
+  @media screen and (max-width: 767px) {
+    font-size: 16px;
+  }
 `;

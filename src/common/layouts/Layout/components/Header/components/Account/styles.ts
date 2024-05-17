@@ -17,6 +17,7 @@ export const Wrapper = styled.div<Partial<IOpenable>>`
   @media screen and (max-width: 767px) {
     width: 100%;
     padding: 16px;
+    gap: 16px;
 
     flex-direction: row-reverse;
     transition: all 0.1s ease;

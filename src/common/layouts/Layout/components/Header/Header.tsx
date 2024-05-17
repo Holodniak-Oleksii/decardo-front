@@ -1,5 +1,4 @@
 import { LINK_TEMPLATES } from "@/common/constants";
-import { useIsMounted } from "@/common/hooks";
 import { useUserStore } from "@/common/store";
 import { MobileOff, MobileOn } from "@/utils";
 import { useRouter } from "next/router";
@@ -15,7 +14,7 @@ const Header = () => {
   const { push, asPath } = useRouter();
   const isAuth = useUserStore((state) => state.isAuth);
   const [isOpen, setIsOpen] = useState(false);
-  const isMounded = useIsMounted();
+
   const renderNavigations = () => {
     return headerNavigation.map((navigation) => {
       const path = navigation.trigger();
