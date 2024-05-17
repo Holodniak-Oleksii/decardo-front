@@ -26,7 +26,7 @@ export const Title = styled.div`
     font-size: 32px;
   }
   @media screen and (max-width: 767px) {
-    font-size: 24px;
+    display: none;
   }
 `;
 
