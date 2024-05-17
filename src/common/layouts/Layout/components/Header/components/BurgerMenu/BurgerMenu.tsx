@@ -70,9 +70,11 @@ const BurgerMenu: FC<IBurgerMenuProps> = (props) => {
             )}
           </MobileOn>
           <List>
-            <NavItem onClick={onClose} href={LINK_TEMPLATES.CREATE_SPACE()}>
-              New Space
-            </NavItem>
+            {isAuth && (
+              <NavItem onClick={onClose} href={LINK_TEMPLATES.CREATE_SPACE()}>
+                New Space
+              </NavItem>
+            )}
             {renderNavigations()}
           </List>
         </Container>
