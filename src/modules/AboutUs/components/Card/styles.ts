@@ -1,5 +1,29 @@
+import { IOpenable } from "@/common/types";
 import Image from "next/image";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+const openState = css`
+  .wrapper {
+    transform: perspective(900px) translateY(-5%) rotateX(25deg) translateZ(0);
+    box-shadow: 2px 35px 20px -8px rgba(0, 0, 0, 0.5);
+
+    &::before,
+    &::after {
+      opacity: 1;
+    }
+
+    &::after {
+      height: 120px;
+    }
+  }
+  .character {
+    opacity: 1;
+    transform: translate3d(0%, -20%, 100px);
+  }
+  .title {
+    transform: translate3d(0%, -50px, 100px);
+  }
+`;
 
 export const Wrapper = styled.div`
   ${({ theme }) => theme.flex.center};
@@ -8,6 +32,14 @@ export const Wrapper = styled.div`
   padding-top: 30px;
   position: relative;
   z-index: 2;
+
+  @media screen and (max-width: 767px) {
+    --card-height: 300px;
+    padding-top: 16px;
+  }
+  @media screen and (max-width: 540px) {
+    --card-width: calc(var(--card-height) / 1.1);
+  }
 `;
 
 export const Character = styled(Image)`
@@ -19,6 +51,9 @@ export const Character = styled(Image)`
   z-index: -1;
   object-fit: contain;
   object-position: bottom;
+  @media screen and (max-width: 767px) {
+    height: 260px;
+  }
 `;
 
 export const Title = styled.div`
@@ -40,7 +75,7 @@ export const Title = styled.div`
   }
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<IOpenable>`
   width: var(--card-width);
   height: var(--card-height);
   position: relative;
@@ -51,28 +86,11 @@ export const Container = styled.div`
 
   @media screen and (hover: hover) {
     &:hover {
-      .wrapper {
-        transform: perspective(900px) translateY(-5%) rotateX(25deg)
-          translateZ(0);
-        box-shadow: 2px 35px 20px -8px rgba(0, 0, 0, 0.5);
-
-        &::before,
-        &::after {
-          opacity: 1;
-        }
-
-        &::after {
-          height: 120px;
-        }
-      }
-      .character {
-        opacity: 1;
-        transform: translate3d(0%, -20%, 100px);
-      }
-      .title {
-        transform: translate3d(0%, -50px, 100px);
-      }
+      ${openState}
     }
+  }
+  @media screen and (hover: none) {
+    ${({ isOpen }) => isOpen && openState}
   }
 `;
 

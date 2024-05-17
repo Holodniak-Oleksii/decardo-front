@@ -13,11 +13,21 @@ import {
 
 import imagePot from "@/assets/images/pot.png";
 import imageStars from "@/assets/images/stars.png";
+import { LINK_TEMPLATES } from "@/common/constants";
 import { PlayIcon } from "@/common/icons";
+import { useUserStore } from "@/common/store";
 import { Button } from "@/ui-liberty/buttons";
 import { MobileOff } from "@/utils";
+import { useRouter } from "next/router";
 
 const Welcome = () => {
+  const { push } = useRouter();
+  const isAuth = useUserStore((state) => state.isAuth);
+
+  const handlerGetStarted = () => {
+    push(isAuth ? LINK_TEMPLATES.CREATE_SPACE() : LINK_TEMPLATES.SIGN_IN());
+  };
+
   return (
     <Wrapper>
       <Container>
@@ -36,7 +46,11 @@ const Welcome = () => {
               leaving unforgettable impressions. Dive into new depths of
               artistry with our collection of stunning 3D works.
             </Description>
-            <Button size="lg" endIcon={<PlayIcon />}>
+            <Button
+              size="lg"
+              endIcon={<PlayIcon />}
+              onClick={handlerGetStarted}
+            >
               Get Started
             </Button>
           </Text>

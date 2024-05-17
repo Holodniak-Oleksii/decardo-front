@@ -1,3 +1,5 @@
+import { LINK_TEMPLATES } from "@/common/constants";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { categories } from "./data";
 import {
@@ -15,10 +17,15 @@ import {
 const HexagonCategories = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(0);
+  const { push } = useRouter();
+
+  const handlerWatchMore = async (tag: string) => {
+    await push(LINK_TEMPLATES.SPACES({ tags: [tag] }));
+  };
 
   const renderHexagons = () => {
     return categories.map((data) => (
-      <Hexagon key={data.id}>
+      <Hexagon key={data.id} onClick={() => handlerWatchMore(data.title)}>
         <DoubleHexagon>
           <Relative>
             <DoubleHexagon>

@@ -49,6 +49,8 @@ export const Avatar = styled.div`
   width: 44px;
   border-radius: 50%;
   position: relative;
+
+  overflow: hidden;
   span {
     color: ${({ theme }) => theme.colors.main0};
   }

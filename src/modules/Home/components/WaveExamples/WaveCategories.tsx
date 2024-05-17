@@ -1,6 +1,8 @@
+import { LINK_TEMPLATES } from "@/common/constants";
 import { useOnClickOutside } from "@/common/hooks";
 import { Button } from "@/ui-liberty/buttons";
 import { MobileOff, MobileOn } from "@/utils";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { waveData } from "./data";
 import {
@@ -18,6 +20,11 @@ const WaveExamples = () => {
   const ref = useRef(null);
   const activeRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { push } = useRouter();
+
+  const handlerWatchMore = () => {
+    push(LINK_TEMPLATES.SPACES({}));
+  };
 
   useOnClickOutside(ref, () => setActive(null));
 
@@ -40,7 +47,7 @@ const WaveExamples = () => {
         onClick={() => setActive(item.id)}
       >
         <BlurBlock className="categories">
-          <Button>Watch more</Button>
+          <Button onClick={handlerWatchMore}>Watch more</Button>
         </BlurBlock>
       </Item>
     ));
