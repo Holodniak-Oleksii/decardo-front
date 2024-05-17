@@ -4,12 +4,7 @@ import { ISceneSettings } from "@/common/components/3d/types";
 import { LINK_TEMPLATES, MODEL_FORMATS } from "@/common/constants";
 import { PhotoIcon } from "@/common/icons";
 import { useUserStore } from "@/common/store";
-import {
-  IArtRequestModel,
-  IResponseError,
-  IUser,
-  TModelFormat,
-} from "@/common/types";
+import { IArtRequestModel, IResponseError, TModelFormat } from "@/common/types";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
@@ -22,6 +17,7 @@ import {
   Content,
   FormContainer,
   Message,
+  MessageContainer,
   MessageDescription,
   MessageTag,
   MessageTitle,
@@ -99,7 +95,6 @@ const Create = () => {
       };
       const response = await mutateAsync(body);
       if (response.status === 200) {
-        const user = response.result[0] as IUser;
         refetch();
         enqueueSnackbar("Success", {
           variant: "success",
@@ -140,21 +135,23 @@ const Create = () => {
               onChangeSceneSettings={(settings) => setSceneSettings(settings)}
             />
           ) : (
-            <Message isError={isSubmitted && !art}>
-              <MessageTitle>Choose file</MessageTitle>
-              <Row>{renderFormatTags()}</Row>
-              <MessageDescription>
-                Download the 3D model and take a photo for preview
-              </MessageDescription>
-              <Upload htmlFor="fileUpload">Upload</Upload>
-              <input
-                type="file"
-                id="fileUpload"
-                onChange={handlerChangeFile}
-                hidden
-                accept={"." + MODEL_FORMATS.join(", .")}
-              />
-            </Message>
+            <MessageContainer>
+              <Message isError={isSubmitted && !art}>
+                <MessageTitle>Choose file</MessageTitle>
+                <Row>{renderFormatTags()}</Row>
+                <MessageDescription>
+                  Download the 3D model and take a photo for preview
+                </MessageDescription>
+                <Upload htmlFor="fileUpload">Upload</Upload>
+                <input
+                  type="file"
+                  id="fileUpload"
+                  onChange={handlerChangeFile}
+                  hidden
+                  accept={"." + MODEL_FORMATS.join(", .")}
+                />
+              </Message>
+            </MessageContainer>
           )}
         </View>
         <Container>

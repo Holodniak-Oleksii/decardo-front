@@ -2,6 +2,7 @@ import { useLogOutMutation } from "@/common/api";
 import { LINK_TEMPLATES } from "@/common/constants";
 import { LogoutIcon, SettingsIcon } from "@/common/icons";
 import { useUserStore } from "@/common/store";
+import { MobileOff } from "@/utils";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { FC } from "react";
@@ -49,25 +50,27 @@ const BannerInfo: FC<IBannerInfoProps> = ({
         )}
         <Flex>
           {children}
-          <Indent />
-          <Row>
-            <Title>
-              {username}
-              {isMyProfile && (
-                <Setting href={LINK_TEMPLATES.EDIT()}>
-                  <SettingsIcon />
-                </Setting>
-              )}
-            </Title>
-            <Text>
-              <span>{email}</span>
-              {isMyProfile && (
-                <Logout onClick={logOut}>
-                  <LogoutIcon />
-                </Logout>
-              )}
-            </Text>
-          </Row>
+          <MobileOff>
+            <Indent />
+            <Row>
+              <Title>
+                {username}
+                {isMyProfile && (
+                  <Setting href={LINK_TEMPLATES.EDIT()}>
+                    <SettingsIcon />
+                  </Setting>
+                )}
+              </Title>
+              <Text>
+                <span>{email}</span>
+                {isMyProfile && (
+                  <Logout onClick={logOut}>
+                    <LogoutIcon />
+                  </Logout>
+                )}
+              </Text>
+            </Row>
+          </MobileOff>
         </Flex>
       </Content>
     </Wrapper>

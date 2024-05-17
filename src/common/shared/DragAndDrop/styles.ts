@@ -5,6 +5,7 @@ export const Container = styled.div`
   border-radius: 8px;
   height: 300px;
   width: 100%;
+  overflow: hidden;
   cursor: pointer;
   ${({ theme }) => theme.flex.center}
 `;

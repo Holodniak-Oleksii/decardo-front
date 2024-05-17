@@ -2,6 +2,7 @@ import {
   queryClient,
   useAddToWishlistMutation,
   useGetArtQuery,
+  useProfileQuery,
   useRemoveArtMutation,
   useRemoveFromWishlistMutation,
 } from "@/common/api";
@@ -45,7 +46,6 @@ const ArtDetails: FC<IArtDetailsProps> = ({ art }) => {
   const maskRef = useRef<HTMLDivElement>(null);
   const { push } = useRouter();
   const user = useUserStore((state) => state.user);
-  const setUser = useUserStore((state) => state.setUser);
 
   const isAuth = useUserStore((state) => state.isAuth);
 
@@ -54,6 +54,8 @@ const ArtDetails: FC<IArtDetailsProps> = ({ art }) => {
     !!user.wishlist.find((item) => item.id === art.id)
   );
   const { refetch: refetchArt } = useGetArtQuery({ id: art.id });
+  const { refetch: refetchUser } = useProfileQuery();
+
   const { mutateAsync: add } = useAddToWishlistMutation(art.id);
   const { mutateAsync: remove } = useRemoveFromWishlistMutation(art.id);
   const { mutateAsync: deleteArt } = useRemoveArtMutation(art.id);
@@ -66,18 +68,11 @@ const ArtDetails: FC<IArtDetailsProps> = ({ art }) => {
     if (isLiked) {
       setIsLiked(false);
       await remove();
-      setUser({
-        ...user,
-        wishlist: user.wishlist.filter((item) => item.id !== art.id),
-      });
     } else {
       setIsLiked(true);
       await add();
-      setUser({
-        ...user,
-        wishlist: [...user.wishlist, art],
-      });
     }
+    refetchUser();
     refetchArt();
   };
 

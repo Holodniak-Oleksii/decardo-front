@@ -4,6 +4,9 @@ import styled, { css } from "styled-components";
 export const columnSize = css`
   width: 100%;
   max-width: 320px;
+  @media screen and (max-width: 1024px) {
+    max-width: 240px;
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -36,6 +39,9 @@ export const Column = styled.div`
   ${({ theme }) => theme.flex.column}
   gap: 24px;
   flex-grow: 1;
+  @media screen and (max-width: 767px) {
+    padding-top: 24px;
+  }
 `;
 
 export const List = styled.div`
@@ -43,10 +49,24 @@ export const List = styled.div`
   position: relative;
   gap: 40px;
   grid-template-columns: repeat(2, calc(50% - 20px));
+  @media screen and (max-width: 1440px) {
+    gap: 24px;
+    grid-template-columns: repeat(2, calc(50% - 13px));
+  }
+  @media screen and (max-width: 767px) {
+    gap: 16px;
+    grid-template-columns: repeat(2, calc(50% - 8px));
+  }
+  @media screen and (max-width: 440px) {
+    grid-template-columns: 100%;
+  }
 `;
 
 export const Indent = styled.div`
   ${columnSize}
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export const Tabs = styled.div`

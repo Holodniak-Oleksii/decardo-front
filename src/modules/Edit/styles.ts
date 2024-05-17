@@ -40,6 +40,20 @@ export const Row = styled.div`
       max-width: 300px;
     }
   }
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+    & > div {
+      &:first-child {
+        height: 300px;
+        max-width: 300px;
+      }
+    }
+  }
+  @media screen and (max-width: 460px) {
+    & > div {
+      max-width: 100%;
+    }
+  }
 `;
 
 export const Column = styled.div`

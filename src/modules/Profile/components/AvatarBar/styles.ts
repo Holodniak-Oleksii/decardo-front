@@ -3,10 +3,15 @@ import { columnSize } from "../../styles";
 
 export const Wrapper = styled.div`
   box-shadow: ${({ theme }) => theme.boxShadow.sm};
+  background-color: ${({ theme }) => theme.colors.main0};
   ${columnSize};
   position: absolute;
   top: 20%;
   left: 0;
+  @media screen and (max-width: 767px) {
+    position: relative;
+    transform: translateY(40px);
+  }
 `;
 
 export const Avatar = styled.div`
@@ -18,6 +23,9 @@ export const Avatar = styled.div`
   img {
     object-fit: cover;
   }
+  @media screen and (max-width: 767px) {
+    aspect-ratio: 1/1;
+  }
 `;
 
 export const Container = styled.div`
@@ -25,6 +33,9 @@ export const Container = styled.div`
   gap: 16px;
   width: 100%;
   padding: 16px;
+  @media screen and (max-width: 767px) {
+    gap: 8px;
+  }
 `;
 
 export const Label = styled.div`

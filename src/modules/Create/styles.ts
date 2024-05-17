@@ -14,6 +14,9 @@ export const Content = styled.div`
   padding: 32px 0 240px 0;
   width: 100%;
   gap: 24px;
+  @media screen and (max-width: 767px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 export const Container = styled.div`
@@ -54,6 +57,10 @@ export const ScreenShot = styled.div<IScreenShotProps>`
         ${theme.colors.error200} 100%
       );
     `};
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    max-width: 100%;
+  }
 `;
 
 export const FormContainer = styled.div`
@@ -61,6 +68,10 @@ export const FormContainer = styled.div`
   max-width: calc(60% - 24px);
   ${({ theme }) => theme.flex.column}
   gap: 4px;
+  @media screen and (max-width: 767px) {
+    max-width: 100%;
+    width: 100%;
+  }
 `;
 
 export const View = styled.div`
@@ -71,6 +82,12 @@ export const View = styled.div`
   height: 100svh;
   min-height: 500px;
   position: relative;
+`;
+export const MessageContainer = styled.div`
+  ${({ theme }) => theme.flex.center}
+  width: 100%;
+  height: 100%;
+  padding: 16px;
 `;
 
 export const Message = styled.div<IInvalid>`
@@ -94,6 +111,9 @@ export const MessageTitle = styled.div`
   font-size: 28px;
   font-weight: 600;
   text-align: center;
+  @media screen and (max-width: 767px) {
+    font-size: 24px;
+  }
 `;
 
 export const Row = styled.div`
@@ -117,6 +137,9 @@ export const MessageTag = styled.div`
 export const MessageDescription = styled.div`
   text-align: center;
   font-size: 16px;
+  @media screen and (max-width: 767px) {
+    font-size: 14px;
+  }
 `;
 
 export const Upload = styled.label`

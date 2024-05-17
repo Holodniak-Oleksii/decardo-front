@@ -6,6 +6,9 @@ export const Wrapper = styled.div`
   height: 400px;
   background-color: ${({ theme }) => theme.colors.main10};
   position: relative;
+  @media screen and (max-width: 767px) {
+    height: fit-content;
+  }
 `;
 
 export const Mask = styled.div`
@@ -32,7 +35,6 @@ export const Content = styled.div`
   position: relative;
   height: 100%;
   img {
-    filter: grayscale(1);
     object-fit: cover;
     object-position: top;
   }
@@ -44,6 +46,9 @@ export const Flex = styled.div`
   gap: 32px;
   width: 100%;
   height: 100%;
+  @media screen and (max-width: 767px) {
+    justify-content: center;
+  }
 `;
 
 export const Row = styled.div`
@@ -71,8 +76,8 @@ export const Text = styled.div`
   font-weight: 600;
   color: ${({ theme }) => theme.colors.main0};
   ${({ theme }) => theme.text.overflow}
-  ${({ theme }) => theme.flex.row}
-gap: 6px;
+  ${({ theme }) => theme.flex.row};
+  gap: 6px;
 `;
 
 export const Logout = styled.button`

@@ -1,4 +1,6 @@
 import { QueryKey } from "@/common/enums";
+import { useUserStore } from "@/common/store";
+import { IUser } from "@/common/types";
 import { ILoginFormValues } from "@/modules/Auth/Login/types";
 import { IRegistrationFormValues } from "@/modules/Auth/Registration/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -41,14 +43,21 @@ export const prefetchProfile = (cookie = "", username = "") => {
 };
 
 export const useProfileQuery = () => {
-  return useQuery({
-    staleTime: 0,
+  const { user, setUser } = useUserStore();
+
+  return useQuery<IUser | null>({
     refetchOnMount: false,
     queryKey: [QueryKey.PROFILE, QueryKey.USER],
+    initialData: user,
 
     queryFn: async () => {
       const response = await axiosInstance.get(`/user`);
-      return response.data.result[0];
+      if (response.status === 200) {
+        setUser(response.data.result[0]);
+        return response.data.result[0];
+      } else {
+        return null;
+      }
     },
   });
 };

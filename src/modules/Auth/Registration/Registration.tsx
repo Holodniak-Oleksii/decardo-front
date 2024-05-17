@@ -1,4 +1,4 @@
-import { useRegistrationMutation } from "@/common/api";
+import { useProfileQuery, useRegistrationMutation } from "@/common/api";
 import { LINK_TEMPLATES } from "@/common/constants";
 import { patterns } from "@/common/helpers";
 import { useUserStore } from "@/common/store";
@@ -22,7 +22,7 @@ const Registration = () => {
 
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const setUser = useUserStore((state) => state.setUser);
+  const { refetch } = useProfileQuery();
   const { mutateAsync } = useRegistrationMutation();
 
   const onSubmit = async (data: IRegistrationFormValues) => {
@@ -30,7 +30,7 @@ const Registration = () => {
       const response = await mutateAsync(data);
       if (response.status === 200) {
         const user = response.result[0] as IUser;
-        setUser(user);
+        refetch();
         enqueueSnackbar("Success", {
           variant: "success",
         });

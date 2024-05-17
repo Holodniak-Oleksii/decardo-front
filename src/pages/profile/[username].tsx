@@ -2,6 +2,7 @@ import { prefetchProfile, queryClient } from "@/common/api";
 import { QueryKey } from "@/common/enums";
 import { ProtectedRouteGuard } from "@/common/guards";
 import { Meta } from "@/common/shared";
+import { useUserStore } from "@/common/store";
 import { IResponse, IUser } from "@/common/types";
 import { Profile } from "@/modules";
 import { IProfilePageProps } from "@/modules/Profile/types";
@@ -12,13 +13,15 @@ export const getServerSideProps: GetServerSideProps = ProtectedRouteGuard(
     const username = context.query.username?.toString() || "";
     const cookies = context.req?.headers.cookie || "";
 
-    let user = queryClient.getQueryData<IResponse<IUser[]>>([QueryKey.PROFILE]);
+    let user = queryClient.getQueryData<IResponse<IUser[]>>([
+      QueryKey.PROFILE,
+      QueryKey.USER,
+    ]);
 
     if (!username) {
       return {
         props: {
           isMyProfile: true,
-          profile: user?.result[0],
         },
       };
     }
@@ -26,7 +29,6 @@ export const getServerSideProps: GetServerSideProps = ProtectedRouteGuard(
       return {
         props: {
           isMyProfile: true,
-          profile: user?.result[0],
         },
       };
     }
@@ -59,11 +61,16 @@ export const getServerSideProps: GetServerSideProps = ProtectedRouteGuard(
   }
 );
 
-const ProfilePage: NextPage<IProfilePageProps> = (props) => {
+const ProfilePage: NextPage<IProfilePageProps> = ({ isMyProfile, profile }) => {
+  const user = useUserStore((state) => state.user);
+
   return (
     <>
       <Meta />
-      <Profile {...props} />
+      <Profile
+        profile={isMyProfile ? user : profile}
+        isMyProfile={isMyProfile}
+      />
     </>
   );
 };

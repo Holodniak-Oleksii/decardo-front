@@ -1,7 +1,6 @@
-import { useLoginMutation } from "@/common/api";
+import { useLoginMutation, useProfileQuery } from "@/common/api";
 import { LINK_TEMPLATES } from "@/common/constants";
 import { patterns } from "@/common/helpers";
-import { useUserStore } from "@/common/store";
 import { IResponseError, IUser } from "@/common/types";
 import { Button } from "@/ui-liberty/buttons";
 import { Input } from "@/ui-liberty/inputs";
@@ -23,14 +22,14 @@ const Login = () => {
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { mutateAsync } = useLoginMutation();
-  const setUser = useUserStore((state) => state.setUser);
+  const { refetch } = useProfileQuery(); 
 
   const onSubmit = async (data: ILoginFormValues) => {
     try {
       const response = await mutateAsync(data);
       if (response.status === 200) {
         const user = response.result[0] as IUser;
-        setUser(user);
+        refetch();
         enqueueSnackbar("Success", {
           variant: "success",
         });
