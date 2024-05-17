@@ -142,7 +142,7 @@ export const prefetchArtsRecommended = ({ id = "", tags = "" }) => {
 export const useRemoveArtMutation = (artId: string | number) => {
   return useMutation({
     mutationFn: async () => {
-      const response = await axiosInstance.delete(`/arts/${artId}`);
+      await axiosInstance.delete(`/arts/${artId}`);
     },
   });
 };

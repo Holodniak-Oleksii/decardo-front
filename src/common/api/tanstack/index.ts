@@ -6,6 +6,7 @@ export const queryClient = new QueryClient({
       retry: false,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
+      staleTime: 0,
     },
   },
 });

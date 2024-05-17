@@ -48,7 +48,7 @@ export const useProfileQuery = () => {
 
     queryFn: async () => {
       const response = await axiosInstance.get(`/user`);
-      return response.data;
+      return response.data.result[0];
     },
   });
 };

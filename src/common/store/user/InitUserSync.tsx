@@ -7,6 +7,7 @@ const InitUserSync: FC<Omit<IInitialUserStoreProps, "isInit">> = ({
   user,
 }) => {
   const isInit = useUserStore((state) => state.isInit);
+  console.log("SUNSCT user :", user);
 
   if (!isInit) {
     useUserStore.setState((state) => ({

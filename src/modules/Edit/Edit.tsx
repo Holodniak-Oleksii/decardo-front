@@ -42,8 +42,12 @@ const Edit = () => {
       form.append("id", user.id);
       form.append("description", data.description);
       form.append("contact", data.contact);
-      form.append("bannerImage", data.bannerImage);
-      form.append("avatar", data.avatar);
+      if (data.bannerImage) {
+        form.append("bannerImage", data.bannerImage);
+      }
+      if (data.avatar) {
+        form.append("avatar", data.avatar);
+      }
 
       const response = await mutateAsync(form);
       if (response.status === 200) {

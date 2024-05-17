@@ -38,13 +38,11 @@ export const getServerSideProps: GetServerSideProps = ProtectedRouteGuard(
 
     if (!profile) {
       await prefetchProfile(cookies, username);
-      console.log("username :", username);
       profile = queryClient.getQueryData<IResponse<IUser[]>>([
         QueryKey.PROFILE,
         username,
       ]);
     }
-    console.log("profile :", profile);
 
     if (profile?.status !== 200) {
       return {
