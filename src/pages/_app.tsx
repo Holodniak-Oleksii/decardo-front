@@ -1,8 +1,8 @@
 import { queryClient } from "@/common/api";
 import { FONTS } from "@/common/constants";
-import { useInitFetch } from "@/common/hooks";
 import { GeneralLayout, Layout } from "@/common/layouts";
 import { PageLoader } from "@/common/shared";
+import { InitUserSync } from "@/common/store";
 import { TAppPropsWithLayout } from "@/common/types";
 import "@/styles/index.scss";
 import Theme from "@/theme";
@@ -14,8 +14,6 @@ import { SnackbarProvider } from "notistack";
 const App = (props: TAppPropsWithLayout) => {
   const { Component, pageProps } = props;
   const { route } = useRouter();
-
-  useInitFetch();
 
   const renderWithLayout =
     Component.getLayout ||
@@ -38,6 +36,7 @@ const App = (props: TAppPropsWithLayout) => {
               }}
               autoHideDuration={3000}
             >
+              <InitUserSync {...pageProps} />
               {renderWithLayout(
                 <Component {...pageProps} key={route} />,
                 pageProps

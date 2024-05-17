@@ -1,36 +1,43 @@
-import avatarImage from "@/assets/images/artist.webp";
 import Image from "next/image";
 
+import imagePlug from "@/assets/images/empty.png";
 import { ExternalLinkIcon } from "@/common/icons";
+import { FC } from "react";
 import { Avatar, Container, Label, Redirect, Text, Wrapper } from "./styles";
+import { IAvatarBarProps } from "./types";
 
-const AvatarBar = () => {
-  return (
-    <Wrapper>
-      <Avatar>
-        <Image src={avatarImage} fill alt="" />
-      </Avatar>
-      <Container>
-        <Label>ABOUT</Label>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </Text>
-        <Label>CONTACT</Label>
-        <Text>
-          <Redirect href="">
-            <ExternalLinkIcon />
-          </Redirect>
-          <span>http://localhost:3000/profile/arsak</span>
-        </Text>
-      </Container>
-    </Wrapper>
-  );
-};
+const AvatarBar: FC<IAvatarBarProps> = ({ avatar, contact, description }) => (
+  <Wrapper>
+    <Avatar>
+      <Image
+        src={(avatar as string) || ""}
+        fill
+        alt=""
+        onError={(e) => {
+          e.currentTarget.src = imagePlug.src;
+        }}
+      />
+    </Avatar>
+    <Container>
+      {description && (
+        <>
+          <Label>ABOUT</Label>
+          <Text>{description}</Text>
+        </>
+      )}
+      {!!contact && (
+        <>
+          <Label>CONTACT</Label>
+          <Text>
+            <Redirect href={contact}>
+              <ExternalLinkIcon />
+            </Redirect>
+            <span>{contact}</span>
+          </Text>
+        </>
+      )}
+    </Container>
+  </Wrapper>
+);
 
 export default AvatarBar;

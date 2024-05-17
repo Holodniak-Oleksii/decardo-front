@@ -38,6 +38,9 @@ export const Content = styled.div`
   z-index: 2;
   width: 100%;
   padding: 24px;
+  @media screen and (max-width: 1024px) {
+    padding: 16px;
+  }
 `;
 
 export const Description = styled.div`
@@ -45,6 +48,9 @@ export const Description = styled.div`
   font-weight: 300;
   line-height: 1.5;
   font-size: 16px;
+  @media screen and (max-width: 1024px) {
+    font-size: 14px;
+  }
 `;
 
 export const Title = styled.div`
@@ -53,4 +59,10 @@ export const Title = styled.div`
   font-weight: 800;
   line-height: 1.3;
   margin-bottom: 12px;
+  @media screen and (max-width: 1024px) {
+    font-size: 24px;
+  }
+  @media screen and (max-width: 767px) {
+    font-size: 18px;
+  }
 `;

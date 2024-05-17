@@ -1,9 +1,10 @@
-import imageBg from "@/assets/images/slider/02.webp";
+import { useLogOutMutation } from "@/common/api";
 import { LINK_TEMPLATES } from "@/common/constants";
 import { LogoutIcon, SettingsIcon } from "@/common/icons";
 import { useUserStore } from "@/common/store";
 import Image from "next/image";
-import { FC, PropsWithChildren } from "react";
+import { useRouter } from "next/router";
+import { FC } from "react";
 import { Indent } from "../../styles";
 import {
   Content,
@@ -16,33 +17,55 @@ import {
   Title,
   Wrapper,
 } from "./styles";
-const BannerInfo: FC<PropsWithChildren> = ({ children }) => {
-  const setAuth = useUserStore((state) => state.setAuth);
+import { IBannerInfoProps } from "./types";
 
-  const logOut = () => {
-    setAuth(false);
+const BannerInfo: FC<IBannerInfoProps> = ({
+  children,
+  bannerImage,
+  email,
+  username,
+  isMyProfile,
+}) => {
+  const setAuth = useUserStore((state) => state.setAuth);
+  const { mutateAsync } = useLogOutMutation();
+  const { push } = useRouter();
+
+  const logOut = async () => {
+    try {
+      await mutateAsync();
+      setAuth(false);
+      push(LINK_TEMPLATES.HOME());
+    } catch (e) {}
   };
 
   return (
     <Wrapper>
       <Content>
-        <Image fill src={imageBg} alt="" />
-        <Mask />
+        {bannerImage && (
+          <>
+            <Image fill alt="" src={bannerImage} />
+            <Mask />
+          </>
+        )}
         <Flex>
           {children}
           <Indent />
           <Row>
             <Title>
-              Magara Uchiha
-              <Setting href={LINK_TEMPLATES.EDIT()}>
-                <SettingsIcon />
-              </Setting>
+              {username}
+              {isMyProfile && (
+                <Setting href={LINK_TEMPLATES.EDIT()}>
+                  <SettingsIcon />
+                </Setting>
+              )}
             </Title>
             <Text>
-              <span>madara@gmail.com</span>
-              <Logout onClick={logOut}>
-                <LogoutIcon />
-              </Logout>
+              <span>{email}</span>
+              {isMyProfile && (
+                <Logout onClick={logOut}>
+                  <LogoutIcon />
+                </Logout>
+              )}
             </Text>
           </Row>
         </Flex>

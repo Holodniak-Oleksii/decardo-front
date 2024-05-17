@@ -1,20 +1,68 @@
+import { useProfileQuery, useUpdateMutation } from "@/common/api";
+import { LINK_TEMPLATES } from "@/common/constants";
 import { DragAndDrop } from "@/common/shared";
+import { useUserStore } from "@/common/store";
+import { IResponseError, IUser } from "@/common/types";
 import { Button } from "@/ui-liberty/buttons";
 import { Input, TextArea } from "@/ui-liberty/inputs";
+import { AxiosError } from "axios";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import { FormProvider, useForm } from "react-hook-form";
 import { Column, Container, Content, Form, Row, Wrapper } from "./styles";
 import { IEditFormFields } from "./types";
 
 const Edit = () => {
-  const methods = useForm<IEditFormFields>({ mode: "onSubmit" });
+  const user = useUserStore((state) => state.user);
+  const methods = useForm<IEditFormFields>({
+    mode: "onSubmit",
+    defaultValues: {
+      contact: user.contact || "",
+      description: user.description || "",
+      username: user.username || "",
+    },
+  });
   const {
     handleSubmit,
     register,
     setValue,
-    formState: { isSubmitted, errors },
+    formState: { errors },
   } = methods;
 
-  const onSubmit = async () => {};
+  const { push } = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { refetch } = useProfileQuery();
+  const { mutateAsync } = useUpdateMutation();
+
+  const onSubmit = async (data: IEditFormFields) => {
+    try {
+      const form = new FormData();
+      form.append("username", data.username);
+      form.append("id", user.id);
+      form.append("description", data.description);
+      form.append("contact", data.contact);
+      form.append("bannerImage", data.bannerImage);
+      form.append("avatar", data.avatar);
+
+      const response = await mutateAsync(form);
+      if (response.status === 200) {
+        const user = response.result[0] as IUser;
+        refetch();
+        enqueueSnackbar("Success", {
+          variant: "success",
+        });
+        push(LINK_TEMPLATES.PROFILE(user.username));
+      }
+    } catch (e) {
+      const error = e as AxiosError<IResponseError>;
+      if (error.response) {
+        enqueueSnackbar(error.response?.data.message || "", {
+          variant: "warning",
+        });
+      }
+    }
+  };
 
   return (
     <Wrapper>
@@ -26,23 +74,31 @@ const Edit = () => {
               <Row>
                 <DragAndDrop onChange={(file) => setValue("avatar", file)} />
                 <Column>
+                  <Input
+                    label={"Username"}
+                    placeholder={"Enter username"}
+                    {...register("username", {
+                      required: true,
+                    })}
+                    error={errors.username}
+                  />
+                  <Input
+                    label={"Contact"}
+                    placeholder={"http://your.contact.com"}
+                    {...register("contact", {
+                      required: true,
+                    })}
+                    error={errors.contact}
+                  />
                   <TextArea
                     label={"Description"}
                     placeholder={"Enter description"}
-                    customHeight={200}
+                    customHeight={160}
                     {...register("description", {
                       required: true,
                       maxLength: 255,
                     })}
                     error={errors.description}
-                  />
-                  <Input
-                    label={"Contact"}
-                    placeholder={"Enter contact"}
-                    {...register("contact", {
-                      required: true,
-                    })}
-                    error={errors.contact}
                   />
                   <Button type="submit">Submit</Button>
                 </Column>

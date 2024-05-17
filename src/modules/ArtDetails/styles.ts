@@ -46,19 +46,12 @@ export const Mask = styled.div`
   transition: all 0.2s ease-in-out;
 `;
 
-export const Like = styled.button`
+export const ActionButton = styled.button`
   ${({ theme }) => theme.flex.row};
   height: 100%;
   gap: 6px;
   margin-right: auto;
   position: relative;
-
-  span {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1;
-    color: ${({ theme }) => theme.colors.error600};
-  }
 
   svg {
     height: 32px;

@@ -1,18 +1,31 @@
-import { queryClient } from "@/common/api";
+import {
+  queryClient,
+  useAddToWishlistMutation,
+  useGetArtQuery,
+  useRemoveArtMutation,
+  useRemoveFromWishlistMutation,
+} from "@/common/api";
 import { Scene } from "@/common/components/3d";
 import { ArtCard } from "@/common/components/cards";
+import { LINK_TEMPLATES } from "@/common/constants";
 import { QueryKey } from "@/common/enums";
-import { useIsMounted } from "@/common/hooks";
-import { HandFingerIcon, HandFingerOffIcon, HeartIcon } from "@/common/icons";
+import {
+  HandFingerIcon,
+  HandFingerOffIcon,
+  HeartIcon,
+  TrashIcon,
+} from "@/common/icons";
+import { useUserStore } from "@/common/store";
 import { IArtResponseModel, IResponse } from "@/common/types";
+import { useRouter } from "next/router";
 import { FC, useEffect, useRef, useState } from "react";
 import {
+  ActionButton,
   Button,
   Container,
   Content,
   Description,
   Details,
-  Like,
   List,
   Mask,
   Overlay,
@@ -28,14 +41,50 @@ import {
 import { IArtDetailsProps } from "./types";
 
 const ArtDetails: FC<IArtDetailsProps> = ({ art }) => {
-  const [isLiked, setIsLiked] = useState(false);
   const [enabled, setEnabled] = useState(false);
   const maskRef = useRef<HTMLDivElement>(null);
-  const isMounted = useIsMounted();
+  const { push } = useRouter();
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
+
+  const isAuth = useUserStore((state) => state.isAuth);
+
+  const isMyProfile = art.owner === user.username;
+  const [isLiked, setIsLiked] = useState(
+    !!user.wishlist.find((item) => item.id === art.id)
+  );
+  const { refetch: refetchArt } = useGetArtQuery({ id: art.id });
+  const { mutateAsync: add } = useAddToWishlistMutation(art.id);
+  const { mutateAsync: remove } = useRemoveFromWishlistMutation(art.id);
+  const { mutateAsync: deleteArt } = useRemoveArtMutation(art.id);
 
   let recommendedArts = queryClient.getQueryData<
     IResponse<IArtResponseModel[]>
   >([QueryKey.RECOMMENDED_ARTS, art.id, art.tags.join(",")]);
+
+  const handlerWishlistToggle = async () => {
+    if (isLiked) {
+      setIsLiked(false);
+      await remove();
+      setUser({
+        ...user,
+        wishlist: user.wishlist.filter((item) => item.id !== art.id),
+      });
+    } else {
+      setIsLiked(true);
+      await add();
+      setUser({
+        ...user,
+        wishlist: [...user.wishlist, art],
+      });
+    }
+    refetchArt();
+  };
+
+  const handlerDeleteArt = async () => {
+    await deleteArt();
+    push(LINK_TEMPLATES.SPACES({}));
+  };
 
   const renderTags = () => {
     return art?.tags?.map((tag) => <Tag>{tag}</Tag>);
@@ -83,12 +132,21 @@ const ArtDetails: FC<IArtDetailsProps> = ({ art }) => {
           <Details>
             <Title>
               <Text>{art.title}</Text>
-              <Like onClick={() => setIsLiked((prev) => !prev)}>
-                <HeartIcon isLike={isLiked} />
-                <span>11</span>
-              </Like>
+              {isAuth && (
+                <>
+                  {!isMyProfile ? (
+                    <ActionButton onClick={handlerWishlistToggle}>
+                      <HeartIcon isLike={isLiked} />
+                    </ActionButton>
+                  ) : (
+                    <ActionButton onClick={handlerDeleteArt}>
+                      <TrashIcon />
+                    </ActionButton>
+                  )}
+                </>
+              )}
             </Title>
-            <Owner href="">@{art.owner}</Owner>
+            <Owner href={LINK_TEMPLATES.PROFILE(art.owner)}>@{art.owner}</Owner>
             <Tags>{renderTags()}</Tags>
             <Description>{art.description}</Description>
             <List>{renderGrid()}</List>

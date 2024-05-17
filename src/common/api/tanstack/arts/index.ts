@@ -9,24 +9,45 @@ export const useCreateArtMutation = () =>
   useMutation({
     mutationFn: async (art: IArtRequestModel) => {
       const formData = new FormData();
-      formData.append("name", art.title);
+      formData.append("title", art.title);
       formData.append("description", art.description);
-      formData.append("tags", JSON.stringify(art.tags));
+      formData.append("owner", art.owner);
+      formData.append("backgroundColor ", art.settings.backgroundColor);
+      formData.append(
+        "ambientLightIntensity ",
+        art.settings.ambientLight.intensity.toString()
+      );
+      formData.append(
+        "directionalLightIntensity",
+        art.settings.directionalLight.intensity.toString()
+      );
+      formData.append(
+        "hemisphereLightGroundColor  ",
+        art.settings.hemisphereLight.groundColor
+      );
+      formData.append(
+        "hemisphereLightIntensity ",
+        art.settings.hemisphereLight.intensity.toString()
+      );
+      formData.append("format", art.format);
+      formData.append("tags", art.tags.join(","));
       formData.append("preview", art.preview);
       formData.append("model", art.model);
-      formData.append("owner", art.owner);
-      formData.append("settings", JSON.stringify(art.settings));
 
-      try {
-        const res = await axiosInstance.post("api/art/create", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        return res.data;
-      } catch (error) {
-        console.log("error :", error);
-      }
+      const res = await axiosInstance.post("/arts", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return res.data;
+    },
+  });
+
+export const useDeleteArtMutation = () =>
+  useMutation({
+    mutationFn: async (id: string | number) => {
+      const res = await axiosInstance.delete("/arts");
+      return res.data;
     },
   });
 
@@ -80,9 +101,9 @@ export const prefetchGetHomeArts = () => {
   });
 };
 
-export const useGetArtQuery = ({ id = "" }) => {
+export const useGetArtQuery = ({ id = "" }: { id: string | number }) => {
   return useQuery<IResponse<IArtResponseModel[]>>({
-    staleTime: 60000,
+    staleTime: 0,
     refetchOnMount: false,
     queryKey: [QueryKey.ART, id],
     queryFn: async () => {
@@ -114,6 +135,14 @@ export const prefetchArtsRecommended = ({ id = "", tags = "" }) => {
         `/arts?page=1&limit=8&tags=${tags}`
       );
       return response.data;
+    },
+  });
+};
+
+export const useRemoveArtMutation = (artId: string | number) => {
+  return useMutation({
+    mutationFn: async () => {
+      const response = await axiosInstance.delete(`/arts/${artId}`);
     },
   });
 };

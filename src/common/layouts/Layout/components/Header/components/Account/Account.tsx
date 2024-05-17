@@ -1,18 +1,22 @@
 import { LINK_TEMPLATES } from "@/common/constants";
+import { useIsMounted } from "@/common/hooks";
 import { PlusIcon } from "@/common/icons";
+import { useUserStore } from "@/common/store";
 import { MobileOff, MobileOn } from "@/utils";
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { Avatar, Create, Wrapper } from "./styles";
 import { IAccountProps } from "../../types";
+import { Avatar, Create, Wrapper } from "./styles";
 
 const Account: FC<IAccountProps> = ({ isOpen, onClose }) => {
   const { push } = useRouter();
+  const user = useUserStore((state) => state.user);
 
   const onRedirect = () => {
     onClose?.();
-    push(LINK_TEMPLATES.PROFILE("1"));
+    push(LINK_TEMPLATES.PROFILE(user?.username || ""));
   };
+
   return (
     <Wrapper isOpen={isOpen}>
       <MobileOff>
@@ -21,10 +25,14 @@ const Account: FC<IAccountProps> = ({ isOpen, onClose }) => {
         </Create>
       </MobileOff>
       <MobileOn>
-        <Create onClick={onRedirect}>Madara Uchiha</Create>
+        <Create onClick={onRedirect}>{user?.username}</Create>
       </MobileOn>
       <Avatar onClick={onRedirect}>
-        <span>MU</span>
+        {user?.avatar ? (
+          <img src={user.avatar} />
+        ) : (
+          <span>{user?.username?.slice(0, 2)}</span>
+        )}
       </Avatar>
     </Wrapper>
   );

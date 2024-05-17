@@ -1,18 +1,21 @@
 import animationData from "@/assets/animation/loader.json";
-import { useUserStore } from "@/common/store";
 import Lottie from "lottie-react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Transition } from "react-transition-group";
 import { Overlay } from "./styles";
 
 const PageLoader = () => {
-  const isInit = useUserStore((state) => state.isInit);
+  const [isMounded, setIsMounded] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setIsMounded(true);
+  }, []);
 
   return (
     <Transition
       nodeRef={overlayRef}
-      in={!isInit}
+      in={!isMounded}
       timeout={1000}
       unmountOnExit
       mountOnEnter

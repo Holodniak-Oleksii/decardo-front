@@ -1,6 +1,6 @@
 import { ArtCard } from "@/common/components/cards";
-import { useState } from "react";
-import { artData } from "../Home/components/Grid/mocks";
+import { useUserStore } from "@/common/store";
+import { FC, useState } from "react";
 import { AvatarBar, BannerInfo } from "./components";
 import { TABS } from "./data";
 import {
@@ -13,12 +13,16 @@ import {
   Tabs,
   Wrapper,
 } from "./styles";
+import { IProfilePageProps } from "./types";
 
-const Profile = () => {
+const Profile: FC<IProfilePageProps> = ({ profile }) => {
   const [activeTab, setActiveTab] = useState(TABS[0]);
+  const user = useUserStore((state) => state.user);
 
   const renderGrid = () => {
-    return artData.map((art) => <ArtCard art={art} key={art.id} />);
+    return (activeTab === "WORKS" ? profile.arts : user.wishlist).map((art) => (
+      <ArtCard art={art} key={art.id} />
+    ));
   };
 
   const renderTabs = () => {
@@ -36,13 +40,22 @@ const Profile = () => {
   return (
     <Wrapper>
       <Container>
-        <BannerInfo>
-          <AvatarBar />
+        <BannerInfo
+          bannerImage={profile.bannerImage}
+          username={profile.username}
+          email={profile.email}
+          isMyProfile={profile.myProfile}
+        >
+          <AvatarBar
+            avatar={profile.avatar}
+            contact={profile.contact}
+            description={profile.description}
+          />
         </BannerInfo>
         <Content>
           <Indent />
           <Column>
-            <Tabs>{renderTabs()}</Tabs>
+            {profile.myProfile && <Tabs>{renderTabs()}</Tabs>}
             <List>{renderGrid()}</List>
           </Column>
         </Content>

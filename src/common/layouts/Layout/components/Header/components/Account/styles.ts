@@ -44,6 +44,7 @@ export const Avatar = styled.div`
   border: 2px solid ${({ theme }) => theme.colors.main400};
   cursor: pointer;
 
+  text-transform: uppercase;
   height: 44px;
   width: 44px;
   border-radius: 50%;

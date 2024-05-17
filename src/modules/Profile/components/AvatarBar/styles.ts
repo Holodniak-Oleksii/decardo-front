@@ -14,6 +14,7 @@ export const Avatar = styled.div`
   position: relative;
   aspect-ratio: 7 / 9;
   background-color: ${({ theme }) => theme.colors.main10};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.main10};
   img {
     object-fit: cover;
   }

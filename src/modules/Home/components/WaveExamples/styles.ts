@@ -4,8 +4,6 @@ import { IWaveProps } from "./types";
 export const Container = styled.div`
   ${({ theme }) => theme.flex.center};
   width: 100%;
-  overflow: hidden;
-  overflow-x: auto;
   @media screen and (max-width: 767px) {
     gap: 16px;
     padding: 0 16px;

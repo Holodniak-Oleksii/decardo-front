@@ -1,14 +1,17 @@
+import { ProtectedRouteGuard } from "@/common/guards";
 import { Meta } from "@/common/shared";
 import { TNextPageWithLayout } from "@/common/types";
 import { Create } from "@/modules";
 import { GetServerSideProps } from "next";
 import { ReactNode } from "react";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    props: {},
-  };
-};
+export const getServerSideProps: GetServerSideProps = ProtectedRouteGuard(
+  async () => {
+    return {
+      props: {},
+    };
+  }
+);
 
 const CreatePage: TNextPageWithLayout = () => {
   return (

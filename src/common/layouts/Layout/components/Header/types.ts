@@ -7,3 +7,7 @@ export interface IHeaderWrapperProps {
 export interface IAccountProps extends Partial<IOpenable> {
   onClose?: () => void;
 }
+
+export interface IHeaderProps {
+  isAuth: boolean;
+}

@@ -1,3 +1,4 @@
+import { ProtectedRouteGuard } from "@/common/guards";
 import { AuthLayout } from "@/common/layouts";
 import { Meta } from "@/common/shared";
 import { TNextPageWithLayout } from "@/common/types";
@@ -5,11 +6,13 @@ import { Login } from "@/modules";
 import { GetServerSideProps } from "next";
 import { ReactNode } from "react";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    props: {},
-  };
-};
+export const getServerSideProps: GetServerSideProps = ProtectedRouteGuard(
+  async () => {
+    return {
+      props: {},
+    };
+  }
+);
 
 const LoginPage: TNextPageWithLayout = () => {
   return (

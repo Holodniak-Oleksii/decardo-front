@@ -1,10 +1,18 @@
-import { useCreateArtMutation } from "@/common/api";
+import { useCreateArtMutation, useProfileQuery } from "@/common/api";
 import { ThreeDEditor } from "@/common/components/3d";
 import { ISceneSettings } from "@/common/components/3d/types";
-import { MODEL_FORMATS } from "@/common/constants";
+import { LINK_TEMPLATES, MODEL_FORMATS } from "@/common/constants";
 import { PhotoIcon } from "@/common/icons";
-import { IArtRequestModel, TModelFormat } from "@/common/types";
+import { useUserStore } from "@/common/store";
+import {
+  IArtRequestModel,
+  IResponseError,
+  IUser,
+  TModelFormat,
+} from "@/common/types";
 import { AxiosError } from "axios";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import { ChangeEvent, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Navigations, SubmitForm } from "./components";
@@ -32,13 +40,17 @@ const Create = () => {
   const [sceneSettings, setSceneSettings] = useState<ISceneSettings | null>(
     null
   );
-
+  const { push } = useRouter();
+  const user = useUserStore((state) => state.user);
   const methods = useForm<IArtFormFiled>({ mode: "onSubmit" });
   const {
     handleSubmit,
     formState: { isSubmitted },
   } = methods;
+
   const { mutateAsync } = useCreateArtMutation();
+  const { refetch } = useProfileQuery();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handlerChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement | null;
@@ -47,7 +59,9 @@ const Create = () => {
         const format = target.value.match(/\.([^\.]+)$/)?.[1] as TModelFormat;
 
         if (!MODEL_FORMATS.includes(format)) {
-          alert("Invalid format of model");
+          enqueueSnackbar("Invalid format of model", {
+            variant: "error",
+          });
           return null;
         }
 
@@ -72,7 +86,6 @@ const Create = () => {
 
   const onSubmit = async (data: IArtFormFiled) => {
     try {
-      // push(LINK_TEMPLATES.USER({ username: user.username }));
       if (!art?.file || !image || !sceneSettings) {
         return;
       }
@@ -82,16 +95,24 @@ const Create = () => {
         model: art.file,
         preview: image,
         settings: sceneSettings,
-        owner: "Alexander",
+        owner: user.username,
       };
-      const res = mutateAsync(body);
+      const response = await mutateAsync(body);
+      if (response.status === 200) {
+        const user = response.result[0] as IUser;
+        refetch();
+        enqueueSnackbar("Success", {
+          variant: "success",
+        });
+        push(LINK_TEMPLATES.PROFILE(user.username));
+      }
     } catch (e) {
-      const error = e as AxiosError;
-      // if (error.response) {
-      //   enqueueSnackbar((error.response?.data as string) || "", {
-      //     variant: "warning",
-      //   });
-      // }
+      const error = e as AxiosError<IResponseError>;
+      if (error.response) {
+        enqueueSnackbar(error.response?.data.message || "", {
+          variant: "warning",
+        });
+      }
     }
   };
 

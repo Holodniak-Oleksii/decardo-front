@@ -14,4 +14,12 @@ export const Wrapper = styled.div`
       max-width: 360px;
     }
   }
+  @media screen and (max-width: 540px) {
+    flex-direction: column;
+    .form_item {
+      &:last-child {
+        max-width: 100%;
+      }
+    }
+  }
 `;

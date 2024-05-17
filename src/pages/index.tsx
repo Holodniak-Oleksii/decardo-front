@@ -1,17 +1,17 @@
-import { prefetchGetHomeArts, queryClient } from "@/common/api";
+import { prefetchGetHomeArts } from "@/common/api";
+import { ProtectedRouteGuard } from "@/common/guards";
 import { Meta } from "@/common/shared";
 import { Home } from "@/modules";
-import { dehydrate } from "@tanstack/react-query";
 import { GetServerSideProps, NextPage } from "next";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  await prefetchGetHomeArts();
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
+export const getServerSideProps: GetServerSideProps = ProtectedRouteGuard(
+  async () => {
+    await prefetchGetHomeArts();
+    return {
+      props: {},
+    };
+  }
+);
 
 const HomePage: NextPage = () => {
   return (

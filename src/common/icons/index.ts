@@ -14,6 +14,7 @@ export { default as PlayIcon } from "./PlayIcon";
 export { default as SearchIcon } from "./SearchIcon";
 export { default as PlusIcon } from "./PlusIcon";
 export { default as LogoutIcon } from "./LogoutIcon";
+export { default as TrashIcon } from "./TrashIcon";
 
 export { default as InstagramIcon } from "./social/InstagramIcon";
 export { default as PinterestIcon } from "./social/PinterestIcon";

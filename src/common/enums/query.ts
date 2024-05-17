@@ -4,4 +4,6 @@ export enum QueryKey {
   ART_HOME = "ART_HOME",
   ART = "ART",
   RECOMMENDED_ARTS = "RECOMMENDED_ARTS",
+  PROFILE = "PROFILE",
+  USER = "USER",
 }

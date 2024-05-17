@@ -29,9 +29,10 @@ export interface IUser {
   username: string;
   bannerImage: string;
   email: string;
+  myProfile: boolean;
   avatar: string | null;
   description: string;
-  contact: string | null;
+  contact: string;
   arts: IArtResponseModel[];
   wishlist: IArtResponseModel[];
 }
@@ -39,5 +40,10 @@ export interface IUser {
 export interface IResponse<T> {
   result: T;
   total: number;
+  status: number;
+}
+
+export interface IResponseError {
+  message: string;
   status: number;
 }

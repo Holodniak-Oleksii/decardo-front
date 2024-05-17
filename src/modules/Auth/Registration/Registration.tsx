@@ -1,5 +1,8 @@
 import { useRegistrationMutation } from "@/common/api";
 import { LINK_TEMPLATES } from "@/common/constants";
+import { patterns } from "@/common/helpers";
+import { useUserStore } from "@/common/store";
+import { IResponseError, IUser } from "@/common/types";
 import { Button } from "@/ui-liberty/buttons";
 import { Input } from "@/ui-liberty/inputs";
 import { AxiosError } from "axios";
@@ -19,18 +22,24 @@ const Registration = () => {
 
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-
+  const setUser = useUserStore((state) => state.setUser);
   const { mutateAsync } = useRegistrationMutation();
 
   const onSubmit = async (data: IRegistrationFormValues) => {
     try {
       const response = await mutateAsync(data);
-      console.log("response :", response);
-      // push(LINK_TEMPLATES.USER({ username: user.username }));
+      if (response.status === 200) {
+        const user = response.result[0] as IUser;
+        setUser(user);
+        enqueueSnackbar("Success", {
+          variant: "success",
+        });
+        push(LINK_TEMPLATES.PROFILE(user.username));
+      }
     } catch (e) {
-      const error = e as AxiosError;
+      const error = e as AxiosError<IResponseError>;
       if (error.response) {
-        enqueueSnackbar((error.response?.data as string) || "", {
+        enqueueSnackbar(error.response?.data.message || "", {
           variant: "warning",
         });
       }
@@ -45,6 +54,10 @@ const Registration = () => {
           placeholder={"Enter username"}
           {...register("username", {
             required: true,
+            pattern: {
+              value: patterns.username,
+              message: "User is incorrect",
+            },
           })}
           error={errors.username}
         />
@@ -53,6 +66,10 @@ const Registration = () => {
           placeholder={"Enter email"}
           {...register("email", {
             required: true,
+            pattern: {
+              value: patterns.email,
+              message: "Email is invalid",
+            },
           })}
           error={errors.email}
         />
@@ -62,6 +79,8 @@ const Registration = () => {
           placeholder={"Create password"}
           {...register("password", {
             required: true,
+            minLength: 6,
+            maxLength: 20,
           })}
           error={errors.password}
         />
@@ -71,6 +90,8 @@ const Registration = () => {
           placeholder={"Confirm password"}
           {...register("confirmPassword", {
             required: true,
+            minLength: 6,
+            maxLength: 20,
           })}
           error={errors.confirmPassword}
         />

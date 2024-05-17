@@ -1,12 +1,12 @@
-import { FC, useRef } from "react";
+import { FC } from "react";
 import { useArtsFilterStore } from ".";
 import { IInitialSyncArtsFilterStoreProps } from "./types";
 
 const InitArtsFilterSync: FC<IInitialSyncArtsFilterStoreProps> = ({
   filter,
 }) => {
-  const initRef = useRef<boolean>(false);
-  if (!initRef.current) {
+  const isInit = useArtsFilterStore((state) => state.isInit);
+  if (!isInit) {
     useArtsFilterStore.setState((state) => ({
       ...state,
       isInit: true,
@@ -15,7 +15,6 @@ const InitArtsFilterSync: FC<IInitialSyncArtsFilterStoreProps> = ({
         ...filter,
       },
     }));
-    initRef.current = true;
   }
   return null;
 };

@@ -1,7 +1,7 @@
 import { IUser } from "@/common/types";
 
 export interface IEditFormFields
-  extends Pick<IUser, "contact" | "description"> {
+  extends Pick<IUser, "contact" | "description" | "username"> {
   avatar: File;
   bannerImage: File;
 }
