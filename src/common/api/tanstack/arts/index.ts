@@ -95,7 +95,7 @@ export const prefetchGetHomeArts = () => {
   return queryClient.prefetchQuery({
     queryKey: [QueryKey.ART_HOME],
     queryFn: async () => {
-      const response = await axiosInstance.get(`/arts?page=1&limit=8`);
+      const response = await axiosInstance.get(`/arts?page=1&limit=9`);
       return response.data.result;
     },
   });

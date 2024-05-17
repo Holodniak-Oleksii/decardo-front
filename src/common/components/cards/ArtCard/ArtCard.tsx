@@ -32,7 +32,7 @@ const ArtCard: FC<IArtCardProps> = (props) => {
   };
 
   return (
-    <Wrapper onClick={() => push(LINK_TEMPLATES.SPACE_DETAILS(id))}>
+    <Wrapper onClick={() => push(LINK_TEMPLATES.SPACE_DETAILS(id))} className='artCard'>
       <Container>
         <Glossiness>
           <Preview

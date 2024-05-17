@@ -11,13 +11,18 @@ export const Wrapper = styled.div`
 
 export const Background = styled.div`
   position: absolute;
-  width: 110%;
-  height: 110%;
+  width: 300%;
+  height: 150%;
   z-index: 1;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  filter: grayscale(1);
+  @media screen and (max-width: 767px) {
+    height: 400%;
+  }
+  @media screen and (max-width: 540px) {
+    width: 500%;
+  }
 `;
 
 export const Content = styled.div`
@@ -40,7 +45,7 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  padding: 32px 0;
+  padding: 32px 16px;
   ${({ theme }) => theme.flex.center};
 `;
 

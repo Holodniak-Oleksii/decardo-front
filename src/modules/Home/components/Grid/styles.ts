@@ -12,9 +12,19 @@ export const List = styled.div`
   gap: 42px;
   grid-template-columns: repeat(4, calc(25% - 32px));
   position: relative;
+  .artCard{
+    &:nth-child(1) {
+      display: none;
+    }
+  }
   @media screen and (max-width: 1620px) {
     gap: 32px;
     grid-template-columns: repeat(3, calc(33.3% - 21px));
+    .artCard{
+      &:nth-child(1) {
+        display: block;
+      }
+    }
   }
   @media screen and (max-width: 1140px) {
     gap: 24px;
@@ -22,12 +32,22 @@ export const List = styled.div`
   }
   @media screen and (max-width: 1024px) {
     grid-template-columns: repeat(2, calc(50% - 13px));
+    .artCard{
+      &:nth-child(1) {
+        display: none;
+      }
+    }
   }
   @media screen and (max-width: 767px) {
     gap: 16px;
     grid-template-columns: repeat(2, calc(50% - 8px));
   }
   @media screen and (max-width: 440px) {
+    .artCard{
+      &:nth-child(odd) {
+        display: none;
+      }
+    }
     grid-template-columns: 100%;
   }
 `;

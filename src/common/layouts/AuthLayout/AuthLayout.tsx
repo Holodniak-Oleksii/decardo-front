@@ -17,7 +17,13 @@ const AuthLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Wrapper>
       <Background>
-        <Lottie animationData={animationData} />
+        <Lottie
+          animationData={animationData}
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+        />
       </Background>
       <Container>
         <Content>
