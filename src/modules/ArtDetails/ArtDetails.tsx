@@ -49,9 +49,9 @@ const ArtDetails: FC<IArtDetailsProps> = ({ art }) => {
 
   const isAuth = useUserStore((state) => state.isAuth);
 
-  const isMyProfile = art.owner === user.username;
+  const isMyProfile = art.owner === user?.username;
   const [isLiked, setIsLiked] = useState(
-    !!user.wishlist.find((item) => item.id === art.id)
+    !!user?.wishlist.find((item) => item.id === art.id)
   );
   const { refetch: refetchArt } = useGetArtQuery({ id: art.id });
   const { refetch: refetchUser } = useProfileQuery();
