@@ -28,6 +28,7 @@ import {
   Wrapper,
 } from "./styles";
 import { IArtFile, IArtFormFiled } from "./types";
+import Cookies from "js-cookie";
 
 const Create = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -44,7 +45,9 @@ const Create = () => {
     formState: { isSubmitted },
   } = methods;
 
-  const { mutateAsync } = useCreateArtMutation();
+  const { mutateAsync } = useCreateArtMutation({
+    token: Cookies.get(process.env.NEXT_PUBLIC_COOKIES_NAME!),
+  });
   const { refetch } = useProfileQuery();
   const { enqueueSnackbar } = useSnackbar();
 

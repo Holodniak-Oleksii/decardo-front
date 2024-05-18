@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "..";
 import { axiosInstance } from "../../axios";
 
-export const useCreateArtMutation = () =>
+export const useCreateArtMutation = ({ token = "" }) =>
   useMutation({
     mutationFn: async (art: IArtRequestModel) => {
       const formData = new FormData();
@@ -37,6 +37,7 @@ export const useCreateArtMutation = () =>
       const res = await axiosInstance.post("/arts", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Cookie: `${process.env.NEXT_PUBLIC_COOKIES_NAME!}=${token}`,
         },
       });
       return res.data;

@@ -69,7 +69,7 @@ const ProfilePage: NextPage<IProfilePageProps> = ({ isMyProfile, profile }) => {
     <>
       <Meta />
       <Profile
-        profile={isMyProfile ? user : profile}
+        profile={isMyProfile ? user || profile : profile}
         isMyProfile={isMyProfile}
       />
     </>
