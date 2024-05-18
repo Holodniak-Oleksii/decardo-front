@@ -20,7 +20,6 @@ import { IProfilePageProps } from "./types";
 const Profile: FC<IProfilePageProps> = ({ username }) => {
   const [activeTab, setActiveTab] = useState(TABS[0]);
   const isUserWorks = activeTab === "WORKS";
-
   const { data, isLoading, isFetching } = useGetUserQuery({ username });
 
   const { data: user, isLoading: isUserLoading } = useProfileQuery();
@@ -54,16 +53,20 @@ const Profile: FC<IProfilePageProps> = ({ username }) => {
     return <PageLoader />;
   }
 
-  if (!profile) {
+  if (!profile && !isUserLoading && !isLoading) {
     return <Error statusCode={404} />;
+  }
+
+  if (!profile) {
+    return null;
   }
 
   return (
     <Wrapper>
       <Container>
         <BannerInfo
-          bannerImage={profile?.bannerImage}
-          username={profile?.username}
+          bannerImage={profile.bannerImage}
+          username={profile.username}
           email={profile.email}
           isMyProfile={profile.myProfile}
         >
