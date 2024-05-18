@@ -12,6 +12,7 @@ const IS_AUTH_ROUTES = ["sign-in", "sign-up"];
 export const ProtectedRouteGuard: TProtectedRoute = (callback) => {
   return async (context) => {
     const cookies = context.req?.headers.cookie || "";
+    console.log("cookies :", cookies);
 
     const isHaveSiteCookies = cookies.includes(
       process.env.NEXT_PUBLIC_COOKIES_NAME!

@@ -1,11 +1,11 @@
 import { useProfileQuery, useRegistrationMutation } from "@/common/api";
 import { LINK_TEMPLATES } from "@/common/constants";
 import { patterns } from "@/common/helpers";
-import { useUserStore } from "@/common/store";
 import { IResponseError, IUser } from "@/common/types";
 import { Button } from "@/ui-liberty/buttons";
 import { Input } from "@/ui-liberty/inputs";
 import { AxiosError } from "axios";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
@@ -30,6 +30,11 @@ const Registration = () => {
       const response = await mutateAsync(data);
       if (response.status === 200) {
         const user = response.result[0] as IUser;
+        Cookies.set(process.env.NEXT_PUBLIC_COOKIES_NAME!, user.tokenJwt, {
+          path: "/",
+          secure: true,
+          sameSite: "strict",
+        });
         refetch();
         enqueueSnackbar("Success", {
           variant: "success",

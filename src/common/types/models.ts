@@ -29,6 +29,7 @@ export interface IUser {
   username: string;
   bannerImage: string;
   email: string;
+  tokenJwt: string;
   myProfile: boolean;
   avatar: string | null;
   description: string;
