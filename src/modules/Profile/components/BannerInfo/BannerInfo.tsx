@@ -3,7 +3,6 @@ import { LINK_TEMPLATES } from "@/common/constants";
 import { LogoutIcon, SettingsIcon } from "@/common/icons";
 import { useUserStore } from "@/common/store";
 import { MobileOff } from "@/utils";
-import Cookies from "js-cookie";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { FC } from "react";

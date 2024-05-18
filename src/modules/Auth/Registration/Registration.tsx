@@ -11,7 +11,6 @@ import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { ActionContainer, Form, Label, Wrapper } from "./styles";
 import { IRegistrationFormValues } from "./types";
-import Cookies from "js-cookie";
 
 const Registration = () => {
   const {
@@ -30,11 +29,11 @@ const Registration = () => {
       const response = await mutateAsync(data);
       if (response.status === 200) {
         const user = response.result[0] as IUser;
-        Cookies.set(process.env.NEXT_PUBLIC_COOKIES_NAME!, user.tokenJwt, {
-          path: "/",
-          secure: true,
-          sameSite: "strict",
-        });
+        // Cookies.set(process.env.NEXT_PUBLIC_COOKIES_NAME!, user.tokenJwt, {
+        //   path: "/",
+        //   secure: true,
+        //   sameSite: "strict",
+        // });
         refetch();
         enqueueSnackbar("Success", {
           variant: "success",

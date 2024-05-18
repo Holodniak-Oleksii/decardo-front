@@ -43,17 +43,18 @@ export const prefetchProfile = (cookie = "", username = "") => {
 };
 
 export const useProfileQuery = () => {
-  const { user, setUser } = useUserStore();
+  const setUser = useUserStore((state) => state.setUser);
+  const setAuth = useUserStore((state) => state.setAuth);
 
   return useQuery<IUser | null>({
     refetchOnMount: false,
     queryKey: [QueryKey.PROFILE, QueryKey.USER],
-    initialData: user,
-
+    keepPreviousData: true,
     queryFn: async () => {
       const response = await axiosInstance.get(`/user`);
       if (response.status === 200) {
         setUser(response.data.result[0]);
+        setAuth(true);
         return response.data.result[0];
       } else {
         return null;
@@ -62,14 +63,29 @@ export const useProfileQuery = () => {
   });
 };
 
-export const useUpdateMutation = ({ token = "" }) => {
+export const useGetUserQuery = ({ username = "" }) => {
+  return useQuery<IUser | null>({
+    refetchOnMount: false,
+    queryKey: [QueryKey.PROFILE, username],
+
+    queryFn: async () => {
+      const response = await axiosInstance.get(
+        `/user${username !== QueryKey.USER ? "/" + username : ""}`
+      );
+
+      if (response.status === 200) {
+        return response.data.result[0];
+      } else {
+        return null;
+      }
+    },
+  });
+};
+
+export const useUpdateMutation = () => {
   return useMutation({
     mutationFn: async (body: FormData) => {
-      const response = await axiosInstance.put(`/user`, body, {
-        headers: {
-          Cookie: `${process.env.NEXT_PUBLIC_COOKIES_NAME!}=${token}`,
-        },
-      });
+      const response = await axiosInstance.put(`/user`, body);
       return response.data;
     },
   });

@@ -15,7 +15,7 @@ import { IEditFormFields } from "./types";
 
 const Edit = () => {
   const user = useUserStore((state) => state.user);
-  console.log("user :", user);
+
   const methods = useForm<IEditFormFields>({
     mode: "onSubmit",
     defaultValues: {
@@ -35,9 +35,7 @@ const Edit = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { refetch } = useProfileQuery();
-  const { mutateAsync } = useUpdateMutation({
-    token: Cookies.get(process.env.NEXT_PUBLIC_COOKIES_NAME!),
-  });
+  const { mutateAsync } = useUpdateMutation();
 
   const onSubmit = async (data: IEditFormFields) => {
     try {
