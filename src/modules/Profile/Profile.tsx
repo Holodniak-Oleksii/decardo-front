@@ -23,7 +23,7 @@ const Profile: FC<IProfilePageProps> = ({ username }) => {
 
   const { data, isLoading, isFetching } = useGetUserQuery({ username });
 
-  const { data: user } = useProfileQuery();
+  const { data: user, isLoading: isUserLoading } = useProfileQuery();
 
   const profile = useMemo(() => {
     return data?.myProfile ? user : data;
@@ -50,7 +50,7 @@ const Profile: FC<IProfilePageProps> = ({ username }) => {
     ));
   };
 
-  if (isLoading || isFetching) {
+  if (isLoading || isFetching || isUserLoading) {
     return <PageLoader />;
   }
 
