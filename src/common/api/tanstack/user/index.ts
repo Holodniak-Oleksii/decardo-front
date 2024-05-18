@@ -6,6 +6,7 @@ import { IRegistrationFormValues } from "@/modules/Auth/Registration/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "..";
 import { axiosInstance } from "../../axios";
+import Cookies from "js-cookie";
 
 export const useRegistrationMutation = () => {
   return useMutation({
@@ -62,10 +63,14 @@ export const useProfileQuery = () => {
   });
 };
 
-export const useUpdateMutation = () => {
+export const useUpdateMutation = ({ token = "" }) => {
   return useMutation({
     mutationFn: async (body: FormData) => {
-      const response = await axiosInstance.put(`/user`, body);
+      const response = await axiosInstance.put(`/user`, body, {
+        headers: {
+          decardoToken: token,
+        },
+      });
       return response.data;
     },
   });

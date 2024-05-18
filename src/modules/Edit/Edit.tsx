@@ -11,6 +11,7 @@ import { useSnackbar } from "notistack";
 import { FormProvider, useForm } from "react-hook-form";
 import { Column, Container, Content, Form, Row, Wrapper } from "./styles";
 import { IEditFormFields } from "./types";
+import Cookies from "js-cookie";
 
 const Edit = () => {
   const user = useUserStore((state) => state.user);
@@ -34,7 +35,7 @@ const Edit = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { refetch } = useProfileQuery();
-  const { mutateAsync } = useUpdateMutation();
+  const { mutateAsync } = useUpdateMutation({ token: Cookies.get(process.env.NEXT_PUBLIC_COOKIES_NAME!) });
 
   const onSubmit = async (data: IEditFormFields) => {
     try {
@@ -54,11 +55,11 @@ const Edit = () => {
       if (response.status === 200) {
         const user = response.result[0] as IUser;
         console.log("user :", user);
-        // Cookies.set(process.env.NEXT_PUBLIC_COOKIES_NAME!, user.tokenJwt, {
-        //   path: "/",
-        //   secure: true,
-        //   sameSite: "strict",
-        // });
+        Cookies.set(process.env.NEXT_PUBLIC_COOKIES_NAME!, user.tokenJwt, {
+          path: "/",
+          secure: true,
+          sameSite: "strict",
+        });
         refetch();
         enqueueSnackbar("Success", {
           variant: "success",
