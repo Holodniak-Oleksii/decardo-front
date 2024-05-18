@@ -6,12 +6,12 @@ import { IResponseError, IUser } from "@/common/types";
 import { Button } from "@/ui-liberty/buttons";
 import { Input, TextArea } from "@/ui-liberty/inputs";
 import { AxiosError } from "axios";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { FormProvider, useForm } from "react-hook-form";
 import { Column, Container, Content, Form, Row, Wrapper } from "./styles";
 import { IEditFormFields } from "./types";
-import Cookies from "js-cookie";
 
 const Edit = () => {
   const user = useUserStore((state) => state.user);
@@ -35,7 +35,9 @@ const Edit = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { refetch } = useProfileQuery();
-  const { mutateAsync } = useUpdateMutation({ token: Cookies.get(process.env.NEXT_PUBLIC_COOKIES_NAME!) });
+  const { mutateAsync } = useUpdateMutation({
+    token: Cookies.get(process.env.NEXT_PUBLIC_COOKIES_NAME!),
+  });
 
   const onSubmit = async (data: IEditFormFields) => {
     try {
