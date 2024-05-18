@@ -15,6 +15,7 @@ import { IEditFormFields } from "./types";
 
 const Edit = () => {
   const user = useUserStore((state) => state.user);
+  console.log("user :", user);
   const methods = useForm<IEditFormFields>({
     mode: "onSubmit",
     defaultValues: {
@@ -53,6 +54,7 @@ const Edit = () => {
       const response = await mutateAsync(form);
       if (response.status === 200) {
         const user = response.result[0] as IUser;
+        console.log("user :", user);
         Cookies.set(process.env.NEXT_PUBLIC_COOKIES_NAME!, user.tokenJwt, {
           path: "/",
           secure: true,

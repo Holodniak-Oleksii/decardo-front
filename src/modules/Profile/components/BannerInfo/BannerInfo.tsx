@@ -3,6 +3,7 @@ import { LINK_TEMPLATES } from "@/common/constants";
 import { LogoutIcon, SettingsIcon } from "@/common/icons";
 import { useUserStore } from "@/common/store";
 import { MobileOff } from "@/utils";
+import Cookies from "js-cookie";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { FC } from "react";
@@ -34,6 +35,7 @@ const BannerInfo: FC<IBannerInfoProps> = ({
   const logOut = async () => {
     try {
       await mutateAsync();
+      Cookies.remove(process.env.NEXT_PUBLIC_COOKIES_NAME!);
       setAuth(false);
       push(LINK_TEMPLATES.HOME());
     } catch (e) {}
