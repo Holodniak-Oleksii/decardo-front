@@ -35,7 +35,7 @@ const BannerInfo: FC<IBannerInfoProps> = ({
   const logOut = async () => {
     try {
       await mutateAsync();
-      Cookies.remove(process.env.NEXT_PUBLIC_COOKIES_NAME!);
+      // Cookies.remove(process.env.NEXT_PUBLIC_COOKIES_NAME!);
       setAuth(false);
       push(LINK_TEMPLATES.HOME());
     } catch (e) {}
