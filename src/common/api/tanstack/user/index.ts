@@ -49,7 +49,6 @@ export const useProfileQuery = () => {
   return useQuery<IUser | null>({
     refetchOnMount: false,
     queryKey: [QueryKey.PROFILE, QueryKey.USER],
-    keepPreviousData: true,
     queryFn: async () => {
       const response = await axiosInstance.get(`/user`);
       if (response.status === 200) {
