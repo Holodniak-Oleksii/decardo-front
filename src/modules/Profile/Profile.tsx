@@ -19,7 +19,7 @@ const Profile: FC<IProfilePageProps> = ({ profile }) => {
   const [activeTab, setActiveTab] = useState(TABS[0]);
   const isUserWorks = activeTab === "WORKS";
   const list = useMemo(
-    () => (activeTab === "WORKS" ? profile.arts : profile.wishlist),
+    () => (activeTab === "WORKS" ? profile?.arts : profile.wishlist),
     [activeTab]
   );
 
@@ -44,7 +44,7 @@ const Profile: FC<IProfilePageProps> = ({ profile }) => {
       <Container>
         <BannerInfo
           bannerImage={profile?.bannerImage}
-          username={profile.username}
+          username={profile?.username}
           email={profile.email}
           isMyProfile={profile.myProfile}
         >

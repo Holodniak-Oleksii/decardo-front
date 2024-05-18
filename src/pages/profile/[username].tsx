@@ -63,6 +63,7 @@ export const getServerSideProps: GetServerSideProps = ProtectedRouteGuard(
 
 const ProfilePage: NextPage<IProfilePageProps> = ({ isMyProfile, profile }) => {
   const user = useUserStore((state) => state.user);
+  console.log("user :", user);
 
   return (
     <>
