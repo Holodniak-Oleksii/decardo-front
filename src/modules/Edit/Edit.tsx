@@ -1,7 +1,6 @@
 import { useProfileQuery, useUpdateMutation } from "@/common/api";
 import { LINK_TEMPLATES } from "@/common/constants";
 import { DragAndDrop } from "@/common/shared";
-import { useUserStore } from "@/common/store";
 import { IResponseError, IUser } from "@/common/types";
 import { Button } from "@/ui-liberty/buttons";
 import { Input, TextArea } from "@/ui-liberty/inputs";
@@ -14,14 +13,14 @@ import { Column, Container, Content, Form, Row, Wrapper } from "./styles";
 import { IEditFormFields } from "./types";
 
 const Edit = () => {
-  const user = useUserStore((state) => state.user);
+  const { data: user, isLoading: isUserLoading } = useProfileQuery();
 
   const methods = useForm<IEditFormFields>({
     mode: "onSubmit",
     defaultValues: {
-      contact: user.contact || "",
-      description: user.description || "",
-      username: user.username || "",
+      contact: user?.contact || "",
+      description: user?.description || "",
+      username: user?.username || "",
     },
   });
   const {
@@ -41,7 +40,9 @@ const Edit = () => {
     try {
       const form = new FormData();
       form.append("username", data.username);
-      form.append("id", user.id);
+      if (user) {
+        form.append("id", user?.id || "");
+      }
       form.append("description", data.description);
       form.append("contact", data.contact);
       if (data.bannerImage) {
