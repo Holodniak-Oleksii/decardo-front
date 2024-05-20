@@ -5,9 +5,7 @@ import { Main } from "./styles";
 import { IGeneralLayoutProps } from "./types";
 
 const GeneralLayout: FC<IGeneralLayoutProps> = ({ font, children }) => {
-  const { data, isLoading, status } = useProfileQuery();
-  console.log("status :", status);
-  console.log("data :", data);
+  const { isLoading } = useProfileQuery();
 
   return (
     <>

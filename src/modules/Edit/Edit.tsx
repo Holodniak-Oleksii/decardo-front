@@ -1,11 +1,11 @@
 import { useProfileQuery, useUpdateMutation } from "@/common/api";
 import { LINK_TEMPLATES } from "@/common/constants";
 import { DragAndDrop } from "@/common/shared";
+import { useUserStore } from "@/common/store";
 import { IResponseError, IUser } from "@/common/types";
 import { Button } from "@/ui-liberty/buttons";
 import { Input, TextArea } from "@/ui-liberty/inputs";
 import { AxiosError } from "axios";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { FormProvider, useForm } from "react-hook-form";
@@ -14,13 +14,14 @@ import { IEditFormFields } from "./types";
 
 const Edit = () => {
   const { data: user, isLoading: isUserLoading } = useProfileQuery();
+  const profile = useUserStore((state) => state.user);
 
   const methods = useForm<IEditFormFields>({
     mode: "onSubmit",
     defaultValues: {
-      contact: user?.contact || "",
-      description: user?.description || "",
-      username: user?.username || "",
+      contact: user?.contact || profile?.contact || "",
+      description: user?.description || profile?.description || "",
+      username: user?.username || profile?.username || "",
     },
   });
   const {
@@ -55,12 +56,6 @@ const Edit = () => {
       const response = await mutateAsync(form);
       if (response.status === 200) {
         const user = response.result[0] as IUser;
-        console.log("user :", user);
-        Cookies.set(process.env.NEXT_PUBLIC_COOKIES_NAME!, user.tokenJwt, {
-          path: "/",
-          secure: true,
-          sameSite: "strict",
-        });
         refetch();
         enqueueSnackbar("Success", {
           variant: "success",
