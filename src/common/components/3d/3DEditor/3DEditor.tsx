@@ -10,6 +10,7 @@ const ThreeDEditor: FC<IThreeDEditorProps> = ({
   isCapture,
   onCaptureModel,
   onChangeSceneSettings,
+  isLocked,
 }) => {
   const [sceneSettings, setSceneSettings] = useState<ISceneSettings>({
     ambientLight: {
@@ -40,6 +41,7 @@ const ThreeDEditor: FC<IThreeDEditorProps> = ({
         hemisphereLight={sceneSettings.hemisphereLight}
         isCapture={isCapture}
         onCaptureModel={onCaptureModel}
+        isLocked={isLocked}
       />
       <SettingsPanel
         onChangeSceneSettings={(settings) => setSceneSettings(settings)}

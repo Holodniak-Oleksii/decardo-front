@@ -118,6 +118,8 @@ export const Overlay = styled.div`
   top: 0;
   pointer-events: all;
   width: fit-content;
+  ${({ theme }) => theme.flex.column};
+  gap: 16px;
 `;
 
 export const Button = styled.button`

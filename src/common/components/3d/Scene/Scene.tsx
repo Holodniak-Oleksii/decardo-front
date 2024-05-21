@@ -1,4 +1,11 @@
-import { Bounds, Center, OrbitControls, useBounds } from "@react-three/drei";
+import {
+  Bounds,
+  Center,
+  FlyControls,
+  OrbitControls,
+  PointerLockControls,
+  useBounds,
+} from "@react-three/drei";
 import { Canvas, useThree } from "@react-three/fiber";
 import { FC, Suspense, useEffect } from "react";
 
@@ -35,11 +42,13 @@ const Scene: FC<ISceneProps> = ({
   hemisphereLight,
   onCaptureModel,
   isCapture,
+  isLocked,
+  unLock,
 }) => {
   return (
     <Canvas shadows resize={{ scroll: false }}>
       <color attach="background" args={[backgroundColor]} />
-      <OrbitControls makeDefault />
+      {!isLocked && <OrbitControls makeDefault />}
       <ambientLight intensity={ambientLight.intensity} />
       <directionalLight intensity={directionalLight.intensity} castShadow />
       <hemisphereLight
@@ -47,13 +56,30 @@ const Scene: FC<ISceneProps> = ({
         groundColor={hemisphereLight.groundColor}
       />
       <Suspense fallback={<ArtLoader />}>
-        <Bounds fit clip observe margin={1.2}>
-          <Center>
-            <ModelLoader url={url} format={format} />
-            <Refresh url={url} />
+        {isLocked ? (
+          <>
+            <FlyControls
+              autoForward={false}
+              movementSpeed={5}
+              rollSpeed={0.005}
+            />
+            <PointerLockControls
+              onUnlock={() => {
+                unLock?.();
+              }}
+            />
             <GetImage onCaptureModel={onCaptureModel} isCapture={isCapture} />
-          </Center>
-        </Bounds>
+            <ModelLoader url={url} format={format} />
+          </>
+        ) : (
+          <Bounds fit clip observe margin={1.2}>
+            <Center>
+              <ModelLoader url={url} format={format} />
+              <Refresh url={url} />
+              <GetImage onCaptureModel={onCaptureModel} isCapture={isCapture} />
+            </Center>
+          </Bounds>
+        )}
       </Suspense>
     </Canvas>
   );

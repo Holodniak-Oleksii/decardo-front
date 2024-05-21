@@ -15,6 +15,8 @@ import {
   HandFingerOffIcon,
   HeartIcon,
   TrashIcon,
+  WalkDisableIcon,
+  WalkIcon,
 } from "@/common/icons";
 import { useUserStore } from "@/common/store";
 import { IArtResponseModel, IResponse } from "@/common/types";
@@ -48,10 +50,11 @@ const ArtDetails: FC<IArtDetailsProps> = ({ art }) => {
   const user = useUserStore((state) => state.user);
 
   const isAuth = useUserStore((state) => state.isAuth);
+  const [isLocked, setIsLocked] = useState(false);
 
   const isMyProfile = art.owner === user?.username;
   const [isLiked, setIsLiked] = useState(
-    !!user?.wishlist.find((item) => item.id === art.id)
+    !!user?.wishlist?.find((item) => item.id === art.id)
   );
   const { refetch: refetchArt } = useGetArtQuery({ id: art.id });
   const { refetch: refetchUser } = useProfileQuery();
@@ -78,6 +81,7 @@ const ArtDetails: FC<IArtDetailsProps> = ({ art }) => {
 
   const handlerDeleteArt = async () => {
     await deleteArt();
+    refetchUser();
     push(LINK_TEMPLATES.SPACES({}));
   };
 
@@ -117,10 +121,24 @@ const ArtDetails: FC<IArtDetailsProps> = ({ art }) => {
                 >
                   {!enabled ? <HandFingerIcon /> : <HandFingerOffIcon />}
                 </Button>
+                <Button
+                  type="button"
+                  onClick={() => setIsLocked((prev) => !prev)}
+                >
+                  {isLocked ? <WalkIcon /> : <WalkDisableIcon />}
+                </Button>
               </Overlay>
             </Relative>
           </Mask>
-          <Scene {...art.settings} format={art.format} url={art.model} />
+          <Scene
+            {...art.settings}
+            format={art.format}
+            url={art.model}
+            isLocked={isLocked}
+            unLock={() => {
+              setIsLocked(false);
+            }}
+          />
         </View>
 
         <Content>
