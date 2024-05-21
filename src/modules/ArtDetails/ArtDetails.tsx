@@ -15,6 +15,8 @@ import {
   HandFingerOffIcon,
   HeartIcon,
   TrashIcon,
+  WalkDisableIcon,
+  WalkIcon,
 } from "@/common/icons";
 import { useUserStore } from "@/common/store";
 import { IArtResponseModel, IResponse } from "@/common/types";
@@ -43,6 +45,8 @@ import { IArtDetailsProps } from "./types";
 
 const ArtDetails: FC<IArtDetailsProps> = ({ art }) => {
   const [enabled, setEnabled] = useState(false);
+  const [isLocked, setIsLocked] = useState(false);
+
   const maskRef = useRef<HTMLDivElement>(null);
   const { push } = useRouter();
   const user = useUserStore((state) => state.user);
@@ -118,10 +122,24 @@ const ArtDetails: FC<IArtDetailsProps> = ({ art }) => {
                 >
                   {!enabled ? <HandFingerIcon /> : <HandFingerOffIcon />}
                 </Button>
+                <Button
+                  type="button"
+                  onClick={() => setIsLocked((prev) => !prev)}
+                >
+                  {isLocked ? <WalkIcon /> : <WalkDisableIcon />}
+                </Button>
               </Overlay>
             </Relative>
           </Mask>
-          <Scene {...art.settings} format={art.format} url={art.model} />
+          <Scene
+            {...art.settings}
+            format={art.format}
+            url={art.model}
+            isLocked={isLocked}
+            unLock={() => {
+              setIsLocked(false);
+            }}
+          />
         </View>
 
         <Content>

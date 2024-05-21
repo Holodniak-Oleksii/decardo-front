@@ -4,6 +4,8 @@ import { IModelLoaderProps, ISceneSettings } from "../types";
 export interface ISceneProps extends IModelLoaderProps, ISceneSettings {
   format: TModelFormat;
   isCapture?: boolean;
+  isLocked?: boolean;
+  unLock?: () => void;
 }
 
 export interface IGetImageProps

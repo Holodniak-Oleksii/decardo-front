@@ -9,4 +9,6 @@ export interface ISettingsPanelProps {
 export interface IThreeDEditorProps
   extends Pick<ISceneProps, "isCapture">,
     Pick<ISettingsPanelProps, "onChangeSceneSettings">,
-    IModelLoaderProps {}
+    IModelLoaderProps {
+  isLocked?: boolean;
+}
