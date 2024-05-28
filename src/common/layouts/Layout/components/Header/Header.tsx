@@ -13,7 +13,6 @@ const Header = () => {
   const refContainer = useRef<HTMLDivElement>(null);
   const { push, asPath } = useRouter();
   const isAuth = useUserStore((state) => state.isAuth);
-  console.log("isAuth :", isAuth);
   const [isOpen, setIsOpen] = useState(false);
 
   const renderNavigations = () => {

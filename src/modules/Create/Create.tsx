@@ -94,6 +94,7 @@ const Create = () => {
         owner: user.username,
       };
       const response = await mutateAsync(body);
+      console.log("response :", response);
       if (response.status === 200) {
         refetch();
         enqueueSnackbar("Success", {

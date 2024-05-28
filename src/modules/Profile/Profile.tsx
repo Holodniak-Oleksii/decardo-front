@@ -1,8 +1,9 @@
-import { useGetUserQuery, useProfileQuery } from "@/common/api";
+import { useGetUserQuery } from "@/common/api";
 import { ArtCard } from "@/common/components/cards";
 import { NotFound, PageLoader } from "@/common/shared";
+import { IArtResponseModel } from "@/common/types";
 import Error from "next/error";
-import { FC, useMemo, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { AvatarBar, BannerInfo } from "./components";
 import { TABS } from "./data";
 import {
@@ -20,18 +21,23 @@ import { IProfilePageProps } from "./types";
 const Profile: FC<IProfilePageProps> = ({ username }) => {
   const [activeTab, setActiveTab] = useState(TABS[0]);
   const isUserWorks = activeTab === "WORKS";
-  const { data, isLoading, isFetching } = useGetUserQuery({ username });
+  const {
+    data: profile,
+    isLoading,
+    isFetching,
+    refetch,
+  } = useGetUserQuery({ username });
+  const [list, setList] = useState<IArtResponseModel[] | undefined>(undefined);
 
-  const { data: user, isLoading: isUserLoading } = useProfileQuery();
-
-  const profile = useMemo(() => {
-    return data?.myProfile ? user : data;
-  }, [data, isLoading, data]);
-
-  const list = useMemo(
-    () => (activeTab === "WORKS" ? profile?.arts : profile?.wishlist),
-    [activeTab]
-  );
+  useEffect(() => {
+    refetch();
+  }, []);
+  
+  useEffect(() => {
+    if (!isLoading && profile) {
+      setList(activeTab === "WORKS" ? profile?.arts : profile?.wishlist);
+    }
+  }, [isLoading, JSON.stringify(profile), activeTab]);
 
   const renderGrid = () => {
     return list?.map((art) => <ArtCard art={art} key={art.id} />);
@@ -49,11 +55,11 @@ const Profile: FC<IProfilePageProps> = ({ username }) => {
     ));
   };
 
-  if (isLoading || isFetching || isUserLoading) {
+  if (isLoading || isFetching) {
     return <PageLoader />;
   }
 
-  if (!profile && !isUserLoading && !isLoading) {
+  if (!profile && !isLoading) {
     return <Error statusCode={404} />;
   }
 

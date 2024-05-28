@@ -47,7 +47,7 @@ export const useProfileQuery = () => {
   const setAuth = useUserStore((state) => state.setAuth);
 
   return useQuery<IUser | null>({
-    refetchOnMount: false,
+    refetchOnWindowFocus: true,
     queryKey: [QueryKey.PROFILE, QueryKey.USER],
     queryFn: async () => {
       const response = await axiosInstance.get(`/user`);
@@ -64,7 +64,6 @@ export const useProfileQuery = () => {
 
 export const useGetUserQuery = ({ username = "" }) => {
   return useQuery<IUser | null>({
-    refetchOnMount: false,
     queryKey: [QueryKey.PROFILE, username],
 
     queryFn: async () => {

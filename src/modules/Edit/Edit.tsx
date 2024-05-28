@@ -15,6 +15,7 @@ import { IEditFormFields } from "./types";
 const Edit = () => {
   const { data: user, isLoading: isUserLoading } = useProfileQuery();
   const profile = useUserStore((state) => state.user);
+  const setProfile = useUserStore((state) => state.setUser);
 
   const methods = useForm<IEditFormFields>({
     mode: "onSubmit",
@@ -56,6 +57,7 @@ const Edit = () => {
       const response = await mutateAsync(form);
       if (response.status === 200) {
         const user = response.result[0] as IUser;
+        setProfile(user);
         refetch();
         enqueueSnackbar("Success", {
           variant: "success",
